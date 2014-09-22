@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc>
+  <web>Flash</web>
+  <name>DisplayFlashMessages</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Flash.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1399398423000</creationDate>
+  <date>1399413974000</date>
+  <contentUpdateDate>1399400917000</contentUpdateDate>
+  <version>1.1</version>
+  <title>DisplayFlashMessages</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <object>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <name>Flash.DisplayFlashMessages</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>96bce27a-7a4d-4273-8f35-15c4a2dfe632</guid>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>#flashMessages {
+  border-radius: 2px;
+  padding: 10px 10px 0 10px;
+  width: 500px;
+  float: left;
+}
+
+#flashMessages .unit {
+  background-color: #7C7676;
+  display: block;
+  /* width: 769px; si les modifs du bas ne fonctionnent pas*/
+  overflow: hidden;
+  padding: 2px 5px 2px 17px;
+  border-radius: 2px;
+  margin-bottom: 2px;
+  position: relative;
+}
+
+#flashMessages .unit * {
+  color: white;
+}
+
+#flashMessages .unit:before {
+  content: "➦";
+  color: white;
+  font-size: .7em;
+  position: absolute;
+  top: 4px; left: 4px;
+}
+
+#flashMessages .unit:hover {
+  background: #811742;
+  color: white;
+}
+
+#flashMessages .unit:hover * {
+  color: white;
+}
+
+#flashMessages .date {
+  color: red;
+  float: left;
+  font-size: 0.9em;
+}
+
+#flashMessages .message {
+  float: left;
+  font-size: 0.9em;
+  margin-left: 0.2em;
+}</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <content>{{velocity}}
+#**
+ * Construct the filter 
+ *#
+###############################################
+##           LOAD POPUP MANAGER
+###############################################
+#set($discard = $xwiki.jsx.use('Flash.FlashNotifier', {'minify':false}))
+###############################################
+##           Group filter
+###############################################
+#set($curentUserR = $escapetool.sql("$xcontext.userReference"))
+#set($curentUser = $escapetool.sql("$context.user"))
+#set($hql = "select DISTINCT doc.fullName from XWikiDocument doc, BaseObject obj, StringProperty prop where doc.fullName=obj.name and obj.className='XWiki.XWikiGroups' and prop.id.id=obj.id and prop.name='member' and (prop.value = '$curentUser' OR prop.value = '$curentUserR') ")
+#set($userGroups = $xwiki.search("$hql"))
+#set($groupsFilter = "")
+#if($userGroups &amp;&amp; $userGroups.size() &gt; 0)
+  #set($v =" ")
+  #set($inGroups ="")
+  #foreach ($value in $userGroups)
+    #set($inGroups = $inGroups + $v + "'$value' member of obj.groups" )
+    #set($v = " OR ")
+  #end
+  #set($groupsFilter = " AND ( $inGroups ) ")
+#end
+##  
+###############################################
+##            DISPLAY MESSAGES
+###############################################
+## UTC
+#set($dateNow = $xwiki.jodatime.dateTime)
+## UTC + 1 (heure FR sans prendre en compte le décalage été/hiver )
+##set($dateNow = $dateNow.plusHours(1))
+## UTC - 1
+##set($dateNow = $dateNow.minusHours(1))
+##set($date8HoursBefore = $dateNow.minusHours(8))
+#if("$!groupsFilter" != '')## If the user is not in any group then no message should be displayed 
+  #set($xwql = "from doc.object(Flash.FlashClass) obj WHERE doc.fullName &lt;&gt; 'Flash.FlashTemplate' $!groupsFilter AND obj.dateBegin &lt;= :now ORDER BY obj.dateBegin DESC")
+  #set($rs = $services.query.xwql($xwql).bindValue('now', $dateNow.toDate()).setLimit(3).execute())
+  #foreach($r in $rs)
+    #set($document = $xwiki.getDocument($r))
+    #set($obj = $document.getObject('Flash.FlashClass'))
+    (% class="unit" %)
+    (((
+      |(% class="date" %)((($obj.display('dateBegin', 'view'):)))|(% class="message" %)((($obj.display('message', 'view'))))
+    )))
+  #end
+#end
+###############################################
+##            DISPLAY ALERT
+###############################################
+#set($userDoc = $xwiki.getDocument($xcontext.user))
+#set($obj = $userDoc.getObject('Flash.FlashValidationClass'))
+#set($need = [])
+#if($obj == $util.getNull())  
+  #set($need = $rs)
+#else
+  #set($list = $userDoc.getValue('flash', $obj))
+  #if($list == $util.getNull())
+    #set($need = $rs)
+  #else
+    #foreach($r in $rs)
+        #if(!$list.contains($r))
+        #set($discard = $need.add($r))
+      #end
+    #end
+  #end
+#end
+#if(!$need.empty())
+  #set($discard = $xwiki.ssx.use('Flash.ModalPopup'))
+  #set($discard = $xwiki.jsx.use('Flash.ModalPopup'))
+
+  #macro(htmlOnly $s) 
+    $escapetool.javascript($s.replaceAll('\{\{html clean="false" wiki="false"\}\}', '').replaceAll('\{\{/html\}\}','')) #end
+
+  {{html}}
+  &lt;script language="javascript"&gt;
+  document.observe('xwiki:dom:loaded', function(){
+    var params = [
+  #foreach($n in $need)
+    #if($velocityCount &gt; 1)
+    ,
+    #end
+    #set($document = $xwiki.getDocument($n))
+    #set($objFlash = $document.getObject('Flash.FlashClass'))
+    #set($message = $objFlash.display('message', 'view'))
+    #set($date = $objFlash.display('dateBegin', 'view'))
+    {
+      'message'  : '#htmlOnly($message)',
+      'document' : '$escapetool.javascript($n)',
+      'date'     : '$escapetool.javascript($date)',
+    }    
+  #end
+    ];
+    window.flashNotifier(params);    
+  });
+  &lt;/script&gt;
+  {{/html}}
+  
+#end
+{{/velocity}}
+</content>
+</xwikidoc>

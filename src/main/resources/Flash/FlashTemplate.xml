@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc>
+  <web>Flash</web>
+  <name>FlashTemplate</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Flash.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1399397158000</creationDate>
+  <date>1399473232000</date>
+  <contentUpdateDate>1389567600000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <object>
+    <class>
+      <name>Flash.FlashClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <dateBegin>
+        <customDisplay>{{include document="AppWithinMinutes.Date"/}}</customDisplay>
+        <dateFormat>dd/MM/yyyy  HH:mm</dateFormat>
+        <disabled>0</disabled>
+        <emptyIsToday>0</emptyIsToday>
+        <name>dateBegin</name>
+        <number>1</number>
+        <picker>1</picker>
+        <prettyName>Date de validité</prettyName>
+        <size>20</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
+      </dateBegin>
+      <groups>
+        <cache>0</cache>
+        <classname/>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <displayType>checkbox</displayType>
+        <idField/>
+        <multiSelect>1</multiSelect>
+        <name>groups</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>Groupes</prettyName>
+        <relationalStorage>1</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>1</size>
+        <sort>none</sort>
+        <sql>select distinct doc.fullName, doc.name  from XWikiDocument as doc, BaseObject as obj where doc.fullName = obj.name and obj.className = 'XWiki.XWikiGroups' and doc.fullName not in ('XWiki.XWikiAdminGroup','XWiki.XWikiGroupTemplate') order by doc.name 
+
+
+
+</sql>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
+      </groups>
+      <message>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>message</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>Message</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </message>
+    </class>
+    <name>Flash.FlashTemplate</name>
+    <number>0</number>
+    <className>Flash.FlashClass</className>
+    <guid>b4ef618c-a80b-4d6b-9813-6d41a85960a2</guid>
+    <property>
+      <dateBegin/>
+    </property>
+    <property>
+      <groups/>
+    </property>
+    <property>
+      <message/>
+    </property>
+  </object>
+  <content/>
+</xwikidoc>
