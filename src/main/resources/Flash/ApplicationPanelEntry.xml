@@ -122,7 +122,7 @@
     <property>
       <parameters>label=$msg.get('flash.panels.quicklinktitle')
 target=Flash.WebHome
-icon=icon:bell_error</parameters>
+icon=icon:bell</parameters>
     </property>
     <property>
       <scope>wiki</scope>
