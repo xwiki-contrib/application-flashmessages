@@ -43,6 +43,10 @@
   </scm>
   <developers>
     <developer>
+      <id>vrachieru</id>
+      <name>Victor Rachieru</name>
+    </developer>
+    <developer>
       <id>gdelhumeau</id>
       <name>Guillaume Delhumeau</name>
     </developer>
