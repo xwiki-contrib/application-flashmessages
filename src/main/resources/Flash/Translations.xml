@@ -77,8 +77,8 @@
     </property>
   </object>
   <content>flash.livetable.doc.name=Name
-flash.livetable.dateBegin=Expiration date
-flash.livetable.groups=Groupes
+flash.livetable.dateBegin=Start date
+flash.livetable.groups=Groups
 flash.livetable.message=Message
 flash.livetable.doc.date=Update date
 flash.livetable._actions.edit=Edit
