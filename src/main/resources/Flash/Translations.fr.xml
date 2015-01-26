@@ -22,9 +22,9 @@
 <xwikidoc>
   <web>Flash</web>
   <name>Translations</name>
-  <language/>
+  <language>fr</language>
   <defaultLanguage>en</defaultLanguage>
-  <translation>0</translation>
+  <translation>1</translation>
   <parent>Flash.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
   <author>xwiki:XWiki.Admin</author>
@@ -76,20 +76,20 @@
       <scope>WIKI</scope>
     </property>
   </object>
-  <content>flash.livetable.doc.name=Name
-flash.livetable.dateBegin=Start date
-flash.livetable.groups=Groups
+  <content>flash.livetable.doc.name=Nom
+flash.livetable.dateBegin=Date de début
+flash.livetable.groups=Groupes
 flash.livetable.message=Message
-flash.livetable.doc.date=Update date
-flash.livetable._actions.edit=Edit
-flash.livetable._actions.delete=Delete
+flash.livetable.doc.date=Date de mise à jour
+flash.livetable._actions.edit=Éditer
+flash.livetable._actions.delete=Supprimer
 flash.livetable._actions=Actions
-flash.creation.utcinfo=The time used for alerts is based on UTC. To check the UTC time you can use the button 'now' in the calendar
-flash.home.title=Flash entries 
-flash.home.msginfo=See here the history of FLASH messages published on the knowledge base.
-flash.panels.quicklinktitle=Flash messages
-Flash.FlashClass_dateBegin=Start date
+flash.creation.utcinfo=Le temps utilisé pour les alertes est basé sur UTC. Pour vérifier l'heure UTC, vous pouvez utiliser le bouton 'now' dans le calendrier
+flash.home.title=Entrées flash
+flash.home.msginfo=Voir ici l’historique de messages Flash publiés sur la base de connaissances.
+flash.panels.quicklinktitle=Messages Flash
+Flash.FlashClass_dateBegin=Date de début
 Flash.FlashClass_message=Message
-Flash.FlashClass_groups=Groups
+Flash.FlashClass_groups=Groupes
 </content>
 </xwikidoc>
