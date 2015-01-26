@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -41,6 +42,152 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
+  <object>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <name>Flash.DisplayFlashMessages</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>68e12981-e81d-4ec5-ac74-704b8f9618af</guid>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>require(['jquery'], function($) {
+  $(document).ready(function() {
+    var messages = $$("#flashMessages .messages li").length;
+    var interval = setInterval(nextMessage, 10000);
+
+    if (messages &gt; 0) {
+      // Generate navigation bullets
+      for (var i = 0; i &lt; messages; i++)
+        $("#flashMessages .navigation").append('&lt;li&gt;&lt;a href="javascript:void(0)"&gt;&lt;span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;');
+
+      // Select the first message and element in the navigation
+      $("#flashMessages .messages li:first-of-type").addClass("selected");
+      $("#flashMessages .navigation :first-child a").addClass("selected");
+    }
+
+    // Navigation bullets
+    $("#flashMessages .navigation a").click(function(e) {
+      e.preventDefault();
+
+      // Remove the selected class from the currently selected indicator
+      $(this).parent().parent().find(".selected").removeClass("selected");
+      // Make the clicked indicator the selected one
+      $(this).addClass("selected");
+
+      // Reset the timer for the next message
+      clearInterval(interval);
+      interval = setInterval(nextMessage, 10000);
+
+      updateSlideshowForSelectedMessage();
+    });
+
+    // Display the currently selected message
+    function updateSlideshowForSelectedMessage() {
+      var index = $("#flashMessages .navigation .selected").parent().index();
+      var classIndex = parseInt(index+1, 10);
+
+      $("#flashMessages .messages .selected").removeClass("selected");
+      $("#flashMessages .messages li:nth-child(" + classIndex + ")").addClass("selected");
+    }
+
+    // Go to the next message
+    function nextMessage() {
+      var reachedLastMessage = $("#flashMessages .navigation .selected").parent().index()+1 &gt;= messages;
+
+      if (reachedLastMessage) {
+        $("#flashMessages .navigation .selected").removeClass("selected");
+        $("#flashMessages .navigation :first-child a").addClass("selected");
+      } else {
+        $("#flashMessages .navigation .selected").removeClass("selected").parent().next().find("a").addClass("selected");
+      }
+
+      updateSlideshowForSelectedMessage();
+    }
+  });
+});</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
   <object>
     <class>
       <name>XWiki.StyleSheetExtension</name>
@@ -118,78 +265,131 @@
     <className>XWiki.StyleSheetExtension</className>
     <guid>96bce27a-7a4d-4273-8f35-15c4a2dfe632</guid>
     <property>
-      <cache>long</cache>
+      <cache>forbid</cache>
     </property>
     <property>
-      <code>#flashMessages {
-  border-radius: 2px;
-  padding: 10px 10px 0 10px;
-  width: 500px;
-  float: left;
-}
+      <code>#template('colorThemeInit.vm')
 
-#flashMessages .unit {
-  background-color: #7C7676;
-  display: block;
-  /* width: 769px; si les modifs du bas ne fonctionnent pas*/
-  overflow: hidden;
-  padding: 2px 5px 2px 17px;
-  border-radius: 2px;
-  margin-bottom: 2px;
+#flashMessages {
+  background-color: $theme.menuBackgroundColor;
+  color: #fff;
+  width: 100%;
   position: relative;
+  display: inline-flex;
+  clear: both;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) inset;
+  align-items: center;
 }
 
-#flashMessages .unit * {
-  color: white;
+#flashMessages .messages {
+  width: 90%;
+  padding: 0;
+  margin: 0;
+  float: left;
 }
 
-#flashMessages .unit:before {
-  content: "➦";
-  color: white;
-  font-size: .7em;
-  position: absolute;
-  top: 4px; left: 4px;
+.skin-flamingo #flashMessages .messages {
+    margin: 10px 0 0;
 }
 
-#flashMessages .unit:hover {
-  background: #811742;
-  color: white;
+#flashMessages .messages li {
+  opacity: 0;
+  visibility: hidden;
+  position: relative;
+  display: none;
 }
 
-#flashMessages .unit:hover * {
-  color: white;
+#flashMessages .messages li .date {
+  float: left;
+  font-size: 0.9em;
+  margin-right: 0.3em;
 }
 
-#flashMessages .date {
-  color: red;
+#flashMessages .messages li .message {
   float: left;
   font-size: 0.9em;
 }
 
-#flashMessages .message {
-  float: left;
-  font-size: 0.9em;
-  margin-left: 0.2em;
+#flashMessages .messages .selected {
+  opacity: 1;
+  visibility: visible;
+  display: inline-flex;
+  margin-left: 10px;
+}
+
+#flashMessages .hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#flashMessages .navigation {
+  width: 10%;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  float: right;
+  text-align: center;
+}
+
+#flashMessages .navigation li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+#flashMessages .navigation a {
+  display: block;
+  padding: 4px;
+  outline: 0;
+}
+
+#flashMessages .navigation span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 100%;
+  opacity: 0.6;
+  -webkit-transition: all 0.2s ease-in-out 0s;
+  transition: all 0.2s ease-in-out 0s;
+  -webkit-transform: scale(0.6);
+  transform: scale(0.6);
+}
+
+#flashMessages .navigation a:hover span {
+  opacity: 1;
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+}
+
+#flashMessages .navigation a.selected span {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
 }</code>
     </property>
     <property>
       <name/>
     </property>
     <property>
-      <parse>0</parse>
+      <parse>1</parse>
     </property>
     <property>
       <use>onDemand</use>
     </property>
   </object>
   <content>{{velocity}}
-#**
- * Construct the filter 
- *#
 ###############################################
 ##           LOAD POPUP MANAGER
 ###############################################
 #set($discard = $xwiki.jsx.use('Flash.FlashNotifier', {'minify':false}))
+##
+###############################################
+##           LOAD MESSAGE SLIDER
+###############################################
+#set($discard = $xwiki.jsx.use('Flash.DisplayFlashMessages'))
+#set($discard = $xwiki.ssx.use('Flash.DisplayFlashMessages'))
+##
 ###############################################
 ##           Group filter
 ###############################################
@@ -221,13 +421,22 @@
 #if("$!groupsFilter" != '')## If the user is not in any group then no message should be displayed 
   #set($xwql = "from doc.object(Flash.FlashClass) obj WHERE doc.fullName &lt;&gt; 'Flash.FlashTemplate' $!groupsFilter AND obj.dateBegin &lt;= :now ORDER BY obj.dateBegin DESC")
   #set($rs = $services.query.xwql($xwql).bindValue('now', $dateNow.toDate()).setLimit(3).execute())
-  #foreach($r in $rs)
-    #set($document = $xwiki.getDocument($r))
-    #set($obj = $document.getObject('Flash.FlashClass'))
-    (% class="unit" %)
-    (((
-      |(% class="date" %)((($obj.display('dateBegin', 'view'):)))|(% class="message" %)((($obj.display('message', 'view'))))
-    )))
+  #if($rs.size() &gt; 0)
+    {{html wiki=true}}
+      &lt;div id="flashMessages"&gt;
+        &lt;ul class="messages"&gt;
+          #foreach($r in $rs)
+            #set($document = $xwiki.getDocument($r))
+            #set($obj = $document.getObject('Flash.FlashClass'))
+            &lt;li class="unit"&gt;
+              &lt;span class="date"&gt;&lt;p&gt;$obj.display('dateBegin', 'view') : &lt;/p&gt;&lt;/span&gt;
+              &lt;span class="message"&gt;$obj.display('message', 'view')&lt;/span&gt;
+            &lt;/li&gt;
+          #end
+        &lt;/ul&gt;
+        &lt;ul class="navigation"&gt;&lt;/ul&gt;
+      &lt;/div&gt;
+    {{/html}}
   #end
 #end
 ###############################################
@@ -253,7 +462,7 @@
 #if(!$need.empty())
   #set($discard = $xwiki.ssx.use('Flash.ModalPopup'))
   #set($discard = $xwiki.jsx.use('Flash.ModalPopup'))
-
+  ##
   #macro(htmlOnly $s) 
     $escapetool.javascript($s.replaceAll('\{\{html clean="false" wiki="false"\}\}', '').replaceAll('\{\{/html\}\}','')) #end
 
