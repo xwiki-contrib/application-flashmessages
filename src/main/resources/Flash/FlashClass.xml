@@ -69,7 +69,21 @@
     <groups>
       <cache>0</cache>
       <classname/>
-      <customDisplay/>
+      <customDisplay>{{velocity}}
+{{html}}
+#if ($type == 'edit')
+  #userPicker_import(true)
+  #set ($id = $escapetool.xml("${prefix}${name}"))
+  #set ($class = 'suggestGroups multipleSelection')
+  #if (!$xcontext.isMainWiki() &amp;&amp; "$!services.wiki.user.userScope" != 'LOCAL_ONLY')
+    #set ($class = "$class withScope")
+  #end
+  &lt;input type="text" id="$!id" name="$!id" value="$stringtool.join($value, ',')" class="$class" /&gt;
+#elseif ($value.size() &gt; 0)
+    #displayGroup($value)
+#end
+{{/html}}
+{{/velocity}}</customDisplay>
       <disabled>0</disabled>
       <displayType>checkbox</displayType>
       <idField/>
@@ -83,11 +97,7 @@
       <separators/>
       <size>1</size>
       <sort>none</sort>
-      <sql>select distinct doc.fullName, doc.name  from XWikiDocument as doc, BaseObject as obj where doc.fullName = obj.name and obj.className = 'XWiki.XWikiGroups' and doc.fullName not in ('XWiki.XWikiAdminGroup','XWiki.XWikiGroupTemplate') order by doc.name 
-
-
-
-</sql>
+      <sql>select distinct doc.fullName, doc.name  from XWikiDocument as doc, BaseObject as obj where doc.fullName = obj.name and obj.className = 'XWiki.XWikiGroups' and doc.fullName &lt;&gt; 'XWiki.XWikiGroupTemplate' order by doc.name</sql>
       <unmodifiable>0</unmodifiable>
       <validationMessage/>
       <validationRegExp/>

@@ -117,7 +117,7 @@
   'dateBegin': {'type': 'text', 'size': 10, 'filterable': true, 'sortable': true, 'html': false},
   'message': {'type': 'text', 'size': 10, 'filterable': true, 'sortable': true, 'html': true},
   'doc.date': {'type': 'text', 'link': 'view', 'size': 10, 'filterable': true, 'sortable': true},
-  'groups': {'type': 'list', 'size': 10, 'filterable': true, 'sortable': true},
+  'groups': {'type': 'list', 'size': 10, 'filterable': true, 'sortable': true, 'html': true},
   '_actions': {'html': true, 'sortable': false, 'actions': ['edit', 'delete']}
 })
 
