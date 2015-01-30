@@ -393,19 +393,30 @@
 ###############################################
 ##           Group filter
 ###############################################
-#set($curentUserR = $escapetool.sql("$xcontext.userReference"))
-#set($curentUser = $escapetool.sql("$context.user"))
-#set($hql = "select DISTINCT doc.fullName from XWikiDocument doc, BaseObject obj, StringProperty prop where doc.fullName=obj.name and obj.className='XWiki.XWikiGroups' and prop.id.id=obj.id and prop.name='member' and (prop.value = '$curentUser' OR prop.value = '$curentUserR') ")
-#set($userGroups = $xwiki.search("$hql"))
-#set($groupsFilter = "")
-#if($userGroups &amp;&amp; $userGroups.size() &gt; 0)
-  #set($v =" ")
-  #set($inGroups ="")
-  #foreach ($value in $userGroups)
-    #set($inGroups = $inGroups + $v + "'$value' member of obj.groups" )
-    #set($v = " OR ")
+#set($groups = $xwiki.rightsmanager.groupsApi)
+#if($xcontext.userReference.wikiReference.name == 'xwiki')
+  #set($localGroups = $groups.getAllMatchedLocalGroups({"member" : ["StringProperty", "$xcontext.userReference"]}))
+  #set($globalGroups = $groups.getAllMatchedGlobalGroups({"member" : ["StringProperty", "$xcontext.localUser"]}))
+#else
+  #set($localGroups = $groups.getAllMatchedLocalGroups({"member" : ["StringProperty", "$xcontext.localUser"]}))
+  #set($globalGroups = [])
+#end
+##
+#if($localGroups.size() &gt; 0 || $globalGroups.size() &gt; 0)
+  #set($groupsFilter = "")
+  #foreach ($group in $localGroups)
+    #set($groupsFilter = "$!{groupsFilter}'$group' member of obj.groups")
+    #if($velocityCount &lt; $localGroups.size() || $globalGroups.size() &gt; 0)
+      #set($groupsFilter = "$!{groupsFilter} OR ")
+    #end
   #end
-  #set($groupsFilter = " AND ( $inGroups ) ")
+  #foreach ($group in $globalGroups)
+    #set($groupsFilter = "$!{groupsFilter}'xwiki:${group}' member of obj.groups")
+    #if($velocityCount &lt; $globalGroups.size())
+      #set($groupsFilter = "$!{groupsFilter} OR ")
+    #end
+  #end
+  #set($groupsFilter = " AND (${groupsFilter}) ")
 #end
 ##  
 ###############################################
@@ -443,20 +454,16 @@
 ##            DISPLAY ALERT
 ###############################################
 #set($userDoc = $xwiki.getDocument($xcontext.user))
-#set($obj = $userDoc.getObject('Flash.FlashValidationClass'))
+#set($userValObj = $userDoc.getObject('Flash.FlashValidationClass'))
+#set($userValList = $userValObj.getProperty('flash').getValue())
 #set($need = [])
-#if($obj == $util.getNull())  
-  #set($need = $rs)
-#else
-  #set($list = $userDoc.getValue('flash', $obj))
-  #if($list == $util.getNull())
-    #set($need = $rs)
-  #else
-    #foreach($r in $rs)
-        #if(!$list.contains($r))
-        #set($discard = $need.add($r))
-      #end
-    #end
+#foreach($msg in $rs)
+  #set($msgDoc = $xwiki.getDocument($msg))
+  #set($msgValObj = $msgDoc.getObject('Flash.FlashValidationClass'))
+  #set($msgValList = $msgValObj.getProperty('flash').getValue())
+  ##
+  #if(!$userValList.contains($msg) &amp;&amp; !$msgValList.contains($xcontext.user))
+    #set($discard = $need.add($msg))
   #end
 #end
 #if(!$need.empty())

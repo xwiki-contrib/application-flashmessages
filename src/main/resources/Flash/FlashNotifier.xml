@@ -268,29 +268,35 @@ window.flashNotifier = function(params){
     </property>
   </object>
   <content>{{velocity}}
-#if("$!request.ajax" == "1" &amp;&amp; $xcontext.action=="get")
-  #set($flashid = $request.flash)
-  #set($doc = $xwiki.getDocument($xcontext.user))
-  #if($doc &amp;&amp; !$doc.isNew() &amp;&amp; $xwiki.exists($flashid))
-    #set($obj = $doc.getObject('Flash.FlashValidationClass', true))
-    #set($list = $doc.getValue('flash', $obj))
-    #if($list == $util.getNull())
-      #set($discard = $obj.set('flash', $flashid))
-      #set($discard = $doc.save("$flashid has been seen"))
-    #elseif($list.class.name == 'com.xpn.xwiki.objects.ListProperty$NotifyList' &amp;&amp; !$list.contains($flashid))
-      #set($s = '')
-      #foreach($l in $list)
-        #if($velocityCount&gt;1)
-          #set($s = "$s,")
-        #end
-        #set($s = "${s}${l}")
+## Mark the message as seen by the current user
+#if("$!request.ajax" == '1' &amp;&amp; $xcontext.action == 'get')
+  #set($msgdoc = $xwiki.getDocument($request.flash))
+  #set($userdoc = $xwiki.getDocument($xcontext.user))
+  #if($userdoc &amp;&amp; !$userdoc.isNew() &amp;&amp; $xwiki.exists($msgdoc))
+    ## Start by looking in the user document in order to ensure backwards compatibility
+    #set($obj = $userdoc.getObject('Flash.FlashValidationClass'))
+    #set($list = $obj.getProperty('flash').getValue())
+    #set($seen = false)
+    #if($list != $util.getNull() &amp;&amp; $list.contains("$msgdoc"))
+      #set($seen = true)
+    #end
+    ## If the user does not have the message marked as seen in his profile add him to the message document. 
+    ## Doing so we ensure that this feature works with global users.
+    #if(!$seen)
+      #set($obj = $msgdoc.getObject('Flash.FlashValidationClass', true))
+      #set($list = $obj.getProperty('flash').getValue())
+      #if($list == $util.getNull())
+        #set($discard = $obj.set('flash', [$xcontext.user]))
+        #set($discard = $msgdoc.save("$xcontext.user has seen the message"))
+      #elseif($list.class.name == 'com.xpn.xwiki.objects.ListProperty$NotifyList' &amp;&amp; !$list.contains($xcontext.user))
+        #set($discard = $list.add($xcontext.user))
+        #set($discard = $obj.set('flash', $list))
+        #set($discard = $msgdoc.save("$xcontext.user has seen the message"))
       #end
-      #set($s = "$s,${flashid}")
-      #set($discard = $obj.set('flash', $s))
-      #set($discard = $doc.save("$flashid has been seen"))      
     #end
   #end
 #end
 {{/velocity}}
+
 </content>
 </xwikidoc>
