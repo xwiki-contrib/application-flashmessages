@@ -108,6 +108,38 @@
       <description/>
     </property>
   </object>
+  <object>
+    <name>Flash.WebHome</name>
+    <number>0</number>
+    <className>XWiki.DocumentSheetBinding</className>
+    <guid>4939aff5-9ec6-437a-bb98-3081abe7d02c</guid>
+    <class>
+      <name>XWiki.DocumentSheetBinding</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <sheet>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>sheet</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Sheet</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </sheet>
+    </class>
+    <property>
+      <sheet>Flash.WebHomeSheet</sheet>
+    </property>
+  </object>
   <content>{{velocity}}
 
 {{info}} $msg.get('flash.home.msginfo') {{/info}}
