@@ -272,13 +272,21 @@
 
 #flashMessages {
   background-color: $theme.menuBackgroundColor;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) inset;
   color: #fff;
   width: 100%;
   position: relative;
-  display: inline-flex;
+  display: -webkit-box;        /* OLD - iOS 6, Safari 3.1-6 */
+  display: -moz-box;           /* OLD - Firefox 19 */
+  display: -ms-flexbox;        /* TWEENER - IE 10 */
+  display: -webkit-flex;       /* NEW - Chrome */
+  display: flex;               /* NEW, Spec - Opera 12.1, Firefox 20+ */
   clear: both;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) inset;
-  align-items: center;
+  -webkit-box-align: center;   /* OLD - iOS 6, Safari 3.1-6 */
+  -moz-box-align: center;      /* OLD - Firefox 19 */
+  -ms-flex-align: center;      /* TWEENER - IE 10 */
+  -webkit-align-items: center; /* NEW - Chrome */
+  align-items: center;         /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
 
 #flashMessages .messages {
@@ -289,7 +297,7 @@
 }
 
 .skin-flamingo #flashMessages .messages {
-    margin: 10px 0 0;
+  margin: 10px 0 0;
 }
 
 #flashMessages .messages li {
@@ -313,7 +321,11 @@
 #flashMessages .messages .selected {
   opacity: 1;
   visibility: visible;
-  display: inline-flex;
+  display: -webkit-box;      /* OLD - iOS 6, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19 */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
   margin-left: 10px;
 }
 
