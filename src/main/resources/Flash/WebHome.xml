@@ -144,6 +144,8 @@
 
 {{info}} $msg.get('flash.home.msginfo') {{/info}}
 
+#set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css', true))
+##
 #set($columnsProperties = {
   'doc.name': {'type': 'text', 'link': 'view', 'size': 10, 'filterable': true, 'sortable': true},
   'dateBegin': {'type': 'text', 'size': 10, 'filterable': true, 'sortable': true, 'html': false},
@@ -152,7 +154,6 @@
   'groups': {'type': 'list', 'size': 10, 'filterable': true, 'sortable': true, 'html': true},
   '_actions': {'html': true, 'sortable': false, 'actions': ['edit', 'delete']}
 })
-
 #set($options = {
   'className': 'Flash.FlashClass',
   'resultPage' : 'AppWithinMinutes.LiveTableGenerator',
@@ -163,9 +164,8 @@
   'selectedColumn': 'doc.name',
   'defaultOrder': 'asc'
 })
-
+##
 #set($columns = ['doc.name', 'dateBegin', 'message', 'doc.date','groups', '_actions'])
 #livetable('flash' $columns $columnsProperties $options)
-
 {{/velocity}}</content>
 </xwikidoc>
