@@ -249,7 +249,7 @@ window.flashNotifier = function(params){
     <guid>1a06641b-d9f3-4c51-9726-5df0c8e87523</guid>
     <property>
       <content>{{velocity}}
-#if($context.action == 'view')
+#if($context.action == 'view' &amp;&amp; $xwiki.hasAccessLevel('view', $xcontext.userReference, 'Flash.DisplayFlashMessages'))
   {{include reference='Flash.DisplayFlashMessages' /}}
 #end
 {{/velocity}}</content>
