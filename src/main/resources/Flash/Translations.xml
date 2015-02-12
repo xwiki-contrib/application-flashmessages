@@ -77,7 +77,8 @@
       <scope>WIKI</scope>
     </property>
   </object>
-  <content>flash.livetable.doc.name=Name
+  <content>admin.flashmessages=Flash messages
+flash.livetable.doc.name=Name
 flash.livetable.dateBegin=Start date
 flash.livetable.groups=Groups
 flash.livetable.message=Message
