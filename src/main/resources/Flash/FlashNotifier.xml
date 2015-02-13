@@ -287,11 +287,11 @@ window.flashNotifier = function(params){
       #set($list = $obj.getProperty('flash').getValue())
       #if($list == $util.getNull())
         #set($discard = $obj.set('flash', [$xcontext.user]))
-        #set($discard = $msgdoc.save("$xcontext.user has seen the message"))
+        #set($discard = $msgdoc.saveAsAuthor("$xcontext.user has seen the message"))
       #elseif($list.class.name == 'com.xpn.xwiki.objects.ListProperty$NotifyList' &amp;&amp; !$list.contains($xcontext.user))
         #set($discard = $list.add($xcontext.user))
         #set($discard = $obj.set('flash', $list))
-        #set($discard = $msgdoc.save("$xcontext.user has seen the message"))
+        #set($discard = $msgdoc.saveAsAuthor("$xcontext.user has seen the message"))
       #end
     #end
   #end
