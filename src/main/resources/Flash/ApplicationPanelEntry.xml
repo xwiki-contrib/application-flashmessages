@@ -121,7 +121,7 @@
       <name>platform.panels.flashApplication</name>
     </property>
     <property>
-      <parameters>label=$msg.get('flash.panels.quicklinktitle')
+      <parameters>label=$services.localization.render('flash.panels.quicklinktitle')
 target=Flash.WebHome
 icon=icon:bell</parameters>
     </property>

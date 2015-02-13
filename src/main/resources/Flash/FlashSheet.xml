@@ -47,19 +47,16 @@
 $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator')
 #set($discard = $doc.use('Flash.FlashClass'))
 ## We don't have access to the form element to set the CSS class for the vertical form layout standard.
-#if("$!context.action" == 'edit' || "$!context.action" == 'inline')
-  {{info}}$msg.get('flash.creation.utcinfo'){{/info}}
+#if("$!xcontext.action" == 'edit' || "$!xcontext.action" == 'inline')
+  {{info}}$services.localization.render('flash.creation.utcinfo'){{/info}}
 #end
 (% class="xform" %)
 (((
-  ; &lt;label for="Flash.FlashClass_0_dateBegin"&gt;$doc.displayPrettyName('dateBegin', false, false)&lt;/label&gt;##
-    (% class="xHint" %)$msg.get('')
+  ; &lt;label for="Flash.FlashClass_0_dateBegin"&gt;$doc.displayPrettyName('dateBegin', false, false)&lt;/label&gt;
   : $doc.display('dateBegin')
-  ; &lt;label for="Flash.FlashClass_0_groups"&gt;$doc.displayPrettyName('groups', false, false)&lt;/label&gt;##
-    (% class="xHint" %)$msg.get('')
+  ; &lt;label for="Flash.FlashClass_0_groups"&gt;$doc.displayPrettyName('groups', false, false)&lt;/label&gt;
   : $doc.display('groups')
-  ; &lt;label for="Flash.FlashClass_0_message"&gt;$doc.displayPrettyName('message', false, false)&lt;/label&gt;##
-    (% class="xHint" %)$msg.get('')
+  ; &lt;label for="Flash.FlashClass_0_message"&gt;$doc.displayPrettyName('message', false, false)&lt;/label&gt;
   : $doc.display('message')
 )))
 {{/html}}
