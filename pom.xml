@@ -31,7 +31,7 @@
   </parent>
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>application-flashmessages</artifactId>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.1.1</version>
   <name>Flash Messages Application</name>
   <packaging>xar</packaging>
   <description>Allow you to create Flash messages aiming at one or multiple local groups</description>
@@ -39,7 +39,7 @@
     <connection>scm:git:git://github.com/xwiki-contrib/application-flashmessages.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/application-flashmessages.git</developerConnection>
     <url>https://github.com/xwiki-contrib/application-flashmessages</url>
-    <tag>HEAD</tag>
+    <tag>application-flashmessages-1.1.1</tag>
   </scm>
   <developers>
     <developer>
