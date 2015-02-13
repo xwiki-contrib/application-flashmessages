@@ -77,7 +77,7 @@
       <scope>WIKI</scope>
     </property>
   </object>
-  <content>admin.flashmessages=Flash messages
+  <content>admin.flashmessages=Flash Messages
 flash.livetable.doc.name=Name
 flash.livetable.dateBegin=Start date
 flash.livetable.groups=Groups
@@ -89,7 +89,7 @@ flash.livetable._actions=Actions
 flash.creation.utcinfo=The time used for alerts is based on UTC. To check the UTC time you can use the button 'now' in the calendar
 flash.home.title=Flash entries 
 flash.home.msginfo=See here the history of FLASH messages published on the knowledge base.
-flash.panels.quicklinktitle=Flash messages
+flash.panels.quicklinktitle=Flash Messages
 Flash.FlashClass_dateBegin=Start date
 Flash.FlashClass_message=Message
 Flash.FlashClass_groups=Groups
