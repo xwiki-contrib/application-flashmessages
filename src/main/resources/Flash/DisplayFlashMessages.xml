@@ -406,7 +406,7 @@
 ##           Group filter
 ###############################################
 #set($groups = $xwiki.rightsmanager.groupsApi)
-#if($xcontext.userReference.wikiReference.name == 'xwiki')
+#if($xcontext.userReference.wikiReference.name == $xcontext.getMainWikiName() &amp;&amp; !$xcontext.isMainWiki())
   #set($localGroups = $groups.getAllMatchedLocalGroups({"member" : ["StringProperty", "$xcontext.userReference"]}))
   #set($globalGroups = $groups.getAllMatchedGlobalGroups({"member" : ["StringProperty", "$xcontext.localUser"]}))
 #else
