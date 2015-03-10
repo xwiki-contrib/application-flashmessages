@@ -66,6 +66,21 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
     </dateBegin>
+    <dateEnd>
+      <customDisplay>{{include document="AppWithinMinutes.Date"/}}</customDisplay>
+      <dateFormat>dd/MM/yyyy  HH:mm</dateFormat>
+      <disabled>0</disabled>
+      <emptyIsToday>0</emptyIsToday>
+      <name>dateEnd</name>
+      <number>1</number>
+      <picker>1</picker>
+      <prettyName>End date</prettyName>
+      <size>20</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
+    </dateEnd>
     <groups>
       <cache>0</cache>
       <classname/>

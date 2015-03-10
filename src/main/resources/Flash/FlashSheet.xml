@@ -54,6 +54,8 @@ $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator')
 (((
   ; &lt;label for="Flash.FlashClass_0_dateBegin"&gt;$doc.displayPrettyName('dateBegin', false, false)&lt;/label&gt;
   : $doc.display('dateBegin')
+  ; &lt;label for="Flash.FlashClass_0_dateEnd"&gt;$doc.displayPrettyName('dateEnd', false, false)&lt;/label&gt;
+  : $doc.display('dateEnd')
   ; &lt;label for="Flash.FlashClass_0_groups"&gt;$doc.displayPrettyName('groups', false, false)&lt;/label&gt;
   : $doc.display('groups')
   ; &lt;label for="Flash.FlashClass_0_message"&gt;$doc.displayPrettyName('message', false, false)&lt;/label&gt;

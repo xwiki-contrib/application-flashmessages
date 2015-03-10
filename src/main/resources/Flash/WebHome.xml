@@ -404,7 +404,7 @@
       <class>Flash.FlashClass</class>
     </property>
     <property>
-      <columns>doc.name dateBegin message doc.date _actions</columns>
+      <columns>doc.name dateBegin dateEnd message doc.date _actions</columns>
     </property>
     <property>
       <description/>
@@ -451,6 +451,7 @@
 #set($columnsProperties = {
   'doc.name': {'type': 'text', 'link': 'view', 'size': 10, 'filterable': true, 'sortable': true},
   'dateBegin': {'type': 'text', 'size': 10, 'filterable': true, 'sortable': true, 'html': false},
+  'dateEnd': {'type': 'text', 'size': 10, 'filterable': true, 'sortable': true, 'html': false},
   'message': {'type': 'text', 'size': 10, 'filterable': true, 'sortable': true, 'html': true},
   'doc.date': {'type': 'text', 'link': 'view', 'size': 10, 'filterable': true, 'sortable': true},
   'groups': {'type': 'list', 'size': 10, 'filterable': true, 'sortable': true, 'html': true},
@@ -467,7 +468,7 @@
   'defaultOrder': 'asc'
 })
 ##
-#set($columns = ['doc.name', 'dateBegin', 'message', 'doc.date','groups', '_actions'])
+#set($columns = ['doc.name', 'dateBegin', 'dateEnd', 'message', 'doc.date','groups', '_actions'])
 #livetable('flash' $columns $columnsProperties $options)
 {{/velocity}}</content>
 </xwikidoc>

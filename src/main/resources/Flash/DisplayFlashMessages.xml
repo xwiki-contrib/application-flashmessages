@@ -430,7 +430,7 @@
   #end
   #set($groupsFilter = " AND (${groupsFilter}) ")
 #end
-##  
+##
 ###############################################
 ##            DISPLAY MESSAGES
 ###############################################
@@ -441,8 +441,8 @@
 ## UTC - 1
 ##set($dateNow = $dateNow.minusHours(1))
 ##set($date8HoursBefore = $dateNow.minusHours(8))
-#if("$!groupsFilter" != '')## If the user is not in any group then no message should be displayed 
-  #set($xwql = "from doc.object(Flash.FlashClass) obj WHERE doc.fullName &lt;&gt; 'Flash.FlashTemplate' $!groupsFilter AND obj.dateBegin &lt;= :now ORDER BY obj.dateBegin DESC")
+#if("$!groupsFilter" != '')## If the user is not in any group then no message should be displayed
+  #set($xwql = "from doc.object(Flash.FlashClass) obj WHERE doc.fullName &lt;&gt; 'Flash.FlashTemplate' $!groupsFilter AND obj.dateBegin &lt;= :now AND (obj.dateEnd is null OR obj.dateEnd &gt; :now) ORDER BY obj.dateBegin DESC")
   #set($rs = $services.query.xwql($xwql).bindValue('now', $dateNow.toDate()).setLimit(3).execute())
   #if($rs.size() &gt; 0)
     {{html wiki=true}}
@@ -482,7 +482,7 @@
   #set($discard = $xwiki.ssx.use('Flash.ModalPopup'))
   #set($discard = $xwiki.jsx.use('Flash.ModalPopup'))
   ##
-  #macro(htmlOnly $s) 
+  #macro(htmlOnly $s)
     $escapetool.javascript($s.replaceAll('\{\{html clean="false" wiki="false"\}\}', '').replaceAll('\{\{/html\}\}','')) #end
 
   {{html}}
@@ -501,14 +501,14 @@
       'message'  : '#htmlOnly($message)',
       'document' : '$escapetool.javascript($n)',
       'date'     : '$escapetool.javascript($date)',
-    }    
+    }
   #end
     ];
-    window.flashNotifier(params);    
+    window.flashNotifier(params);
   });
   &lt;/script&gt;
   {{/html}}
-  
+
 #end
 {{/velocity}}
 </content>

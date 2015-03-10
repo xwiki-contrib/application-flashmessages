@@ -80,6 +80,7 @@
   <content>admin.flashmessages=Messages Flash
 flash.livetable.doc.name=Nom
 flash.livetable.dateBegin=Date de début
+flash.livetable.dateEnd=Date de fin
 flash.livetable.groups=Groupes
 flash.livetable.message=Message
 flash.livetable.doc.date=Date de mise à jour
@@ -91,6 +92,7 @@ flash.home.title=Entrées flash
 flash.home.msginfo=Voir ici l’historique de messages Flash publiés sur la base de connaissances.
 flash.panels.quicklinktitle=Messages Flash
 Flash.FlashClass_dateBegin=Date de début
+Flash.FlashClass_dateBegin=Date de fin
 Flash.FlashClass_message=Message
 Flash.FlashClass_groups=Groupes
 </content>
