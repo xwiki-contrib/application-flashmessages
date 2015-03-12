@@ -77,7 +77,14 @@
       <scope>WIKI</scope>
     </property>
   </object>
-  <content>admin.flashmessages=Flash Messages
+  <content>## Administration ##
+admin.flashmessages=Flash Messages
+flash.creation.utcinfo=The time used for alerts is based on UTC. To check the UTC time you can use the button 'now' in the calendar
+flash.home.title=Flash entries
+flash.home.msginfo=See here the history of FLASH messages published on the knowledge base.
+flash.panels.quicklinktitle=Flash Messages
+
+## Livetable ##
 flash.livetable.doc.name=Name
 flash.livetable.dateBegin=Start date
 flash.livetable.dateEnd=End date
@@ -87,13 +94,36 @@ flash.livetable.doc.date=Update date
 flash.livetable._actions.edit=Edit
 flash.livetable._actions.delete=Delete
 flash.livetable._actions=Actions
-flash.creation.utcinfo=The time used for alerts is based on UTC. To check the UTC time you can use the button 'now' in the calendar
-flash.home.title=Flash entries 
-flash.home.msginfo=See here the history of FLASH messages published on the knowledge base.
-flash.panels.quicklinktitle=Flash Messages
+
+## Class ##
 Flash.FlashClass_dateBegin=Start date
 Flash.FlashClass_dateEnd=End date
+Flash.FlashClass_repeat=Repeat
+Flash.FlashClass_repeatInterval=Repeat interval
+Flash.FlashClass_repeatInterval_daily=Daily
+Flash.FlashClass_repeatInterval_weekly=Weekly
+Flash.FlashClass_repeatInterval_monthly=Monthly
+Flash.FlashClass_repeatInterval_yearly=Yearly
+Flash.FlashClass_repeatFrequency=Repeat frequency
+Flash.FlashClass_repeatDays=Repeat days
+Flash.FlashClass_repeatDays_monday=Monday
+Flash.FlashClass_repeatDays_tuesday=Tuesday
+Flash.FlashClass_repeatDays_wednesday=Wednesday
+Flash.FlashClass_repeatDays_thursday=Thursday
+Flash.FlashClass_repeatDays_friday=Friday
+Flash.FlashClass_repeatDays_saturday=Saturday
+Flash.FlashClass_repeatDays_sunday=Sunday
 Flash.FlashClass_message=Message
 Flash.FlashClass_groups=Groups
+
+## Sheet ##
+flash.repeat.summary=Repeat summary
+flash.repeat.summary.every=Every {0} {1}
+flash.repeat.summary.on=on
+flash.repeat.summary.day=day
+flash.repeat.summary.daily=days
+flash.repeat.summary.weekly=weeks
+flash.repeat.summary.monthly=months
+flash.repeat.summary.yearly=years
 </content>
 </xwikidoc>

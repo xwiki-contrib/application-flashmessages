@@ -42,13 +42,179 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
+  <object>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <name>Flash.FlashSheet</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>05822848-2ae0-457b-9078-fbac588b534a</guid>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>/*
+ * Hide extra settings if recurrency is disabled
+ */
+
+document.getElementById('Flash.FlashClass_0_repeat').addEventListener('change', function() {
+  document.querySelector('.repeatSettings').classList.toggle('hidden');
+});
+
+
+/*
+ * Show day of the week selector only for the week interval
+ */
+
+document.getElementById('Flash.FlashClass_0_repeatInterval').addEventListener('change', function() {
+  if(this.value == 'weekly') {
+    document.querySelector('.repeatDays').classList.remove('hidden');
+  } else {
+    document.querySelector('.repeatDays').classList.add('hidden');
+  }
+});
+
+
+/*
+ * Summary
+ */
+
+// Compute summary for the saved values
+document.observe('dom:loaded', summary);
+
+// Set listeners on the recurrency properties
+document.getElementById('Flash.FlashClass_0_dateBegin').addEventListener('change', summary);
+document.getElementById('Flash.FlashClass_0_repeatInterval').addEventListener('change', summary);
+document.getElementById('Flash.FlashClass_0_repeatFrequency').addEventListener('change', summary);
+Array.prototype.forEach.call(document.querySelectorAll('input[name="Flash.FlashClass_0_repeatDays"]'), function(checkbox) {
+  checkbox.addEventListener('click', summary);
+});
+
+function summary() {
+  var startDate       = Date.parse(document.getElementById('Flash.FlashClass_0_dateBegin').value);
+  var repeatInterval  = document.getElementById('Flash.FlashClass_0_repeatInterval').value;
+  var repeatFrequency = document.getElementById('Flash.FlashClass_0_repeatFrequency').value;
+  var repeatDays      = [].map.call(document.querySelectorAll('input[name="Flash.FlashClass_0_repeatDays"]:checked'), function(day) { return day.value });
+
+  new Ajax.Request
+  (
+    '$xwiki.getURL("Flash.RepeatSummaryService", "view")',
+    {
+      method: 'get',
+      parameters:
+      {
+        xpage: 'plain',
+        outputSyntax: 'plain',
+        date: startDate,
+        interval: repeatInterval,
+        frequency: repeatFrequency,
+        days: repeatDays.join(',')
+      },
+      onSuccess: function(transport) {
+        document.getElementById('repeatSummary').textContent = transport.responseText;
+      },
+      onFailure: function() {
+        document.getElementById('repeatSummary').textContent = '-';
+      }
+    }
+  );
+    }</code>
+    </property>
+    <property>
+      <name>Control display of extra settings for recurrency</name>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
   <content>{{velocity}}
 {{html wiki="true"}}
-$xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator')
+#set($discard = $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator'))
+#set($discard = $xwiki.jsx.use('Flash.FlashSheet'))
 #set($discard = $doc.use('Flash.FlashClass'))
 ## We don't have access to the form element to set the CSS class for the vertical form layout standard.
 #if("$!xcontext.action" == 'edit' || "$!xcontext.action" == 'inline')
   {{info}}$services.localization.render('flash.creation.utcinfo'){{/info}}
+#end
+## If recurrency is not enabled don't show the extra settings
+#if ($doc.getValue('repeat') != 1)
+  #set($hideRepeatSettings = 'hidden')
+#end
+## Show day of the week selector only for the week interval
+#if ($doc.getValue('repeatInterval') != 'weekly')
+  #set($hideRepeatDays = 'hidden')
 #end
 (% class="xform" %)
 (((
@@ -56,6 +222,22 @@ $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator')
   : $doc.display('dateBegin')
   ; &lt;label for="Flash.FlashClass_0_dateEnd"&gt;$doc.displayPrettyName('dateEnd', false, false)&lt;/label&gt;
   : $doc.display('dateEnd')
+  ; &lt;label for="Flash.FlashClass_0_repeat"&gt;$doc.displayPrettyName('repeat', false, false)&lt;/label&gt;
+  : $doc.display('repeat')
+  (% class="repeatSettings $!hideRepeatSettings" %)
+  (((
+    ; &lt;label for="Flash.FlashClass_0_repeatInterval"&gt;$doc.displayPrettyName('repeatInterval', false, false)&lt;/label&gt;
+    : $doc.display('repeatInterval')
+    ; &lt;label for="Flash.FlashClass_0_repeatFrequency"&gt;$doc.displayPrettyName('repeatFrequency', false, false)&lt;/label&gt;
+    : $doc.display('repeatFrequency')
+    (% class="repeatDays $!hideRepeatDays" %)
+    (((
+      ; &lt;label for="Flash.FlashClass_0_repeatDays"&gt;$doc.displayPrettyName('repeatDays', false, false)&lt;/label&gt;
+      : $doc.display('repeatDays')
+    )))
+    ; &lt;label for="repeatSummary"&gt;Repeat summary&lt;/label&gt;
+    : (% id="repeatSummary" %)N/A
+  )))
   ; &lt;label for="Flash.FlashClass_0_groups"&gt;$doc.displayPrettyName('groups', false, false)&lt;/label&gt;
   : $doc.display('groups')
   ; &lt;label for="Flash.FlashClass_0_message"&gt;$doc.displayPrettyName('message', false, false)&lt;/label&gt;

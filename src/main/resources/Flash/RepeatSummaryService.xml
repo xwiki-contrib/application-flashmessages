@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc>
+  <web>Flash</web>
+  <name>RepeatSummaryService</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Flash.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1426079528000</creationDate>
+  <date>1426164510000</date>
+  <contentUpdateDate>1426164510000</contentUpdateDate>
+  <version>1.1</version>
+  <title>RepeatSummaryService</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content>{{velocity}}
+#if($request.date &amp;&amp; $request.interval &amp;&amp; $request.frequency &amp;&amp; $request.days)
+  #set($date      = $datetool.toDate($numbertool.toNumber($request.date)))
+  #set($interval  = $request.interval)
+  #set($frequency = $numbertool.toNumber($request.frequency))
+  #set($days      = $request.days)
+  ##
+  #if($frequency != 1)
+    #set($params = [
+      $frequency,
+      $services.localization.render("flash.repeat.summary.${interval}")
+    ])
+    #set($result = $services.localization.render('flash.repeat.summary.every', $params))
+  #else
+    #set($result = $services.localization.render("Flash.FlashClass_repeatInterval_${interval}"))
+  #end
+  ##
+  #if($interval == 'weekly' &amp;&amp; $!days != '')
+    #set($buffer = [])
+    #foreach($day in $stringtool.split($days, ','))
+       #set($discard = $buffer.add($services.localization.render("Flash.FlashClass_repeatDays_${day}")))
+    #end
+    #set($result = "$result $services.localization.render('flash.repeat.summary.on')")
+    #set($result = "$result ${stringtool.join($buffer, ', ')}")
+  #elseif($interval == 'monthly')
+    #set($result = "$result $services.localization.render('flash.repeat.summary.on')")
+    #set($result = "$result $services.localization.render('flash.repeat.summary.day')")
+    #set($result = "$result $datetool.format('dd', $date, $datetool.getLocale())")
+  #elseif($interval == 'yearly')
+    #set($result = "$result $services.localization.render('flash.repeat.summary.on')")
+    #set($result = "$result $datetool.format('MMMM d', $date, $datetool.getLocale())")
+  #end
+  ##
+  $result
+#else
+  Invalid request
+#end
+{{/velocity}}</content>
+</xwikidoc>

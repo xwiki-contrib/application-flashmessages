@@ -77,7 +77,14 @@
       <scope>WIKI</scope>
     </property>
   </object>
-  <content>admin.flashmessages=Messages Flash
+  <content>## Administration ##
+admin.flashmessages=Messages Flash
+flash.creation.utcinfo=Le temps utilisé pour les alertes est basé sur UTC. Pour vérifier l'heure UTC, vous pouvez utiliser le bouton 'now' dans le calendrier
+flash.home.title=Entrées flash
+flash.home.msginfo=Voir ici l’historique de messages Flash publiés sur la base de connaissances.
+flash.panels.quicklinktitle=Messages Flash
+
+## Livetable ##
 flash.livetable.doc.name=Nom
 flash.livetable.dateBegin=Date de début
 flash.livetable.dateEnd=Date de fin
@@ -87,13 +94,36 @@ flash.livetable.doc.date=Date de mise à jour
 flash.livetable._actions.edit=Éditer
 flash.livetable._actions.delete=Supprimer
 flash.livetable._actions=Actions
-flash.creation.utcinfo=Le temps utilisé pour les alertes est basé sur UTC. Pour vérifier l'heure UTC, vous pouvez utiliser le bouton 'now' dans le calendrier
-flash.home.title=Entrées flash
-flash.home.msginfo=Voir ici l’historique de messages Flash publiés sur la base de connaissances.
-flash.panels.quicklinktitle=Messages Flash
+
+## Class ##
 Flash.FlashClass_dateBegin=Date de début
 Flash.FlashClass_dateBegin=Date de fin
+Flash.FlashClass_repeat=Répétition
+Flash.FlashClass_repeatInterval=Intervalle de répétition
+Flash.FlashClass_repeatInterval_daily=Tous les jours
+Flash.FlashClass_repeatInterval_weekly=Hebdomadaire
+Flash.FlashClass_repeatInterval_monthly=Mensuel
+Flash.FlashClass_repeatInterval_yearly=Annuel
+Flash.FlashClass_repeatFrequency=La fréquence de répétition
+Flash.FlashClass_repeatDays=Jours de répétition
+Flash.FlashClass_repeatDays_monday=Lundi
+Flash.FlashClass_repeatDays_tuesday=Mardi
+Flash.FlashClass_repeatDays_wednesday=Mercredi
+Flash.FlashClass_repeatDays_thursday=Jeudi
+Flash.FlashClass_repeatDays_friday=Vendredi
+Flash.FlashClass_repeatDays_saturday=Samedi
+Flash.FlashClass_repeatDays_sunday=Dimanche
 Flash.FlashClass_message=Message
 Flash.FlashClass_groups=Groupes
+
+## Sheet ##
+flash.repeat.summary=Résumé de répétition
+flash.repeat.summary.every=Tous les {0} {1}
+flash.repeat.summary.on=sur
+flash.repeat.summary.day=jour
+flash.repeat.summary.daily=journées
+flash.repeat.summary.weekly=semaines
+flash.repeat.summary.monthly=mois
+flash.repeat.summary.yearly=ans
 </content>
 </xwikidoc>
