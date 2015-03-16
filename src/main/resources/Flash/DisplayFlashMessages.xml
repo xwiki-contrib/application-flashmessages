@@ -441,15 +441,51 @@
 ## UTC - 1
 ##set($dateNow = $dateNow.minusHours(1))
 ##set($date8HoursBefore = $dateNow.minusHours(8))
-#if("$!groupsFilter" != '')## If the user is not in any group then no message should be displayed
-  #set($xwql = "from doc.object(Flash.FlashClass) obj WHERE doc.fullName &lt;&gt; 'Flash.FlashTemplate' $!groupsFilter AND obj.dateBegin &lt;= :now AND (obj.dateEnd is null OR obj.dateEnd &gt; :now) ORDER BY obj.dateBegin DESC")
-  #set($rs = $services.query.xwql($xwql).bindValue('now', $dateNow.toDate()).setLimit(3).execute())
-  #if($rs.size() &gt; 0)
+##
+## If the user is not in any group then no message should be displayed
+#if("$!groupsFilter" != '')
+  #set($baseQuery = "select doc.fullName, obj.dateBegin {0} from Document doc, doc.object(Flash.FlashClass) as obj WHERE doc.fullName &lt;&gt; 'Flash.FlashTemplate' $!groupsFilter AND obj.dateBegin &lt;= :now AND (obj.dateEnd is null OR obj.dateEnd &gt; :now) {1} ORDER BY obj.dateBegin DESC")
+  ##
+  #set($nonRecurringQuery = $baseQuery.replace("{0}", "").replace("{1}", "AND (obj.repeat is null OR obj.repeat = 0)"))
+  #set($nonRecurring = $services.query.xwql($nonRecurringQuery).bindValue('now', $dateNow.toDate()).setLimit(3).execute())
+  ##
+  #set($recurringQuery = $baseQuery.replace("{0}", ", obj.repeatInterval, obj.repeatFrequency, obj.repeatDays ").replace("{1}", "AND obj.repeat = 1"))
+  #set($recurring = $services.query.xwql($recurringQuery).bindValue('now', $dateNow.toDate()).execute())
+  ##
+  #set($events = [])
+  #foreach($event in $nonRecurring)
+    #set($discard = $events.add({'doc' : $event[0], 'date' : $event[1]}))
+  #end
+  ##
+  #foreach($event in $recurring)
+    #set($document        = $event[0])
+    #set($date            = $event[1])
+    #set($repeatInterval  = $event[2])
+    #set($repeatFrequency = $numbertool.integer($event[3]))
+    #set($repeatDays      = $stringtool.split($event[4], '|'))
+    ##
+    #set($today           = $datetool)
+    #set($dayOfTheWeek    = $stringtool.lowerCase($datetool.format('EEEE', $today)))
+    #set($dateDiff        = $datetool.difference($date, $today))
+    ##
+    #if(
+      ($repeatInterval == 'daily'   &amp;&amp; $mathtool.mod($dateDiff.days,   $repeatFrequency) == 0) ||
+      ($repeatInterval == 'weekly'  &amp;&amp; $mathtool.mod($dateDiff.weeks,  $repeatFrequency) == 0 &amp;&amp; $listtool.contains($repeatDays, $dayOfTheWeek)) ||
+      ($repeatInterval == 'monthly' &amp;&amp; $mathtool.mod($dateDiff.months, $repeatFrequency) == 0 &amp;&amp; $datetool.format('d', $date) == $datetool.format('d', $today)) ||
+      ($repeatInterval == 'yearly'  &amp;&amp; $mathtool.mod($dateDiff.years,  $repeatFrequency) == 0 &amp;&amp; $datetool.format('Md', $date) == $datetool.format('Md', $today))
+    )
+      #set($discard = $events.add({'doc' : $document, 'date' : $date}))
+    #end
+  #end
+  ##
+  #set($events = $sorttool.sort($events, 'date:desc'))
+  ##
+  #if($events.size() &gt; 0)
     {{html wiki=true}}
       &lt;div id="flashMessages"&gt;
         &lt;ul class="messages"&gt;
-          #foreach($r in $rs)
-            #set($document = $xwiki.getDocument($r))
+          #foreach($r in $events)
+            #set($document = $xwiki.getDocument($r.doc))
             #set($obj = $document.getObject('Flash.FlashClass'))
             &lt;li class="unit"&gt;
               &lt;span class="date"&gt;&lt;p&gt;$obj.display('dateBegin', 'view') : &lt;/p&gt;&lt;/span&gt;
@@ -469,13 +505,13 @@
 #set($userValObj = $userDoc.getObject('Flash.FlashValidationClass'))
 #set($userValList = $userValObj.getProperty('flash').getValue())
 #set($need = [])
-#foreach($msg in $rs)
-  #set($msgDoc = $xwiki.getDocument($msg))
+#foreach($msg in $events)
+  #set($msgDoc = $xwiki.getDocument($msg.doc))
   #set($msgValObj = $msgDoc.getObject('Flash.FlashValidationClass'))
   #set($msgValList = $msgValObj.getProperty('flash').getValue())
   ##
-  #if(!$userValList.contains($msg) &amp;&amp; !$msgValList.contains($xcontext.user))
-    #set($discard = $need.add($msg))
+  #if(!$userValList.contains($msg.doc) &amp;&amp; !$msgValList.contains($xcontext.user))
+    #set($discard = $need.add($msg.doc))
   #end
 #end
 #if(!$need.empty())
