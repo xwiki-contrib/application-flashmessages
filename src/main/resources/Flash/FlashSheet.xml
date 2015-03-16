@@ -199,17 +199,25 @@ function summary() {
       <use>onDemand</use>
     </property>
   </object>
-  <content>{{velocity}}
+  <content>{{include reference='Flash.Macros' /}}
+
+{{velocity}}
 {{html wiki="true"}}
-#set($discard = $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator'))
-#set($discard = $xwiki.jsx.use('Flash.FlashSheet'))
-#set($discard = $doc.use('Flash.FlashClass'))
+#set($discard   = $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator'))
+#set($discard   = $xwiki.jsx.use('Flash.FlashSheet'))
+#set($discard   = $doc.use('Flash.FlashClass'))
+##
+#set($date      = $doc.getValue('dateBegin'))
+#set($interval  = $doc.getValue('repeatInterval'))
+#set($frequency = $doc.getValue('repeatFrequency'))
+#set($days      = $doc.getValue('repeatDays'))
+##
 ## We don't have access to the form element to set the CSS class for the vertical form layout standard.
 #if("$!xcontext.action" == 'edit' || "$!xcontext.action" == 'inline')
   {{info}}$services.localization.render('flash.creation.utcinfo'){{/info}}
 #end
 ## If recurrency is not enabled don't show the extra settings
-#if ($doc.getValue('repeat') != 1)
+#if ($xcontext.action == 'view' || $doc.getValue('repeat') != 1)
   #set($hideRepeatSettings = 'hidden')
 #end
 ## Show day of the week selector only for the week interval
@@ -223,7 +231,11 @@ function summary() {
   ; &lt;label for="Flash.FlashClass_0_dateEnd"&gt;$doc.displayPrettyName('dateEnd', false, false)&lt;/label&gt;
   : $doc.display('dateEnd')
   ; &lt;label for="Flash.FlashClass_0_repeat"&gt;$doc.displayPrettyName('repeat', false, false)&lt;/label&gt;
-  : $doc.display('repeat')
+  : #if($xcontext.action == 'view' &amp;&amp; $doc.getValue('repeat') == 1)
+      #repeatSummary($date, $interval, $frequency, $days)
+    #else
+      $doc.display('repeat')
+    #end
   (% class="repeatSettings $!hideRepeatSettings" %)
   (((
     ; &lt;label for="Flash.FlashClass_0_repeatInterval"&gt;$doc.displayPrettyName('repeatInterval', false, false)&lt;/label&gt;

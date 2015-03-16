@@ -42,40 +42,15 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{velocity}}
+  <content>{{include reference='Flash.Macros' /}}
+{{velocity}}
 #if($request.date &amp;&amp; $request.interval &amp;&amp; $request.frequency &amp;&amp; $request.days)
   #set($date      = $datetool.toDate($numbertool.toNumber($request.date)))
   #set($interval  = $request.interval)
   #set($frequency = $numbertool.toNumber($request.frequency))
   #set($days      = $request.days)
   ##
-  #if($frequency != 1)
-    #set($params = [
-      $frequency,
-      $services.localization.render("flash.repeat.summary.${interval}")
-    ])
-    #set($result = $services.localization.render('flash.repeat.summary.every', $params))
-  #else
-    #set($result = $services.localization.render("Flash.FlashClass_repeatInterval_${interval}"))
-  #end
-  ##
-  #if($interval == 'weekly' &amp;&amp; $!days != '')
-    #set($buffer = [])
-    #foreach($day in $stringtool.split($days, ','))
-       #set($discard = $buffer.add($services.localization.render("Flash.FlashClass_repeatDays_${day}")))
-    #end
-    #set($result = "$result $services.localization.render('flash.repeat.summary.on')")
-    #set($result = "$result ${stringtool.join($buffer, ', ')}")
-  #elseif($interval == 'monthly')
-    #set($result = "$result $services.localization.render('flash.repeat.summary.on')")
-    #set($result = "$result $services.localization.render('flash.repeat.summary.day')")
-    #set($result = "$result $datetool.format('dd', $date, $datetool.getLocale())")
-  #elseif($interval == 'yearly')
-    #set($result = "$result $services.localization.render('flash.repeat.summary.on')")
-    #set($result = "$result $datetool.format('MMMM d', $date, $datetool.getLocale())")
-  #end
-  ##
-  $result
+  #repeatSummary($date, $interval, $frequency, $days)
 #else
   Invalid request
 #end
