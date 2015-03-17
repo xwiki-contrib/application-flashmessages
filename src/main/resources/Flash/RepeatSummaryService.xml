@@ -20,28 +20,39 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc>
   <web>Flash</web>
-  <name>WebHomeSheet</name>
+  <name>RepeatSummaryService</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1399397158000</creationDate>
   <parent>Flash.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
   <author>xwiki:XWiki.Admin</author>
+  <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1399397158000</date>
-  <contentUpdateDate>1399397158000</contentUpdateDate>
+  <creationDate>1426079528000</creationDate>
+  <date>1426164510000</date>
+  <contentUpdateDate>1426164510000</contentUpdateDate>
   <version>1.1</version>
-  <title/>
+  <title>RepeatSummaryService</title>
+  <defaultTemplate/>
+  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference="AppWithinMinutes.LiveTableViewSheet"/}}
-
+  <content>{{include reference='Flash.Macros' /}}
 {{velocity}}
-#set($docextras = [])
+#if($request.date &amp;&amp; $request.interval &amp;&amp; $request.frequency &amp;&amp; $request.days)
+  #set($date      = $datetool.toDate($numbertool.toNumber($request.date)))
+  #set($interval  = $request.interval)
+  #set($frequency = $numbertool.toNumber($request.frequency))
+  #set($days      = $stringtool.split($request.days, ','))
+  ##
+  #repeatSummary($date, $interval, $frequency, $days)
+#else
+  Invalid request
+#end
 {{/velocity}}</content>
 </xwikidoc>

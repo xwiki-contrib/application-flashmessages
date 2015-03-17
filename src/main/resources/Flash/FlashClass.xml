@@ -134,6 +134,83 @@
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
     </message>
+    <repeat>
+      <customDisplay/>
+      <defaultValue>0</defaultValue>
+      <disabled>0</disabled>
+      <displayFormType>select</displayFormType>
+      <displayType/>
+      <name>repeat</name>
+      <number>5</number>
+      <prettyName>Repeat</prettyName>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+    </repeat>
+    <repeatDays>
+      <cache>0</cache>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <displayType>checkbox</displayType>
+      <multiSelect>1</multiSelect>
+      <name>repeatDays</name>
+      <number>8</number>
+      <picker>0</picker>
+      <prettyName>Repeat Days</prettyName>
+      <relationalStorage>0</relationalStorage>
+      <separator/>
+      <separators> ,|</separators>
+      <size>1</size>
+      <sort>none</sort>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <values>monday|tuesday|wednesday|thursday|friday|saturday|sunday</values>
+      <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+    </repeatDays>
+    <repeatFrequency>
+      <cache>0</cache>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <displayType>select</displayType>
+      <multiSelect>0</multiSelect>
+      <name>repeatFrequency</name>
+      <number>7</number>
+      <picker>0</picker>
+      <prettyName>Repeat Frequency</prettyName>
+      <relationalStorage>0</relationalStorage>
+      <separator> </separator>
+      <separators> ,|</separators>
+      <size>1</size>
+      <sort>none</sort>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <values>1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30</values>
+      <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+    </repeatFrequency>
+    <repeatInterval>
+      <cache>0</cache>
+      <customDisplay/>
+      <disabled>0</disabled>
+      <displayType>select</displayType>
+      <multiSelect>0</multiSelect>
+      <name>repeatInterval</name>
+      <number>6</number>
+      <picker>0</picker>
+      <prettyName>Repeat Interval</prettyName>
+      <relationalStorage>0</relationalStorage>
+      <separator> </separator>
+      <separators> ,|</separators>
+      <size>1</size>
+      <sort>none</sort>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <values>daily|weekly|monthly|yearly</values>
+      <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+    </repeatInterval>
   </class>
   <object>
     <class>
