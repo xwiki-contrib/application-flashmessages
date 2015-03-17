@@ -61,7 +61,7 @@
   #elseif($interval == 'monthly')
     #set($result = "$result $services.localization.render('flash.repeat.summary.on')")
     #set($result = "$result $services.localization.render('flash.repeat.summary.day')")
-    #set($result = "$result $!datetool.format('dd', $date)")
+    #set($result = "$result $!datetool.format('d', $date)")
   #elseif($interval == 'yearly')
     #set($result = "$result $services.localization.render('flash.repeat.summary.on')")
     #set($result = "$result $!datetool.format('MMMM d', $date)")

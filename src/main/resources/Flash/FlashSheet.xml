@@ -149,8 +149,12 @@ document.getElementById('Flash.FlashClass_0_repeatInterval').addEventListener('c
  */
 
 var dateBegin = 0;
-var dateBeginClasses = Array.prototype.slice.call(document.getElementById('Flash.FlashClass_0_dateBegin').classList);
-var defaultDateBegin = parseInt(dateBeginClasses.find(function (c) { return /^t\d+$/.test(c) }).substring(1));
+var defaultDateBegin = 0;
+
+try {
+  var dateBeginClasses = Array.prototype.slice.call(document.getElementById('Flash.FlashClass_0_dateBegin').classList);
+  var defaultDateBegin = parseInt(dateBeginClasses.find(function (c) { return /^t\d+$/.test(c) }).substring(1));
+} catch (Ex) {}
 
 // Compute summary for the saved values
 document.observe('dom:loaded', summary);
