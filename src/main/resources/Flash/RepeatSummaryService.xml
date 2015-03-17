@@ -48,7 +48,7 @@
   #set($date      = $datetool.toDate($numbertool.toNumber($request.date)))
   #set($interval  = $request.interval)
   #set($frequency = $numbertool.toNumber($request.frequency))
-  #set($days      = $request.days)
+  #set($days      = $stringtool.split($request.days, ','))
   ##
   #repeatSummary($date, $interval, $frequency, $days)
 #else

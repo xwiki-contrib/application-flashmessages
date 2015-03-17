@@ -53,7 +53,7 @@
   ##
   #if($interval == 'weekly' &amp;&amp; $!days != '')
     #set($buffer = [])
-    #foreach($day in $stringtool.split($days, ','))
+    #foreach($day in $days)
        #set($discard = $buffer.add($services.localization.render("Flash.FlashClass_repeatDays_${day}")))
     #end
     #set($result = "$result $services.localization.render('flash.repeat.summary.on')")

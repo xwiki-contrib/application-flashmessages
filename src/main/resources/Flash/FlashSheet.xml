@@ -148,19 +148,28 @@ document.getElementById('Flash.FlashClass_0_repeatInterval').addEventListener('c
  * Summary
  */
 
+var dateBegin = 0;
+var dateBeginClasses = Array.prototype.slice.call(document.getElementById('Flash.FlashClass_0_dateBegin').classList);
+var defaultDateBegin = parseInt(dateBeginClasses.find(function (c) { return /^t\d+$/.test(c) }).substring(1));
+
 // Compute summary for the saved values
 document.observe('dom:loaded', summary);
 
 // Set listeners on the recurrency properties
-document.getElementById('Flash.FlashClass_0_dateBegin').addEventListener('change', summary);
+document.getElementById('Flash.FlashClass_0_dateBegin').addEventListener('change', function(){
+  dateBegin = this.calendar_date_select.selected_date.getTime();
+  summary();
+});
+
 document.getElementById('Flash.FlashClass_0_repeatInterval').addEventListener('change', summary);
 document.getElementById('Flash.FlashClass_0_repeatFrequency').addEventListener('change', summary);
+
 Array.prototype.forEach.call(document.querySelectorAll('input[name="Flash.FlashClass_0_repeatDays"]'), function(checkbox) {
   checkbox.addEventListener('click', summary);
 });
 
 function summary() {
-  var startDate       = Date.parse(document.getElementById('Flash.FlashClass_0_dateBegin').value);
+  var startDate       = dateBegin || defaultDateBegin;
   var repeatInterval  = document.getElementById('Flash.FlashClass_0_repeatInterval').value;
   var repeatFrequency = document.getElementById('Flash.FlashClass_0_repeatFrequency').value;
   var repeatDays      = [].map.call(document.querySelectorAll('input[name="Flash.FlashClass_0_repeatDays"]:checked'), function(day) { return day.value });
@@ -187,7 +196,7 @@ function summary() {
       }
     }
   );
-    }</code>
+}</code>
     </property>
     <property>
       <name>Control display of extra settings for recurrency</name>
@@ -204,8 +213,11 @@ function summary() {
 {{velocity}}
 {{html wiki="true"}}
 #set($discard   = $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator'))
-#set($discard   = $xwiki.jsx.use('Flash.FlashSheet'))
 #set($discard   = $doc.use('Flash.FlashClass'))
+##
+#if($listtool.contains(['edit', 'inline'], $xcontext.action))
+  #set($discard   = $xwiki.jsx.use('Flash.FlashSheet'))
+#end
 ##
 #set($date      = $doc.getValue('dateBegin'))
 #set($interval  = $doc.getValue('repeatInterval'))
