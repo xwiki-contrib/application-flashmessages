@@ -263,7 +263,7 @@ function summary() {
       ; &lt;label for="Flash.FlashClass_0_repeatDays"&gt;$doc.displayPrettyName('repeatDays', false, false)&lt;/label&gt;
       : $doc.display('repeatDays')
     )))
-    ; &lt;label for="repeatSummary"&gt;Repeat summary&lt;/label&gt;
+    ; &lt;label for="repeatSummary"&gt;$services.localization.render('flash.repeat.summary')&lt;/label&gt;
     : (% id="repeatSummary" %)N/A
   )))
   ; &lt;label for="Flash.FlashClass_0_groups"&gt;$doc.displayPrettyName('groups', false, false)&lt;/label&gt;
