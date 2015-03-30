@@ -411,7 +411,7 @@
   #set($globalGroups = $groups.getAllMatchedGlobalGroups({"member" : ["StringProperty", "$xcontext.localUser"]}))
 #else
   #set($localGroups = $groups.getAllMatchedLocalGroups({"member" : ["StringProperty", "$xcontext.localUser"]}))
-  #set($globalGroups = [])
+  #set($globalGroups = $localGroups)
 #end
 ##
 #if($localGroups.size() &gt; 0 || $globalGroups.size() &gt; 0)
