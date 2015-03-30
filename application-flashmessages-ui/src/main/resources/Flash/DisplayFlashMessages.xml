@@ -434,23 +434,17 @@
 ###############################################
 ##            DISPLAY MESSAGES
 ###############################################
-## UTC
-#set($dateNow = $xwiki.jodatime.dateTime)
-## UTC + 1 (heure FR sans prendre en compte le décalage été/hiver )
-##set($dateNow = $dateNow.plusHours(1))
-## UTC - 1
-##set($dateNow = $dateNow.minusHours(1))
-##set($date8HoursBefore = $dateNow.minusHours(8))
+#set($dateNow = $datetool.getSystemDate())
 ##
 ## If the user is not in any group then no message should be displayed
 #if("$!groupsFilter" != '')
   #set($baseQuery = "select doc.fullName, obj.dateBegin {0} from Document doc, doc.object(Flash.FlashClass) as obj WHERE doc.fullName &lt;&gt; 'Flash.FlashTemplate' $!groupsFilter AND obj.dateBegin &lt;= :now AND (obj.dateEnd is null OR obj.dateEnd &gt; :now) {1} ORDER BY obj.dateBegin DESC")
   ##
   #set($nonRecurringQuery = $baseQuery.replace("{0}", "").replace("{1}", "AND (obj.repeat is null OR obj.repeat = 0)"))
-  #set($nonRecurring = $services.query.xwql($nonRecurringQuery).bindValue('now', $dateNow.toDate()).setLimit(3).execute())
+  #set($nonRecurring = $services.query.xwql($nonRecurringQuery).bindValue('now', $dateNow).setLimit(3).execute())
   ##
   #set($recurringQuery = $baseQuery.replace("{0}", ", obj.repeatInterval, obj.repeatFrequency, obj.repeatDays ").replace("{1}", "AND obj.repeat = 1"))
-  #set($recurring = $services.query.xwql($recurringQuery).bindValue('now', $dateNow.toDate()).execute())
+  #set($recurring = $services.query.xwql($recurringQuery).bindValue('now', $dateNow).execute())
   ##
   #set($events = [])
   #foreach($event in $nonRecurring)
