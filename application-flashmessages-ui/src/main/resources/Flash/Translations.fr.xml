@@ -97,7 +97,7 @@ flash.livetable._actions=Actions
 
 ## Class ##
 Flash.FlashClass_dateBegin=Date de début
-Flash.FlashClass_dateBegin=Date de fin
+Flash.FlashClass_dateEnd=Date de fin
 Flash.FlashClass_repeat=Répétition
 Flash.FlashClass_repeatInterval=Intervalle de répétition
 Flash.FlashClass_repeatInterval_daily=Tous les jours
