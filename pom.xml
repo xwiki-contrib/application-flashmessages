@@ -33,8 +33,15 @@
   <artifactId>application-flashmessages</artifactId>
   <version>1.2-SNAPSHOT</version>
   <name>Flash Messages Application</name>
-  <packaging>xar</packaging>
+  <packaging>pom</packaging>
   <description>Allow you to create Flash messages aiming at one or multiple local groups</description>
+  <properties>
+    <platform.version>${commons.version}</platform.version>
+    <rendering.version>${commons.version}</rendering.version>
+  </properties>
+  <modules>
+    <module>application-flashmessages-ui</module>
+  </modules>
   <scm>
     <connection>scm:git:git://github.com/xwiki-contrib/application-flashmessages.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/application-flashmessages.git</developerConnection>
@@ -62,29 +69,4 @@
      <url>http://nexus.xwiki.org/nexus/service/local/staging/deploy/maven2/</url>
    </repository>
   </distributionManagement>
-  <properties>
-   <!-- Don't run CLIRR here since there's no Java code. -->
-   <xwiki.clirr.skip>true</xwiki.clirr.skip>
-   <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
-   <xwiki.extension.features>
-     sidali:flash-messages-application
-   </xwiki.extension.features>
-  </properties>
-  <build>
-    <extensions>
-      <extension>
-        <groupId>org.xwiki.commons</groupId>
-        <artifactId>xwiki-commons-tool-xar-handlers</artifactId>
-        <version>${commons.version}</version>
-      </extension>
-    </extensions>
-	<plugins>
-     <!-- The XAR packaging uses the XAR plugin and thus we need to define what version to use -->
-     <plugin>
-       <groupId>org.xwiki.commons</groupId>
-       <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
-       <version>${commons.version}</version>
-     </plugin>
-   </plugins>
-  </build>
 </project>
