@@ -27,7 +27,7 @@ import org.xwiki.test.ui.po.BaseElement;
  * Represents the pane used to input the entry name.
  * 
  * @version $Id$
- * @since 
+ * @since
  */
 public class AddEntryDialog extends BaseElement
 {

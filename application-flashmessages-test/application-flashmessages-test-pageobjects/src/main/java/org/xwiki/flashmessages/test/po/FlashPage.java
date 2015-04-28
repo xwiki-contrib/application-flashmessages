@@ -1,3 +1,22 @@
+/*
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
 package org.xwiki.flashmessages.test.po;
 
 import java.util.List;
@@ -92,7 +111,7 @@ public class FlashPage extends ViewPage
     {
         return messageLabelElement.getText();
     }
-    
+
     /**
      * Check if the page contains xwiki message
      * 
@@ -102,7 +121,7 @@ public class FlashPage extends ViewPage
     public Boolean containsXWikiMessage(String message)
     {
         List<WebElement> messages = getUtil().findElementsWithoutWaiting(getDriver(), By.className("xwikimessage"));
-        
+
         for (WebElement msg : messages) {
             if (msg.getText().contains(message)) {
                 return true;
@@ -111,7 +130,7 @@ public class FlashPage extends ViewPage
 
         return false;
     }
-    
+
     /**
      * Check if an element is present in the DOM
      * 
@@ -121,12 +140,11 @@ public class FlashPage extends ViewPage
     public boolean elementExists(String id)
     {
         List<WebElement> elements = getDriver().findElements(By.id(id));
-        
-        if(!elements.isEmpty())
-        {
+
+        if (!elements.isEmpty()) {
             return elements.get(0).isDisplayed();
         }
-        
+
         return !elements.isEmpty();
     }
 }

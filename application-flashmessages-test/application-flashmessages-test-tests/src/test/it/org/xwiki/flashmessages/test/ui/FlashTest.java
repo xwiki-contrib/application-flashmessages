@@ -84,7 +84,7 @@ public class FlashTest extends AbstractTest
     private void createDefaultEntry()
     {
         // Create the default entry object
-            
+
         if (flashUtil.getDefaultEntry() == null) {
             FlashEntry defaultEntry = new FlashEntry("Default",
                 flashUtil.getDate(0, 0, -2, 0, 0, true),

@@ -133,7 +133,7 @@ public class FlashHomePage extends ViewPage
 
         return liveTable;
     }
-    
+
     /**
      * Check if the page contains xwiki message
      * 
@@ -143,7 +143,7 @@ public class FlashHomePage extends ViewPage
     public Boolean containsXWikiMessage(String message)
     {
         List<WebElement> messages = getUtil().findElementsWithoutWaiting(getDriver(), By.className("xwikimessage"));
-        
+
         for (WebElement msg : messages) {
             if (msg.getText().contains(message)) {
                 return true;

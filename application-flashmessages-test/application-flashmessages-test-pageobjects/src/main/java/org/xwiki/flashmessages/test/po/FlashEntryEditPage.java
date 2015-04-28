@@ -41,13 +41,13 @@ public class FlashEntryEditPage extends FlashPage
 {
     @FindBy(id = "Flash.FlashClass_0_dateBegin")
     private WebElement dateBeginElement;
-    
+
     @FindBy(id = "Flash.FlashClass_0_dateEnd")
     private WebElement dateEndElement;
-    
+
     @FindBy(id = "Flash.FlashClass_0_repeat")
     private WebElement repeatElement;
-    
+
     @FindBy(xpath = "//label[@for='Flash.FlashClass_0_repeatInterval']")
     private WebElement repeatIntervalLabelElement;
 
@@ -71,10 +71,10 @@ public class FlashEntryEditPage extends FlashPage
 
     @FindBy(id = "repeatSummary")
     private WebElement repeatSummaryElement;
-    
+
     @FindBy(id = "Flash.FlashClass_0_groups")
     protected WebElement groupsElement;
-    
+
     @FindBy(id = "Flash.FlashClass_0_message")
     protected WebElement messageElement;
 
