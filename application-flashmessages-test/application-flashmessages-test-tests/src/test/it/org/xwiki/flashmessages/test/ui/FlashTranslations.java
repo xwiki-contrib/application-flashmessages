@@ -1,3 +1,22 @@
+/*
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
 package org.xwiki.flashmessages.test.ui;
 
 import java.util.HashMap;
@@ -32,7 +51,9 @@ public class FlashTranslations
 
         // Administration
         english.put("admin.flashmessages", "Flash Messages");
-        english.put("flash.creation.utcinfo", "The time used for alerts is based on UTC. To check the UTC time you can use the button 'now' in the calendar");
+        english
+            .put("flash.creation.utcinfo",
+                "The time used for alerts is based on UTC. To check the UTC time you can use the button 'now' in the calendar");
         english.put("flash.home.title", "Flash entries");
         english.put("flash.home.msginfo", "See here the history of FLASH messages published on the knowledge base.");
         english.put("flash.panels.quicklinktitle", "Flash Messages");
@@ -90,9 +111,13 @@ public class FlashTranslations
 
         // Administration
         french.put("admin.flashmessages", "Messages Flash");
-        french.put("flash.creation.utcinfo", "Le temps utilisé pour les alertes est basé sur UTC. Pour vérifier l'heure UTC, vous pouvez utiliser le bouton 'now' dans le calendrier");
+        french
+            .put(
+                "flash.creation.utcinfo",
+                "Le temps utilisé pour les alertes est basé sur UTC. Pour vérifier l'heure UTC, vous pouvez utiliser le bouton 'now' dans le calendrier");
         french.put("flash.home.title", "Entrées flash");
-        french.put("flash.home.msginfo", "Voir ici l’historique de messages Flash publiés sur la base de connaissances.");
+        french.put("flash.home.msginfo",
+            "Voir ici l’historique de messages Flash publiés sur la base de connaissances.");
         french.put("flash.panels.quicklinktitle", "Messages Flash");
 
         // Livetable
