@@ -84,6 +84,8 @@ public class FlashTest extends AbstractTest
     private void createDefaultEntry()
     {
         // Create the default entry object
+            
+        if (flashUtil.getDefaultEntry() == null) {
             FlashEntry defaultEntry = new FlashEntry("Default",
                 flashUtil.getDate(0, 0, -2, 0, 0, true),
                 flashUtil.getDate(0, 0, 2, 0, 0, true),
@@ -93,8 +95,6 @@ public class FlashTest extends AbstractTest
                 new ArrayList<String>(Arrays.asList(flashUtil.getCurrentDayOfTheWeek())),
                 new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
                 "Hi! It is like hello, only shorter.");
-            
-        if (flashUtil.getDefaultEntry() == null) {
             flashUtil.setDefaultEntry(defaultEntry);
         }
 
