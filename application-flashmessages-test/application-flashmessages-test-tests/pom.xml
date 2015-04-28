@@ -34,16 +34,16 @@
   <packaging>jar</packaging>
   <properties>
     <xwikiCfgSuperadminPassword>pass</xwikiCfgSuperadminPassword>
-  	<xwikiCfgPlugins>\
-  		com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin,\
-  		com.xpn.xwiki.plugin.skinx.JsSkinFileExtensionPlugin,\
-  		com.xpn.xwiki.plugin.skinx.CssSkinExtensionPlugin,\
-  		com.xpn.xwiki.plugin.skinx.CssSkinFileExtensionPlugin,\
-  		com.xpn.xwiki.plugin.skinx.LinkExtensionPlugin,\
-  		com.xpn.xwiki.plugin.rightsmanager.RightsManagerPlugin
-  	</xwikiCfgPlugins>
-  	<!-- Functional tests are allowed to output content to the console -->
-  	<xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>
+    <xwikiCfgPlugins>\
+      com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin,\
+      com.xpn.xwiki.plugin.skinx.JsSkinFileExtensionPlugin,\
+      com.xpn.xwiki.plugin.skinx.CssSkinExtensionPlugin,\
+      com.xpn.xwiki.plugin.skinx.CssSkinFileExtensionPlugin,\
+      com.xpn.xwiki.plugin.skinx.LinkExtensionPlugin,\
+      com.xpn.xwiki.plugin.rightsmanager.RightsManagerPlugin
+    </xwikiCfgPlugins>
+    <!-- Functional tests are allowed to output content to the console -->
+    <xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>
   </properties>
   <dependencies>
     <dependency>

@@ -33,15 +33,15 @@
   <packaging>xar</packaging>
   <name>Flash Messages Application - UI</name>
   <properties>
-   <!-- Name to display by the Extension Manager -->
-   <xwiki.extension.name>Flash Messages Application</xwiki.extension.name>
-   <!-- Don't run CLIRR here since there's no Java code. -->
-   <xwiki.clirr.skip>true</xwiki.clirr.skip>
-   <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
-   <xwiki.extension.features>
-     sidali:flash-messages-application,
-     org.xwiki.contrib:application-flashmessages
-   </xwiki.extension.features>
+    <!-- Name to display by the Extension Manager -->
+    <xwiki.extension.name>Flash Messages Application</xwiki.extension.name>
+    <!-- Don't run CLIRR here since there's no Java code. -->
+    <xwiki.clirr.skip>true</xwiki.clirr.skip>
+    <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
+    <xwiki.extension.features>
+      sidali:flash-messages-application,
+      org.xwiki.contrib:application-flashmessages
+    </xwiki.extension.features>
   </properties>
   <dependencies>
     <dependency>
