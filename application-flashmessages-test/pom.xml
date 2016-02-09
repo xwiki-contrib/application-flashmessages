@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.xwiki.contrib</groupId>
-    <artifactId>application-flashmessages-pom</artifactId>
+    <artifactId>application-flashmessages</artifactId>
     <version>1.1.4-SNAPSHOT</version>
   </parent>
   <artifactId>application-flashmessages-test</artifactId>
