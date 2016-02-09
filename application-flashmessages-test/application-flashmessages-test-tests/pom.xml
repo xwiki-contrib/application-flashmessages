@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>application-flashmessages-test</artifactId>
-    <version>1.1.4-SNAPSHOT</version>
+    <version>1.1.4</version>
   </parent>
   <artifactId>application-flashmessages-test-tests</artifactId>
   <name>Flash Messages Application - Test - Tests</name>
