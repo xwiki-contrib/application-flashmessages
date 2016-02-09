@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>application-flashmessages-test</artifactId>
-    <version>1.1.5-SNAPSHOT</version>
+    <version>1.1.4-SNAPSHOT</version>
   </parent>
   <artifactId>application-flashmessages-test-pageobjects</artifactId>
   <name>Flash Messages Application - Test - Page Objects</name>
