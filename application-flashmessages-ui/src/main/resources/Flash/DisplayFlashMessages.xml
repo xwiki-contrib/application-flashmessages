@@ -275,7 +275,7 @@
 #flashMessages {
   background-color: $theme.menuBackgroundColor;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) inset;
-  color: #fff;
+  color: $theme.menuLinkColor;
   width: 100%;
   position: relative;
   display: -webkit-box;        /* OLD - iOS 6, Safari 3.1-6 */
