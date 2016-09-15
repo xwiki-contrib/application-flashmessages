@@ -484,8 +484,8 @@
             #set($document = $xwiki.getDocument($r.doc))
             #set($obj = $document.getObject('Flash.FlashClass'))
             &lt;li class="unit"&gt;
-              &lt;span class="date"&gt;&lt;p&gt;$obj.display('dateBegin', 'view') : &lt;/p&gt;&lt;/span&gt;
-              &lt;span class="message"&gt;$obj.display('message', 'view')&lt;/span&gt;
+              &lt;span class="date"&gt;&lt;p&gt;$!obj.display('dateBegin', 'view') : &lt;/p&gt;&lt;/span&gt;
+              &lt;span class="message"&gt;$!obj.getValue('message')&lt;/span&gt;
             &lt;/li&gt;
           #end
         &lt;/ul&gt;
@@ -527,8 +527,8 @@
     #end
     #set($document = $xwiki.getDocument($n))
     #set($objFlash = $document.getObject('Flash.FlashClass'))
-    #set($message = $objFlash.display('message', 'view'))
-    #set($date = $objFlash.display('dateBegin', 'view'))
+    #set($message = $!objFlash.getValue('message'))
+    #set($date = $!objFlash.display('dateBegin', 'view'))
     {
       'message'  : '#htmlOnly($message)',
       'document' : '$escapetool.javascript($n)',
