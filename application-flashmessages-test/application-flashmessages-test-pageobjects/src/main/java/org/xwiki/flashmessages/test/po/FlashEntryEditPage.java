@@ -252,10 +252,11 @@ public class FlashEntryEditPage extends FlashPage
     public List<String> getRepeatDays()
     {
         List<String> repeatDays = new LinkedList<String>();
-        for (int i = 0; i < 7; i++) {
-            repeatDays.add(getDriver()
-                .findElementWithoutWaiting(By.xpath("//label[@for='xwiki-form-repeatDays-0-" + i + "']")).getText());
-        }
+		for (int i = 0; i < 7; i++) {
+			repeatDays.add(getDriver()
+			    .findElementWithoutWaiting(By.xpath("//label[@for='xwiki-form-repeatDays-0-" + i + "']"))
+				.getText());
+		}
 
         return repeatDays;
     }
@@ -313,7 +314,7 @@ public class FlashEntryEditPage extends FlashPage
     }
 
     /**
-     * Click the Save &amp; View button
+     * Click the Save & View button
      * 
      * @return the resulting view page
      */
