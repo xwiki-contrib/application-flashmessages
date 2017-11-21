@@ -320,7 +320,14 @@ public class FlashEntryEditPage extends FlashPage
      */
     public FlashEntryViewPage clickSaveAndView()
     {
+        getDriver().addPageNotYetReloadedMarker();
+
         saveAndViewButtonElement.click();
+
+        // Since we might have a loading step between clicking Save & View and the view page actually loading
+        // (specifically when using templates that have child documents associated), we need to wait for the save to
+        // finish and for the redirect to occur.
+        getDriver().waitUntilPageIsReloaded();
 
         return new FlashEntryViewPage();
     }

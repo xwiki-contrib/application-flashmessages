@@ -247,7 +247,7 @@ public class FlashUtil extends ViewPage
      */
     public String getFormattedDate(Calendar calendar)
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy  HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         return dateFormat.format(calendar.getTime());
     }

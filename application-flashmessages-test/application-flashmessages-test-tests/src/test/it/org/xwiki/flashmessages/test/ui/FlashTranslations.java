@@ -47,7 +47,7 @@ public class FlashTranslations
         HashMap<String, String> english = addLanguage("en");
 
         // Core
-        english.put("notallowed", "You are not allowed to view this document or perform this action.");
+        english.put("notallowed", "You are not allowed to view this page or perform this action.");
 
         // Administration
         english.put("admin.flashmessages", "Flash Messages");

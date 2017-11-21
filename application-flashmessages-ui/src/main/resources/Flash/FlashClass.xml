@@ -53,7 +53,7 @@
     <validationScript/>
     <dateBegin>
       <customDisplay>{{include reference="AppWithinMinutes.Date"/}}</customDisplay>
-      <dateFormat>dd/MM/yyyy  HH:mm</dateFormat>
+      <dateFormat>dd/MM/yyyy HH:mm</dateFormat>
       <disabled>0</disabled>
       <emptyIsToday>0</emptyIsToday>
       <name>dateBegin</name>
@@ -68,7 +68,7 @@
     </dateBegin>
     <dateEnd>
       <customDisplay>{{include reference="AppWithinMinutes.Date"/}}</customDisplay>
-      <dateFormat>dd/MM/yyyy  HH:mm</dateFormat>
+      <dateFormat>dd/MM/yyyy HH:mm</dateFormat>
       <disabled>0</disabled>
       <emptyIsToday>0</emptyIsToday>
       <name>dateEnd</name>
