@@ -86,5 +86,9 @@ flash.repeat.summary.day=jour
 flash.repeat.summary.daily=journées
 flash.repeat.summary.weekly=semaines
 flash.repeat.summary.monthly=mois
-flash.repeat.summary.yearly=ans</content>
+flash.repeat.summary.yearly=ans
+
+## Template Provider ##
+templateProvider.flashmessages.name=Messages Flash
+templateProvider.flashmessages.description=Messages flash programmés visant un ou plusieurs groupes</content>
 </xwikidoc>
