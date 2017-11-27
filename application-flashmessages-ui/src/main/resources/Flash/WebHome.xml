@@ -233,7 +233,7 @@
       <categoryIcon/>
     </property>
     <property>
-      <codeToExecute>{{include reference="Flash.WebHome"/}}</codeToExecute>
+      <codeToExecute>{{include reference="Flash.WebHomeSheet"/}}</codeToExecute>
     </property>
     <property>
       <configurationClass/>
