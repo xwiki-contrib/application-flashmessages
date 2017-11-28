@@ -58,27 +58,23 @@
 
 #set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css', true))
 ##
+#set($columns = ['doc.name', 'dateBegin', 'dateEnd', 'message', 'doc.date','groups', '_actions'])
 #set($columnsProperties = {
-  'doc.name': {'type': 'text', 'link': 'view', 'size': 10, 'filterable': true, 'sortable': true},
-  'dateBegin': {'type': 'text', 'size': 10, 'filterable': true, 'sortable': true, 'html': false},
-  'dateEnd': {'type': 'text', 'size': 10, 'filterable': true, 'sortable': true, 'html': false},
-  'message': {'type': 'text', 'size': 10, 'filterable': true, 'sortable': false, 'html': true},
-  'doc.date': {'type': 'text', 'link': 'view', 'size': 10, 'filterable': true, 'sortable': true},
-  'groups': {'type': 'list', 'size': 10, 'filterable': true, 'sortable': true, 'html': true},
+  'doc.name': {'type': 'text', 'link': 'view', 'size': 10},
+  'dateBegin': {'type': 'text', 'size': 10},
+  'dateEnd': {'type': 'text', 'size': 10},
+  'message': {'type': 'text', 'size': 10, 'sortable': false, 'html': true},
+  'doc.date': {'type': 'text', 'link': 'view', 'size': 10},
+  'groups': {'type': 'list', 'size': 10, 'html': true},
   '_actions': {'html': true, 'sortable': false, 'actions': ['edit', 'delete']}
 })
 #set($options = {
   'className': 'Flash.FlashClass',
-  'resultPage' : 'AppWithinMinutes.LiveTableGenerator',
   'translationPrefix': 'flash.livetable.',
   'tagCloud': true,
-  'rowCount': 15,
-  'maxPages': 10,
-  'selectedColumn': 'doc.name',
-  'defaultOrder': 'asc'
+  'selectedColumn': 'doc.name'
 })
 ##
-#set($columns = ['doc.name', 'dateBegin', 'dateEnd', 'message', 'doc.date','groups', '_actions'])
 #livetable('flash' $columns $columnsProperties $options)
 {{/velocity}}</content>
 </xwikidoc>

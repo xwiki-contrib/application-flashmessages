@@ -50,7 +50,7 @@
     <nameField/>
     <validationScript/>
     <dateBegin>
-      <customDisplay>{{include reference="AppWithinMinutes.Date"/}}</customDisplay>
+      <customDisplay/>
       <dateFormat>dd/MM/yyyy HH:mm</dateFormat>
       <disabled>0</disabled>
       <emptyIsToday>0</emptyIsToday>
@@ -65,7 +65,7 @@
       <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
     </dateBegin>
     <dateEnd>
-      <customDisplay>{{include reference="AppWithinMinutes.Date"/}}</customDisplay>
+      <customDisplay/>
       <dateFormat>dd/MM/yyyy HH:mm</dateFormat>
       <disabled>0</disabled>
       <emptyIsToday>0</emptyIsToday>
@@ -240,38 +240,6 @@
     </class>
     <property>
       <sheet>FlashSheet</sheet>
-    </property>
-  </object>
-  <object>
-    <name>Flash.FlashClass</name>
-    <number>0</number>
-    <className>XWiki.DocumentSheetBinding</className>
-    <guid>08970117-f9ba-4c13-9642-054f8bf74937</guid>
-    <class>
-      <name>XWiki.DocumentSheetBinding</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <sheet>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <name>sheet</name>
-        <number>1</number>
-        <picker>0</picker>
-        <prettyName>Sheet</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </sheet>
-    </class>
-    <property>
-      <sheet>AppWithinMinutes.ClassEditSheet</sheet>
     </property>
   </object>
   <object>

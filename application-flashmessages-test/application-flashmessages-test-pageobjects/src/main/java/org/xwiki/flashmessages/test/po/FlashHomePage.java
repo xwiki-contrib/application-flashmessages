@@ -25,6 +25,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
+import org.xwiki.test.ui.po.CreatePagePage;
 import org.xwiki.test.ui.po.LiveTableElement;
 import org.xwiki.test.ui.po.ViewPage;
 
@@ -39,8 +40,8 @@ public class FlashHomePage extends ViewPage
     @FindBy(id = "document-title")
     private WebElement titleElement;
 
-    @FindBys({@FindBy(id = "actionBox"), @FindBy(className = "add")})
-    private WebElement addEntryLink;
+    @FindBy(xpath = "//div[@id='tmCreate']/a[contains(@role, 'button')]")
+    private WebElement tmCreate;
 
     @FindBy(className = "infomessage")
     private WebElement infoMessageElement;
@@ -93,11 +94,11 @@ public class FlashHomePage extends ViewPage
      *
      * @return the pane used to input the entry name
      */
-    public AddEntryDialog clickAddNewEntry()
+    public CreatePagePage createPage()
     {
-        addEntryLink.click();
+        tmCreate.click();
 
-        return new AddEntryDialog();
+        return new CreatePagePage();
     }
 
     /**

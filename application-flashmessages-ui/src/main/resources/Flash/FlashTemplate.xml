@@ -55,7 +55,7 @@
       <nameField/>
       <validationScript/>
       <dateBegin>
-        <customDisplay>{{include reference="AppWithinMinutes.Date"/}}</customDisplay>
+        <customDisplay/>
         <dateFormat>dd/MM/yyyy  HH:mm</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>0</emptyIsToday>
@@ -70,7 +70,7 @@
         <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
       </dateBegin>
       <dateEnd>
-        <customDisplay>{{include reference="AppWithinMinutes.Date"/}}</customDisplay>
+        <customDisplay/>
         <dateFormat>dd/MM/yyyy  HH:mm</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>0</emptyIsToday>

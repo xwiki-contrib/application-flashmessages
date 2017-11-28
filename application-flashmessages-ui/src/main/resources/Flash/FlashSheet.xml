@@ -43,7 +43,6 @@
 
 {{velocity}}
 {{html wiki="true"}}
-#set($discard   = $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator'))
 #set($discard   = $doc.use('Flash.FlashClass'))
 ##
 #if($listtool.contains(['edit', 'inline'], $xcontext.action))
