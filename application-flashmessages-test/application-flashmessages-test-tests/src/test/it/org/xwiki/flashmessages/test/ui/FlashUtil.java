@@ -33,7 +33,6 @@ import org.xwiki.flashmessages.test.po.FlashPopup;
 import org.xwiki.flashmessages.test.po.FlashSlider;
 import org.xwiki.test.ui.po.CreatePagePage;
 import org.xwiki.test.ui.po.ViewPage;
-import org.xwiki.test.ui.po.editor.EditPage;
 
 /**
  * Flash Messages test utilities.
@@ -182,8 +181,6 @@ public class FlashUtil extends ViewPage
      */
     public FlashEntryViewPage createEntry(FlashEntry entry) throws Exception
     {
-    	String templateProviderName = "FlashMessagesTemplateProvider";
-    	
         if (getUtil().pageExists("Flash", entry.getName())) {
             getUtil().deletePage("Flash", entry.getName());
         }
@@ -192,14 +189,12 @@ public class FlashUtil extends ViewPage
 
         CreatePagePage createPage = homePage.createPage();
         createPage.getDocumentPicker().setTitle(entry.getName());
-        createPage.setTemplate("Flash.Code." + templateProviderName);
+        // TODO: We shouldn't have to select the template when using the Create menu (the Flash Message template should
+        // be preselected). Note that the template is preselected when creating Flash Messages from the Administration.
+        createPage.setTemplate("Flash.Code.FlashMessagesTemplateProvider");
         createPage.clickCreate();
-        EditPage editPage = new EditPage();
-        editPage.clickSaveAndView();
 
-        FlashEntryEditPage entryEditPage = FlashEntryEditPage.gotoPage(entry.getName());
-        entryEditPage.edit();
-
+        FlashEntryEditPage entryEditPage = new FlashEntryEditPage(); 
         entryEditPage.setDateBegin(entry.getDateBegin());
         entryEditPage.setDateEnd(entry.getDateEnd());
         entryEditPage.setRepeat(entry.getRepeat());

@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -126,9 +127,8 @@ public class FlashEntryEditPage extends FlashPage
         datePicker.setHour(getFormattedDate(calendar, "h a"));
         datePicker.setMinute(getFormattedDate(calendar, "mm"));
 
-        // Click the input field again so that the date picker disappears
-        // Do so in order to avoid issues when trying to set values to other fields right after setting a date
-        element.click();
+        // Close the date picker.
+        element.sendKeys(Keys.ESCAPE);
     }
 
     /**

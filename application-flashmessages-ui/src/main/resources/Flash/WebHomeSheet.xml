@@ -44,7 +44,8 @@
 #if ($doc.fullName == 'XWiki.XWikiPreferences' &amp;&amp; $request.section == 'FlashMessages')
 {{html}}
 &lt;div id="tmCreate" class="btn-group"&gt;
-  &lt;a role="button" href="/xwiki/bin/create/Main/WebHome" title="$services.localization.render('core.menu.create')" class="btn btn-default "&gt;
+  &lt;a role="button" href="$xwiki.getURL('Flash.WebHome', 'create', 'type=Flash.Code.FlashMessagesTemplateProvider')"
+      title="$services.localization.render('core.menu.create')" class="btn btn-default "&gt;
     &lt;span class="fa fa-plus"&gt;&lt;/span&gt;
     &lt;span class="btn-label"&gt;$services.localization.render('core.menu.create')&lt;/span&gt;
   &lt;/a&gt;

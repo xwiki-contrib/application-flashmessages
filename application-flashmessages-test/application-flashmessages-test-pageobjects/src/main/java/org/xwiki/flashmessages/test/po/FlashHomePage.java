@@ -24,8 +24,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
-import org.xwiki.test.ui.po.CreatePagePage;
 import org.xwiki.test.ui.po.LiveTableElement;
 import org.xwiki.test.ui.po.ViewPage;
 
@@ -39,9 +37,6 @@ public class FlashHomePage extends ViewPage
 {
     @FindBy(id = "document-title")
     private WebElement titleElement;
-
-    @FindBy(xpath = "//div[@id='tmCreate']/a[contains(@role, 'button')]")
-    private WebElement tmCreate;
 
     @FindBy(className = "infomessage")
     private WebElement infoMessageElement;
@@ -87,18 +82,6 @@ public class FlashHomePage extends ViewPage
     public static String getPage()
     {
         return "WebHome";
-    }
-
-    /**
-     * Clicks on the link to add a new application entry.
-     *
-     * @return the pane used to input the entry name
-     */
-    public CreatePagePage createPage()
-    {
-        tmCreate.click();
-
-        return new CreatePagePage();
     }
 
     /**
