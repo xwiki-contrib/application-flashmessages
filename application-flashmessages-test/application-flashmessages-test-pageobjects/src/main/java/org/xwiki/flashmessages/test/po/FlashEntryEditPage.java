@@ -36,7 +36,7 @@ import org.xwiki.test.ui.po.editor.DatePicker;
  * Represents a Flash Messages entry page being edited.
  *
  * @version $Id$
- * @since
+ * @since 1.1.2
  */
 public class FlashEntryEditPage extends FlashPage
 {
@@ -113,7 +113,7 @@ public class FlashEntryEditPage extends FlashPage
      * Set value for date element
      * 
      * @param element the element representing a date input
-     * @param date the date value to set
+     * @param calendar the date value to set
      */
     private void setDate(WebElement element, Calendar calendar)
     {

@@ -27,7 +27,7 @@ import org.openqa.selenium.support.FindBy;
  * Represents a Flash Messages entry page being viewed.
  *
  * @version $Id$
- * @since
+ * @since 1.1.2
  */
 public class FlashEntryViewPage extends FlashPage
 {

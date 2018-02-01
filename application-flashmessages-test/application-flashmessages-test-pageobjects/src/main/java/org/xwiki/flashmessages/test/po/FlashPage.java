@@ -30,7 +30,7 @@ import org.xwiki.test.ui.po.ViewPage;
  * Represents the common ground between the Flash Messages view and edit pages.
  *
  * @version $Id$
- * @since
+ * @since 1.1.2
  */
 public class FlashPage extends ViewPage
 {

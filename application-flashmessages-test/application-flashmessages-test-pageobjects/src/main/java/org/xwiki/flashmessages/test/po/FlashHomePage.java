@@ -31,7 +31,7 @@ import org.xwiki.test.ui.po.ViewPage;
  * Represents actions that can be done on the Flash.WebHome page.
  *
  * @version $Id$
- * @since
+ * @since 1.1.2
  */
 public class FlashHomePage extends ViewPage
 {
