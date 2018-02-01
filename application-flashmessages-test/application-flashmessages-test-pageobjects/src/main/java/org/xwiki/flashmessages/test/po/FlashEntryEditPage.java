@@ -167,7 +167,7 @@ public class FlashEntryEditPage extends FlashPage
     /**
      * Set repeat
      * 
-     * @param repeat
+     * @param repeat the flag for message occurrence repetition
      */
     public void setRepeat(Boolean repeat)
     {
@@ -314,7 +314,7 @@ public class FlashEntryEditPage extends FlashPage
     }
 
     /**
-     * Click the Save & View button
+     * Click the Save &amp; View button
      * 
      * @return the resulting view page
      */
