@@ -56,6 +56,7 @@ flash.livetable.doc.date=Update date
 flash.livetable._actions.edit=Edit
 flash.livetable._actions.delete=Delete
 flash.livetable._actions=Actions
+flash.livetable.emptyvalue=-
 
 ## Class ##
 Flash.FlashClass_dateBegin=Start date
