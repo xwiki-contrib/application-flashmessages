@@ -84,16 +84,25 @@
       <classname/>
       <customDisplay>{{velocity}}
 {{html}}
+## TODO: Drop this custom displayer and change the property type from Database List to List of Groups once we fix the
+## List of Groups property type to take into account the relational storage setting. We need relational storage in order
+## to be able to filter the values properly. Moreover, the values stored as LargeStringProperty are not filterable in
+## Oracle, see https://jira.xwiki.org/browse/XWIKI-14634 .
 #if ($type == 'edit')
-  #userPicker_import(true)
-  #set ($id = $escapetool.xml("${prefix}${name}"))
-  #set ($class = 'suggestGroups multipleSelection')
-  #if (!$xcontext.isMainWiki() &amp;&amp; "$!services.wiki.user.userScope" != 'LOCAL_ONLY')
-    #set ($class = "$class withScope")
+  ## This code is copied from displayer_groups.vm . The only difference is that the value is an array not a string.
+  #set ($isMultiSelect = $field.getProperty('multiSelect').value == 1)
+  #set ($id = "${prefix}${name}")
+  #set ($parameters = {
+    'id': $id,
+    'name': $id,
+    'value': $stringtool.join($value, ',')
+  })
+  #if ($field.getProperty('disabled').value == 1)
+    #set ($parameters.disabled = 'disabled')
   #end
-  &lt;input type="text" id="$!id" name="$!id" value="$stringtool.join($value, ',')" class="$class" /&gt;
+  #groupPicker($isMultiSelect $parameters)
 #elseif ($value.size() &gt; 0)
-    #displayGroup($value)
+  #displayGroup($value)
 #end
 {{/html}}
 {{/velocity}}</customDisplay>
