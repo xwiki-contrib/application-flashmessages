@@ -247,7 +247,9 @@
       <name>templateProvider.flashmessages.name</name>
     </property>
     <property>
-      <spaces/>
+      <spaces>
+        <value>Flash</value>
+      </spaces>
     </property>
     <property>
       <template>Flash.FlashTemplate</template>
