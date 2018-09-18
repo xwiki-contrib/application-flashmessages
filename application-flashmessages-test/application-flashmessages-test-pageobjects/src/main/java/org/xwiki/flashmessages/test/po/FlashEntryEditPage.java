@@ -49,19 +49,19 @@ public class FlashEntryEditPage extends FlashPage
     @FindBy(id = "Flash.FlashClass_0_repeat")
     private WebElement repeatElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_repeatInterval']")
+    @FindBy(xpath = "//div[@class='repeatSettings']/div[@class='row']/div[1]/dl/dt/label")
     private WebElement repeatIntervalLabelElement;
 
     @FindBy(id = "Flash.FlashClass_0_repeatInterval")
     private WebElement repeatIntervalElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_repeatFrequency']")
+    @FindBy(xpath = "//div[@class='repeatSettings']/div[@class='row']/div[2]/dl/dt/label")
     private WebElement repeatFrequencyLabelElement;
 
     @FindBy(id = "Flash.FlashClass_0_repeatFrequency")
     private WebElement repeatFrequencyElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_repeatDays']")
+    @FindBy(xpath = "//div[@class='repeatSettings']/div[@class='repeatDays']//label")
     private WebElement repeatDaysLabelElement;
 
     @FindBy(name = "Flash.FlashClass_0_repeatDays")

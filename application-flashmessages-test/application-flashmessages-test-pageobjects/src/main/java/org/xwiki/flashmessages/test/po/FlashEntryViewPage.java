@@ -31,19 +31,19 @@ import org.openqa.selenium.support.FindBy;
  */
 public class FlashEntryViewPage extends FlashPage
 {
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_dateBegin']/following::dd")
+    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[1]/div[1]//dd")
     protected WebElement dateBeginElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_dateEnd']/following::dd")
+    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[1]/div[2]//dd")
     protected WebElement dateEndElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_repeat']/following::dd")
+    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[2]/div[1]//dd")
     protected WebElement repeatElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_groups']/following::dd")
+    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[2]/div[2]//dd")
     protected WebElement groupsElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_message']/following::dd")
+    @FindBy(xpath = "//div[@class='xform']/dl/dd")
     protected WebElement messageElement;
 
     /**

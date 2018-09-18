@@ -39,67 +39,97 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference='Flash.Macros' /}}
+  <content>{{include reference="Flash.Macros"/}}
+
+{{velocity output="false"}}
+#macro (displayFlashProperty $obj $propName)
+  #set ($class = $obj.xWikiClass)
+  #set ($prettyName = $class.get($propName).translatedPrettyName)
+  ; &lt;label #if ($xcontext.action == 'edit')for="${class.getName()}_${obj.number}_${propName}"#end&gt;
+      $prettyName
+    &lt;/label&gt;
+  : $!doc.display($propName, $obj)
+#end
+{{/velocity}}
 
 {{velocity}}
 {{html wiki="true"}}
-#set($discard   = $doc.use('Flash.FlashClass'))
-##
-#if($listtool.contains(['edit', 'inline'], $xcontext.action))
-  #set($discard   = $xwiki.jsx.use('Flash.FlashSheet'))
-#end
-##
-#set($date      = $doc.getValue('dateBegin'))
-#set($interval  = $doc.getValue('repeatInterval'))
-#set($frequency = $doc.getValue('repeatFrequency'))
-#set($days      = $doc.getValue('repeatDays'))
-##
-## We don't have access to the form element to set the CSS class for the vertical form layout standard.
-#if("$!xcontext.action" == 'edit' || "$!xcontext.action" == 'inline')
-  {{info}}$services.localization.render('flash.creation.utcinfo'){{/info}}
-#end
-## If recurrency is not enabled don't show the extra settings
-#if ($xcontext.action == 'view' || $doc.getValue('repeat') != 1)
-  #set($hideRepeatSettings = 'hidden')
-#end
-## Show day of the week selector only for the week interval
-#if ($doc.getValue('repeatInterval') != 'weekly')
-  #set($hideRepeatDays = 'hidden')
-#end
-(% class="xform" %)
-(((
-  ; &lt;label for="Flash.FlashClass_0_dateBegin"&gt;$doc.displayPrettyName('dateBegin', false, false)&lt;/label&gt;
-  : $doc.display('dateBegin')
-  ; &lt;label for="Flash.FlashClass_0_dateEnd"&gt;$doc.displayPrettyName('dateEnd', false, false)&lt;/label&gt;
-  : $doc.display('dateEnd')
-  ; &lt;label for="Flash.FlashClass_0_repeat"&gt;$doc.displayPrettyName('repeat', false, false)&lt;/label&gt;
-  : #if($xcontext.action == 'view' &amp;&amp; $doc.getValue('repeat') == 1)
-      #repeatSummary($date, $interval, $frequency, $days)
-    #else
-      $doc.display('repeat')
-    #end
-  (% class="repeatSettings $!hideRepeatSettings" %)
+#if ($doc.getObject('Flash.FlashClass'))
+  #set($obj = $doc.getObject('Flash.FlashClass'))
+  #set($discard   = $doc.use('Flash.FlashClass'))
+  #if($listtool.contains(['edit', 'inline'], $xcontext.action))
+    #set($discard   = $xwiki.jsx.use('Flash.FlashSheet'))
+  #end
+  ## We don't have access to the form element to set the CSS class for the vertical form layout standard.
+  #if("$!xcontext.action" == 'edit' || "$!xcontext.action" == 'inline')
+    {{info}}$services.localization.render('flash.creation.utcinfo'){{/info}}
+  #end
+  ## If recurrency is not enabled don't show the extra settings
+  #if ($xcontext.action == 'view' || $doc.getValue('repeat') != 1)
+    #set($hideRepeatSettings = 'hidden')
+  #end
+  ## Show day of the week selector only for the week interval
+  #if ($doc.getValue('repeatInterval') != 'weekly')
+    #set($hideRepeatDays = 'hidden')
+  #end
+  (% class="xform" %)
   (((
-    ; &lt;label for="Flash.FlashClass_0_repeatInterval"&gt;$doc.displayPrettyName('repeatInterval', false, false)&lt;/label&gt;
-    : $doc.display('repeatInterval')
-    ; &lt;label for="Flash.FlashClass_0_repeatFrequency"&gt;$doc.displayPrettyName('repeatFrequency', false, false)&lt;/label&gt;
-    : $doc.display('repeatFrequency')
-    (% class="repeatDays $!hideRepeatDays" %)
+    (% class="row" %)
     (((
-      ; &lt;label for="Flash.FlashClass_0_repeatDays"&gt;$doc.displayPrettyName('repeatDays', false, false)&lt;/label&gt;
-      : $doc.display('repeatDays')
+      (% class="col-xs-12 col-sm-6" %)
+      (((
+        #displayFlashProperty($obj 'dateBegin')
+      )))
+      (% class="col-xs-12 col-sm-6" %)
+      (((
+        #displayFlashProperty($obj 'dateEnd')
+      )))
     )))
-    ; &lt;label for="repeatSummary"&gt;$services.localization.render('flash.repeat.summary')&lt;/label&gt;
-    : (% id="repeatSummary" %)N/A
+    (% class="row" %)
+    (((
+      (% class="col-xs-12 col-sm-6" %)
+      (((
+        ; &lt;label for="Flash.FlashClass_0_repeat"&gt;$doc.displayPrettyName('repeat', false, false)&lt;/label&gt;
+        : #if($xcontext.action == 'view' &amp;&amp; $doc.getValue('repeat') == 1)
+            #set($date      = $doc.getValue('dateBegin'))
+            #set($interval  = $doc.getValue('repeatInterval'))
+            #set($frequency = $doc.getValue('repeatFrequency'))
+            #set($days      = $doc.getValue('repeatDays'))
+            #repeatSummary($date, $interval, $frequency, $days)
+          #else
+            $doc.display('repeat')
+          #end
+      )))
+      (% class="col-xs-12 col-sm-6" %)
+      (((
+        #displayFlashProperty($obj 'groups')
+      )))
+    )))
+    (% class="repeatSettings $!hideRepeatSettings" %)
+    (((
+      (% class="row" %)
+      (((
+        (% class="col-xs-12 col-sm-6" %)
+        (((
+          #displayFlashProperty($obj 'repeatInterval')
+        )))
+        (% class="col-xs-12 col-sm-6" %)
+        (((
+          #displayFlashProperty($obj 'repeatFrequency')
+        )))
+      )))
+      (% class="repeatDays $!hideRepeatDays" %)
+      (((
+        #displayFlashProperty($obj 'repeatDays')
+      )))
+      ; &lt;label for="repeatSummary"&gt;$services.localization.render('flash.repeat.summary')&lt;/label&gt;
+      : (% id="repeatSummary" %)N/A
+    )))
+    #displayFlashProperty($obj 'message')
   )))
-  ; &lt;label for="Flash.FlashClass_0_groups"&gt;$doc.displayPrettyName('groups', false, false)&lt;/label&gt;
-  : $doc.display('groups')
-  ; &lt;label for="Flash.FlashClass_0_message"&gt;$doc.displayPrettyName('message', false, false)&lt;/label&gt;
-  : $doc.display('message')
-)))
+#end
 {{/html}}
-{{/velocity}}
-</content>
+{{/velocity}}</content>
   <object>
     <name>Flash.FlashSheet</name>
     <number>0</number>

@@ -37,19 +37,19 @@ public class FlashPage extends ViewPage
     @FindBy(id = "document-title")
     protected WebElement titleElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_dateBegin']")
+    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[1]/div[1]//dt")
     protected WebElement dateBeginLabelElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_dateEnd']")
+    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[1]/div[2]//dt")
     protected WebElement dateEndLabelElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_repeat']")
+    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[2]/div[1]//dt")
     protected WebElement repeatLabelElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_groups']")
+    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[2]/div[2]//dt")
     protected WebElement groupsLabelElement;
 
-    @FindBy(xpath = "//label[@for='Flash.FlashClass_0_message']")
+    @FindBy(xpath = "//div[@class='xform']/dl/dt")
     protected WebElement messageLabelElement;
 
     /**
