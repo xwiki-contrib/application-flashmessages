@@ -41,24 +41,13 @@
   <hidden>true</hidden>
   <content>{{include reference="Flash.Macros"/}}
 
-{{velocity output="false"}}
-#macro (displayFlashProperty $obj $propName)
-  #set ($class = $obj.xWikiClass)
-  #set ($prettyName = $class.get($propName).translatedPrettyName)
-  ; &lt;label #if ($xcontext.action == 'edit')for="${class.getName()}_${obj.number}_${propName}"#end&gt;
-      $prettyName
-    &lt;/label&gt;
-  : $!doc.display($propName, $obj)
-#end
-{{/velocity}}
-
 {{velocity}}
 {{html wiki="true"}}
 #if ($doc.getObject('Flash.FlashClass'))
   #set($obj = $doc.getObject('Flash.FlashClass'))
-  #set($discard   = $doc.use('Flash.FlashClass'))
+  #set($discard = $doc.use('Flash.FlashClass'))
   #if($listtool.contains(['edit', 'inline'], $xcontext.action))
-    #set($discard   = $xwiki.jsx.use('Flash.FlashSheet'))
+    #set($discard = $xwiki.jsx.use('Flash.FlashSheet'))
   #end
   ## We don't have access to the form element to set the CSS class for the vertical form layout standard.
   #if("$!xcontext.action" == 'edit' || "$!xcontext.action" == 'inline')
@@ -76,18 +65,18 @@
   (((
     (% class="row" %)
     (((
-      (% class="col-xs-12 col-sm-6" %)
+      (% class="col-sm-6" %)
       (((
         #displayFlashProperty($obj 'dateBegin')
       )))
-      (% class="col-xs-12 col-sm-6" %)
+      (% class="col-sm-6" %)
       (((
         #displayFlashProperty($obj 'dateEnd')
       )))
     )))
     (% class="row" %)
     (((
-      (% class="col-xs-12 col-sm-6" %)
+      (% class="col-sm-6" %)
       (((
         ; &lt;label for="Flash.FlashClass_0_repeat"&gt;$doc.displayPrettyName('repeat', false, false)&lt;/label&gt;
         : #if($xcontext.action == 'view' &amp;&amp; $doc.getValue('repeat') == 1)
@@ -100,7 +89,7 @@
             $doc.display('repeat')
           #end
       )))
-      (% class="col-xs-12 col-sm-6" %)
+      (% class="col-sm-6" %)
       (((
         #displayFlashProperty($obj 'groups')
       )))
@@ -109,11 +98,11 @@
     (((
       (% class="row" %)
       (((
-        (% class="col-xs-12 col-sm-6" %)
+        (% class="col-sm-6" %)
         (((
           #displayFlashProperty($obj 'repeatInterval')
         )))
-        (% class="col-xs-12 col-sm-6" %)
+        (% class="col-sm-6" %)
         (((
           #displayFlashProperty($obj 'repeatFrequency')
         )))

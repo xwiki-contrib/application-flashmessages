@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.0" reference="Flash.Macros" locale="">
+<xwikidoc version="1.3" reference="Flash.Macros" locale="">
   <web>Flash</web>
   <name>Macros</name>
   <language/>
@@ -68,6 +68,13 @@
   #end
   ##
   $result
+#end
+#macro (displayFlashProperty $obj $propName)
+  #set ($class = $obj.xWikiClass)
+  ; &lt;label #if ($xcontext.action == 'edit')for="${class.getName()}_${obj.number}_${propName}"#end&gt;
+      $doc.displayPrettyName($propName)
+    &lt;/label&gt;
+  : $!doc.display($propName, $obj)
 #end
 {{/velocity}}</content>
 </xwikidoc>
