@@ -39,7 +39,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{velocity}}
+  <content>{{include reference="Flash.Macros"/}}
+
+{{velocity}}
 ###############################################
 ##           LOAD POPUP MANAGER
 ###############################################
@@ -158,8 +160,6 @@
   #end
 #end
 #if(!$need.empty())
-  #set($discard = $xwiki.ssx.use('Flash.ModalPopup'))
-  #set($discard = $xwiki.jsx.use('Flash.ModalPopup'))
   ##
   #macro(htmlOnly $s)
     $escapetool.javascript($s.replaceAll('\{\{html clean="false" wiki="false"\}\}', '').replaceAll('\{\{/html\}\}','')) #end
@@ -183,14 +183,20 @@
     }
   #end
     ];
-    window.flashNotifier(params);
+    require(['jquery'], function($) {
+      $(window)[0].flashNotifier(params);
+      $(window)[0].flashPopup = $('#flashPopup');
+    });
   });
   &lt;/script&gt;
   {{/html}}
 
+
 #end
-{{/velocity}}
-</content>
+{{html wiki="true"}}
+  #showFlashPopup
+{{/html}}
+{{/velocity}}</content>
   <object>
     <name>Flash.DisplayFlashMessages</name>
     <number>0</number>

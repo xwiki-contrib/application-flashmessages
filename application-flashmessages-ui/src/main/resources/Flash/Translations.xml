@@ -42,6 +42,7 @@
   <content>## Administration ##
 admin.flashmessages=Flash Messages
 flash.creation.utcinfo=The time used for alerts is based on UTC. To check the UTC time you can use the button 'now' in the calendar
+flash.flashmessages.confirm=Ok
 flash.home.title=Flash entries
 flash.home.msginfo=See here the history of FLASH messages published on the knowledge base.
 flash.panels.quicklinktitle=Flash Messages

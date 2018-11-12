@@ -76,5 +76,24 @@
     &lt;/label&gt;
   : $!doc.display($propName, $obj)
 #end
+#macro(showFlashPopup)
+  &lt;div class="modal fade" id="flashPopup" tabindex="-1" role="dialog" aria-hidden="true"&gt;
+    &lt;div class="modal-dialog"&gt;
+      &lt;div class="modal-content"&gt;
+        &lt;div class="modal-header"&gt;
+          &lt;button type="button" class="close" data-dismiss="modal"&gt;&amp;times;&lt;/button&gt;
+          &lt;h4 class="modal-title"&gt;Date&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class="modal-body"&gt;
+          &lt;div&gt;Content&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="modal-footer"&gt;
+          &lt;input type="button" class="btn btn-primary" data-dismiss="modal"
+          value = "$escapetool.xml($services.localization.render('flash.flashmessages.confirm'))"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+#end
 {{/velocity}}</content>
 </xwikidoc>

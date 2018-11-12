@@ -153,51 +153,64 @@
       <cache>long</cache>
     </property>
     <property>
-      <code>/**
- * Confirm that the user has seen the popups
- */
-window.flashNotifierConfirm = function(params){
-  window.flashPopup.closeDialog();
-  new Ajax.Request("$doc.getURL('get')", {
-    parameters : {'ajax' : '1', 'flash': params['document']},
-    method: 'get'
+      <code>require(['jquery'], function($) {
+  var thisWindow = $(window)[0];
+  /**
+   * Initialize the flash notifier.
+   */
+  thisWindow.flashNotifier = function(params) {
+    thisWindow.flashNotifierParams = params;
+    thisWindow.flashNotifierIndex = 0;
+    thisWindow.flashNotifierNext();
+  };
+  /**
+  * Display the next popup.
+  */
+  thisWindow.flashNotifierNext = function() {
+    // If index &gt; length, stop it!
+    if(thisWindow.flashNotifierIndex &gt;= thisWindow.flashNotifierParams.length)
+      return;
+    // Get the params.
+    var params = thisWindow.flashNotifierParams[thisWindow.flashNotifierIndex];
+    // Show the popup.
+    $(window).load(function() {
+      thisWindow.flashPopup.modal('show');
+    });
+    // When window has already been loaded.
+    if(thisWindow.flashNotifierIndex &gt; 0) {
+      thisWindow.flashPopup.modal('show');
+    }
+  }
+  /**
+   * Confirm that the user has seen the popups.
+   */
+  thisWindow.flashNotifierConfirm = function(params) {
+    $.ajax({
+      url : "$doc.getURL('get')",
+      data : {'ajax' : '1', 'flash' : params['document']},
+    });
+    thisWindow.flashNotifierIndex++;
+    thisWindow.flashNotifierNext();
+  }
+   /**
+   * Events when flashPopup is shown.
+   */
+  $(document).on('show.bs.modal', '#flashPopup', function(event) {
+    var params = thisWindow.flashNotifierParams[thisWindow.flashNotifierIndex];
+    $(this).find('.modal-title').text(params['date']);
+    $(this).find('.modal-body').text(params['message']);
   });
-  window.flashNotifierNext();
-}
-
-/** 
- * Display the next popup
- */
-window.flashNotifierNext = function(){
-  // If index &gt; length, stop it!
-  if(window.flashNotifierIndex &gt;= window.flashNotifierParams.length)
-    return;
-  // Get the params
-  var params = window.flashNotifierParams[window.flashNotifierIndex++];
-  // Create the popup
-  window.flashPopup = new XWiki.widgets.MyModalPopup({});  
-  // Create the content
-  var content = window.flashPopup.content;// $('my-modal-popup'); 
-  content.insert(params['date']);
-  content.insert(params['message']);  
-  var f = new Element('form');
-  var p = new Element('p', {'style': 'text-align: center'});
-  var input = new Element('input', {'type':'submit', 'class': 'button', 'value': 'OK'});
-  input.observe('click', function f(event){event.stop(); window.flashNotifierConfirm(params);});
-  f.insert(p);
-  p.insert(input);
-  content.insert(f);
-}
-
-/** 
- * Initialize the flash notifier
- */
-window.flashNotifier = function(params){
-  window.flashNotifierParams = params;
-  window.flashNotifierIndex = 0;
-  window.flashNotifierNext();
-};
-</code>
+  /**
+   * Events on confirmation.
+   */
+  $(document).on('click', '#flashPopup input.btn-primary', function(event) {
+    var params = thisWindow.flashNotifierParams[thisWindow.flashNotifierIndex];
+    // We need to wait for the displayed modal to be closed.
+    setTimeout(function() {
+      thisWindow.flashNotifierConfirm(params);
+    }, 1000);
+  });
+});</code>
     </property>
     <property>
       <name>Flash Notifier</name>
