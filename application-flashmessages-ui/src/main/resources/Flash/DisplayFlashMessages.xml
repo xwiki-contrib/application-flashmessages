@@ -164,7 +164,7 @@
   #macro(htmlOnly $s)
     $escapetool.javascript($s.replaceAll('\{\{html clean="false" wiki="false"\}\}', '').replaceAll('\{\{/html\}\}','')) #end
 
-  {{html}}
+  {{html clean="false"}}
   &lt;script language="javascript"&gt;
   document.observe('xwiki:dom:loaded', function(){
     var params = [
@@ -184,18 +184,14 @@
   #end
     ];
     require(['jquery'], function($) {
-      $(window)[0].flashNotifier(params);
-      $(window)[0].flashPopup = $('#flashPopup');
+      window.flashNotifier(params);
+      window.flashPopup = $('#flashPopup');
     });
   });
   &lt;/script&gt;
   {{/html}}
-
-
 #end
-{{html wiki="true"}}
-  #showFlashPopup
-{{/html}}
+#showFlashPopup
 {{/velocity}}</content>
   <object>
     <name>Flash.DisplayFlashMessages</name>
@@ -555,6 +551,14 @@
   opacity: 1;
   -webkit-transform: scale(1);
   transform: scale(1);
+}
+
+#flashPopup .modal-title {
+  text-align: center;
+}
+
+#flashPopup .modal-footer {
+  text-align: center;
 }</code>
     </property>
     <property>

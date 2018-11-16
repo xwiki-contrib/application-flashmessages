@@ -154,61 +154,74 @@
     </property>
     <property>
       <code>require(['jquery'], function($) {
-  var thisWindow = $(window)[0];
   /**
    * Initialize the flash notifier.
    */
-  thisWindow.flashNotifier = function(params) {
-    thisWindow.flashNotifierParams = params;
-    thisWindow.flashNotifierIndex = 0;
-    thisWindow.flashNotifierNext();
+  window.flashNotifier = function(params) {
+    window.flashNotifierParams = params;
+    window.flashNotifierIndex = 0;
+    window.flashNotifierNext();
   };
   /**
   * Display the next popup.
   */
-  thisWindow.flashNotifierNext = function() {
+  window.flashNotifierNext = function() {
     // If index &gt; length, stop it!
-    if(thisWindow.flashNotifierIndex &gt;= thisWindow.flashNotifierParams.length)
+    if(window.flashNotifierIndex &gt;= window.flashNotifierParams.length) {
       return;
+    }
     // Get the params.
-    var params = thisWindow.flashNotifierParams[thisWindow.flashNotifierIndex];
+    var params = window.flashNotifierParams[window.flashNotifierIndex];
     // Show the popup.
-    $(window).load(function() {
-      thisWindow.flashPopup.modal('show');
+    $(window).on('load', function() {
+      window.flashPopup.modal('show');
     });
     // When window has already been loaded.
-    if(thisWindow.flashNotifierIndex &gt; 0) {
-      thisWindow.flashPopup.modal('show');
+    if(window.flashNotifierIndex &gt; 0) {
+      window.flashPopup.modal('show');
     }
   }
   /**
    * Confirm that the user has seen the popups.
    */
-  thisWindow.flashNotifierConfirm = function(params) {
+  window.flashNotifierConfirm = function() {
+    let params = window.flashNotifierParams[window.flashNotifierIndex];
     $.ajax({
       url : "$doc.getURL('get')",
       data : {'ajax' : '1', 'flash' : params['document']},
     });
-    thisWindow.flashNotifierIndex++;
-    thisWindow.flashNotifierNext();
+    window.flashNotifierIndex++;
+    window.flashNotifierNext();
   }
    /**
    * Events when flashPopup is shown.
    */
   $(document).on('show.bs.modal', '#flashPopup', function(event) {
-    var params = thisWindow.flashNotifierParams[thisWindow.flashNotifierIndex];
+    let params = window.flashNotifierParams[window.flashNotifierIndex];
     $(this).find('.modal-title').text(params['date']);
     $(this).find('.modal-body').text(params['message']);
   });
   /**
-   * Events on confirmation.
+   * Check if the button that closed the modal is the 'Ok' button
+   * and save that information.
    */
-  $(document).on('click', '#flashPopup input.btn-primary', function(event) {
-    var params = thisWindow.flashNotifierParams[thisWindow.flashNotifierIndex];
-    // We need to wait for the displayed modal to be closed.
-    setTimeout(function() {
-      thisWindow.flashNotifierConfirm(params);
-    }, 1000);
+  $(document).on('hide.bs.modal', '#flashPopup', function(event) {
+    var activeElement = $(document.activeElement);
+    var okButton = $('#flashPopup input.btn-primary');
+    if(okButton[0] == activeElement[0]) {
+      okButton.data('clicked', 'yes');
+    } else {
+      okButton.data('clicked', 'no');
+    }
+  });
+  /**
+   * Check if we can show the next popup when the modal is closed.
+   */
+  $(document).on('hidden.bs.modal', '#flashPopup', function(event) {
+    var clicked = $('#flashPopup input.btn-primary').data('clicked');
+    if(clicked == 'yes') {
+      window.flashNotifierConfirm();
+    }
   });
 });</code>
     </property>
