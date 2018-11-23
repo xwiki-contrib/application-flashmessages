@@ -202,17 +202,10 @@
     $(this).find('.modal-body').text(params['message']);
   });
   /**
-   * Check if the button that closed the modal is the 'Ok' button
-   * and save that information.
+   * Save the fact that 'ok' button was clicked.
    */
-  $(document).on('hide.bs.modal', '#flashPopup', function(event) {
-    var activeElement = $(document.activeElement);
-    var okButton = $('#flashPopup input.btn-primary');
-    if(okButton[0] == activeElement[0]) {
-      okButton.data('clicked', 'yes');
-    } else {
-      okButton.data('clicked', 'no');
-    }
+  $(document).on('click', '#flashPopup input.btn-primary', function(event) {
+    $(this).data('clicked', 'yes');
   });
   /**
    * Check if we can show the next popup when the modal is closed.
