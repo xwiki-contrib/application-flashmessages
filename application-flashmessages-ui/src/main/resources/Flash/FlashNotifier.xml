@@ -186,8 +186,9 @@
    */
   window.flashNotifierConfirm = function() {
     let params = window.flashNotifierParams[window.flashNotifierIndex];
+    url = new XWiki.Document('FlashNotifier', 'Flash').getURL('get');
     $.ajax({
-      url : "$doc.getURL('get')",
+      url : url,
       data : {'ajax' : '1', 'flash' : params['document']},
     });
     window.flashNotifierIndex++;
@@ -205,15 +206,16 @@
    * Save the fact that 'ok' button was clicked.
    */
   $(document).on('click', '#flashPopup input.btn-primary', function(event) {
-    $(this).data('clicked', 'yes');
+    $(this).data('clicked', true);
   });
   /**
    * Check if we can show the next popup when the modal is closed.
    */
   $(document).on('hidden.bs.modal', '#flashPopup', function(event) {
-    var clicked = $('#flashPopup input.btn-primary').data('clicked');
-    if(clicked == 'yes') {
+    var okButton = $('#flashPopup input.btn-primary');
+    if(okButton.data('clicked')) {
       window.flashNotifierConfirm();
+      okButton.data('clicked', false);
     }
   });
 });</code>
