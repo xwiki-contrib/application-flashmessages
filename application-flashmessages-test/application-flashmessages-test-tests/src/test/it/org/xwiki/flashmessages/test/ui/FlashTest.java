@@ -99,7 +99,7 @@ public class FlashTest extends AbstractTest
         }
 
         // Create the default entry document inside the wiki
-        if (!getUtil().pageExists("Flash", flashUtil.getDefaultEntry().getName())) {
+        if (!getUtil().pageExists(Arrays.asList("Flash", flashUtil.getDefaultEntry().getName()), "WebHome")) {
             // Login as an administrator
             flashUtil.login("LightYagami", "justice");
 
@@ -243,7 +243,7 @@ public class FlashTest extends AbstractTest
         FlashEntryViewPage entryViewPage;
 
         // Get the default entry page name
-        String entryPage = flashUtil.getDefaultEntryViewPage().getMetaDataValue("page");
+        String entryPage = flashUtil.getDefaultEntryName();
 
         // Enable support for multiple languages
         getUtil().addObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences");
@@ -260,7 +260,7 @@ public class FlashTest extends AbstractTest
             Assert.assertEquals(homePage.getTitle(), translation.getKey("flash.home.title"));
             Assert.assertEquals(homePage.getInfoMessage(), translation.getKey("flash.home.msginfo"));
             liveTable = homePage.getLiveTable();
-            Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.doc.name")));
+            Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.doc.title")));
             Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.dateBegin")));
             Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.dateEnd")));
             Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.doc.date")));
@@ -313,7 +313,7 @@ public class FlashTest extends AbstractTest
 
         // Livetable
         LiveTableElement liveTable = homePage.getLiveTable();
-        Assert.assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.doc.name"),
+        Assert.assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.doc.title"),
             flashUtil.getDefaultEntryName()));
         Assert.assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.dateBegin"),
             flashUtil.getDefaultEntryFormattedDateBegin()));

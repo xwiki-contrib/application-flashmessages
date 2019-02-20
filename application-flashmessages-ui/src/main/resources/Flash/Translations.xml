@@ -48,7 +48,7 @@ flash.home.msginfo=See here the history of FLASH messages published on the knowl
 flash.panels.quicklinktitle=Flash Messages
 
 ## Livetable ##
-flash.livetable.doc.name=Name
+flash.livetable.doc.title=Name
 flash.livetable.dateBegin=Start date
 flash.livetable.dateEnd=End date
 flash.livetable.groups=Groups

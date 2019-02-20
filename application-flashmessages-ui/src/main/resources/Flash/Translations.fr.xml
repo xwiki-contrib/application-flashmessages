@@ -54,6 +54,7 @@ flash.livetable.groups=Groupes
 flash.livetable.message=Message
 flash.livetable.emptyvalue=-
 flash.livetable.doc.date=Date de mise à jour
+flash.livetable.doc.title=Nom
 flash.livetable._actions.edit=Éditer
 flash.livetable._actions.delete=Supprimer
 flash.livetable._actions=Actions

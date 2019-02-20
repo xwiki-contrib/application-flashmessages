@@ -181,7 +181,7 @@ public class FlashUtil extends ViewPage
      */
     public FlashEntryViewPage createEntry(FlashEntry entry) throws Exception
     {
-        if (getUtil().pageExists("Flash", entry.getName())) {
+        if (getUtil().pageExists(Arrays.asList("Flash", entry.getName()), "WebHome")) {
             getUtil().deletePage("Flash", entry.getName());
         }
 
@@ -189,9 +189,6 @@ public class FlashUtil extends ViewPage
 
         CreatePagePage createPage = homePage.createPage();
         createPage.getDocumentPicker().setTitle(entry.getName());
-        // TODO: We shouldn't have to select the template when using the Create menu (the Flash Message template should
-        // be preselected). Note that the template is preselected when creating Flash Messages from the Administration.
-        createPage.setTemplate("Flash.Code.FlashMessagesTemplateProvider");
         createPage.clickCreate();
 
         FlashEntryEditPage entryEditPage = new FlashEntryEditPage(); 
@@ -332,10 +329,10 @@ public class FlashUtil extends ViewPage
         FlashEntryViewPage entryViewPage = createEntry(entry);
 
         // Check if the entry document was created
-        Assert.assertTrue(getUtil().pageExists("Flash", entry.getName()));
+        Assert.assertTrue(getUtil().pageExists(Arrays.asList("Flash", entry.getName()), "WebHome"));
 
         // Get the Flash Message view page
-        entryViewPage = FlashEntryViewPage.gotoPage(entryViewPage.getMetaDataValue("page"));
+        entryViewPage = FlashEntryViewPage.gotoPage(entry.getName());
 
         // Click the pop-up notification
         if (shouldBeInSlider && entryViewPage.hasPopup()) {
