@@ -43,5 +43,52 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
   
-  <content></content>
+  <content>## Administration ##
+admin.flashmessages=Флэш-сообщения
+flash.creation.utcinfo=Время, используемое для оповещений, основано на UTC. Для проверки времени UTC можно использовать кнопку 'сейчас' в календаре
+flash.home.title=Записи флэш
+flash.home.msginfo=Просмотр истории флэш-сообщений, опубликованных в базе знаний.
+flash.panels.quicklinktitle=Флэш-сообщения
+
+## Livetable ##
+flash.livetable.doc.name=Имя
+flash.livetable.dateBegin=Дата начала
+flash.livetable.dateEnd=Дата окончания
+flash.livetable.groups=Группы
+flash.livetable.message=Сообщение
+flash.livetable.doc.date=Дата изменения
+flash.livetable._actions.edit=Правка
+flash.livetable._actions.delete=Удалить
+flash.livetable._actions=Действия
+
+## Class ##
+Flash.FlashClass_dateBegin=Дата начала
+Flash.FlashClass_dateEnd=Дата окончания
+Flash.FlashClass_repeat=Повтор
+Flash.FlashClass_repeatInterval=Интервал повторения
+Flash.FlashClass_repeatInterval_daily=Ежедневно
+Flash.FlashClass_repeatInterval_weekly=Еженедельно
+Flash.FlashClass_repeatInterval_monthly=Ежемесячно
+Flash.FlashClass_repeatInterval_yearly=Ежегодно
+Flash.FlashClass_repeatFrequency=Частота повторения
+Flash.FlashClass_repeatDays=Дни повторения
+Flash.FlashClass_repeatDays_monday=Понедельник
+Flash.FlashClass_repeatDays_tuesday=Вторник
+Flash.FlashClass_repeatDays_wednesday=Среда
+Flash.FlashClass_repeatDays_thursday=Четверг
+Flash.FlashClass_repeatDays_friday=Пятница
+Flash.FlashClass_repeatDays_saturday=Суббота
+Flash.FlashClass_repeatDays_sunday=Воскресенье
+Flash.FlashClass_message=Сообщение
+Flash.FlashClass_groups=Группы
+
+## Sheet ##
+flash.repeat.summary=Всего повторений
+flash.repeat.summary.every=Каждый(ые) {0} {1}
+### Missing: flash.repeat.summary.on=on
+flash.repeat.summary.day=день
+flash.repeat.summary.daily=дней
+flash.repeat.summary.weekly=недель
+flash.repeat.summary.monthly=месяцев
+flash.repeat.summary.yearly=лет</content>
 </xwikidoc>
