@@ -190,8 +190,9 @@
   });
   &lt;/script&gt;
   {{/html}}
+
 #end
-#showFlashPopup
+#showFlashPopup()
 {{/velocity}}</content>
   <object>
     <name>Flash.DisplayFlashMessages</name>
