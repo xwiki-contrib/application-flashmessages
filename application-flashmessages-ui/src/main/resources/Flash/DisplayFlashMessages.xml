@@ -175,7 +175,6 @@
     #set($document = $xwiki.getDocument($n))
     #set($objFlash = $document.getObject('Flash.FlashClass'))
     #set($message = $!objFlash.get('message'))
-
     #set($date = $!objFlash.display('dateBegin', 'view'))
     {
       'message'  : '$message',
