@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Flash.DisplayFlashMessages" locale="">
+<xwikidoc version="1.2" reference="Flash.DisplayFlashMessages" locale="">
   <web>Flash</web>
   <name>DisplayFlashMessages</name>
   <language/>
@@ -161,8 +161,7 @@
 #end
 #if(!$need.empty())
   ##
-  #macro(htmlOnly $s)
-    $escapetool.javascript($s.replaceAll('\{\{html clean="false" wiki="false"\}\}', '').replaceAll('\{\{/html\}\}','')) #end
+
 
   {{html clean="false"}}
   &lt;script language="javascript"&gt;
@@ -492,7 +491,7 @@
   font-size: 0.9em;
 }
 
-#flashMessages a{
+#flashMessages a {
   color: $theme.menuLinkColor;
   font-weight: bolder;
 }
