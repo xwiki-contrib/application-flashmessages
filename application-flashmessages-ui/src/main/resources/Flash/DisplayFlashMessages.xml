@@ -174,10 +174,11 @@
     #end
     #set($document = $xwiki.getDocument($n))
     #set($objFlash = $document.getObject('Flash.FlashClass'))
-    #set($message = $!objFlash.getValue('message'))
+    #set($message = $!objFlash.get('message'))
+
     #set($date = $!objFlash.display('dateBegin', 'view'))
     {
-      'message'  : '#htmlOnly($message)',
+      'message'  : '$message',
       'document' : '$escapetool.javascript($n)',
       'date'     : '$escapetool.javascript($date)',
     }
@@ -490,6 +491,11 @@
 #flashMessages .messages li .message {
   float: left;
   font-size: 0.9em;
+}
+
+#flashMessages a{
+  color: $theme.menuLinkColor;
+  font-weight: bolder;
 }
 
 #flashMessages .messages .selected {
