@@ -125,7 +125,6 @@
   ##
   #set($events = $sorttool.sort($events, 'date:desc'))
   ##
-  
   #if($events.size() &gt; 0)
     {{html}}
       &lt;div id="flashMessages"&gt;
@@ -162,7 +161,6 @@
 #end
 #if(!$need.empty())
   ##
-
 
   {{html clean="false"}}
   &lt;script language="javascript"&gt;
