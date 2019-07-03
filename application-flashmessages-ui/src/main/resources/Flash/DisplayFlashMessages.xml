@@ -125,16 +125,17 @@
   ##
   #set($events = $sorttool.sort($events, 'date:desc'))
   ##
+  
   #if($events.size() &gt; 0)
-    {{html wiki=true}}
+    {{html}}
       &lt;div id="flashMessages"&gt;
         &lt;ul class="messages"&gt;
           #foreach($r in $events)
             #set($document = $xwiki.getDocument($r.doc))
             #set($obj = $document.getObject('Flash.FlashClass'))
             &lt;li class="unit"&gt;
-              &lt;span class="date"&gt;&lt;p&gt;$!obj.display('dateBegin', 'view') : &lt;/p&gt;&lt;/span&gt;
-              &lt;span class="message"&gt;$!obj.getValue('message')&lt;/span&gt;
+              &lt;span class="date"&gt;$!obj.display('dateBegin', 'view') : &lt;/span&gt;
+              &lt;span class="message"&gt;$!obj.display('message', 'view')&lt;/span&gt;
             &lt;/li&gt;
           #end
         &lt;/ul&gt;
@@ -277,7 +278,8 @@
     <property>
       <code>require(['jquery'], function($) {
   $(document).ready(function() {
-    var messages = $$("#flashMessages .messages li").length;
+    var messages = $$("#flashMessages .messages li.unit").length;
+    console.log(messages)
     if (messages &gt; 1) {
       var interval = setInterval(nextMessage, 10000);
       // Generate navigation bullets
@@ -288,8 +290,8 @@
   
     if (messages &gt; 0) {
       // Select the first message and element in the navigation
-      $("#flashMessages .messages li:first-of-type").addClass("selected");
-      $("#flashMessages .navigation :first-child a").addClass("selected");
+      $("#flashMessages .messages&gt;li:first-of-type").addClass("selected");
+      $("#flashMessages .navigation:first-child a").addClass("selected");
     }
 
     // Navigation bullets
@@ -473,7 +475,7 @@
   margin: 10px 0 0;
 }
 
-#flashMessages .messages li {
+#flashMessages .messages&gt;li {
   opacity: 0;
   visibility: hidden;
   position: relative;
