@@ -457,7 +457,7 @@
   -moz-box-align: center;      /* OLD - Firefox 19 */
   -ms-flex-align: center;      /* TWEENER - IE 10 */
   -webkit-align-items: center; /* NEW - Chrome */
-  align-items: center;         /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  align-items: flex-start;         /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
 
 #flashMessages .messages {
