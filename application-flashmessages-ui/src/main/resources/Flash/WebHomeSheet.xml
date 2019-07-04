@@ -77,11 +77,7 @@
 })
 ## Checking if groups type (list) can be replaced with suggest (supported in 9.8 &amp; earlier)
 ## In the futere, when upgrading to a version earlier than 9.8, should definetelly change it to suggest
-#set ($actualVersion = $services.extension.core.repository.environmentExtension.id.version.value)
-#set ($actualVersion = $mathtool.toDouble($actualVersion))
-#set ($minimalVersion = 9.8)
-## Change groups type with suggest
-#if ($actualVersion &gt;= $minimalVersion)
+#if ('#livetable_filters' != "#livetable_filters")
   #set($columnsProperties.groups.type = 'suggest')
 #end
 ##
