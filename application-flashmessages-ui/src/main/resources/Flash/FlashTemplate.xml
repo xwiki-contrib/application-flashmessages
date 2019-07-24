@@ -132,6 +132,7 @@
         <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
       </groups>
       <message>
+        <contenttype>---</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>---</editor>
@@ -228,10 +229,27 @@
       <dateBegin/>
     </property>
     <property>
+      <dateEnd/>
+    </property>
+    <property>
       <groups/>
     </property>
     <property>
       <message/>
+    </property>
+    <property>
+      <repeat>1</repeat>
+    </property>
+    <property>
+      <repeatDays>
+        <value>monday</value>
+      </repeatDays>
+    </property>
+    <property>
+      <repeatFrequency>1</repeatFrequency>
+    </property>
+    <property>
+      <repeatInterval>weekly</repeatInterval>
     </property>
   </object>
 </xwikidoc>
