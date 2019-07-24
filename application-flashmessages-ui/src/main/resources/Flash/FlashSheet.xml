@@ -257,9 +257,10 @@ function summary() {
   var repeatFrequency = document.getElementById('Flash.FlashClass_0_repeatFrequency').value;
   var repeatDays      = [].map.call(document.querySelectorAll('input[name="Flash.FlashClass_0_repeatDays"]:checked'), function(day) { return day.value });
 
-  //When one of the required values is not selected, repeat summary will not be displayed.
-  if (repeatInterval &amp;&amp; repeatFrequency){
-    document.getElementById("repeatSummary").parentElement.parentElement.classList.remove('hidden');
+  // When one of the required values is not selected, repeat summary will not be displayed.
+  var repeatSummaryDLClasses = document.getElementById('repeatSummary').parentElement.parentElement.classList;
+  if (repeatInterval &amp;&amp; repeatFrequency) {
+    repeatSummaryDLClasses.remove('hidden');
     new Ajax.Request
     (
       '$xwiki.getURL("Flash.RepeatSummaryService", "view")',
@@ -282,8 +283,8 @@ function summary() {
         }
       }
     );
-  }else{
-    document.getElementById("repeatSummary").parentElement.parentElement.classList.add('hidden');
+  } else {
+   repeatSummaryDLClasses.add('hidden');
   }
 }</code>
     </property>
