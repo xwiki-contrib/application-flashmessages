@@ -46,11 +46,9 @@
 #if ($doc.getObject('Flash.FlashClass'))
   #set($obj = $doc.getObject('Flash.FlashClass'))
   #set($discard = $doc.use('Flash.FlashClass'))
-  #if($listtool.contains(['edit'], $xcontext.action))
-    #set($discard = $xwiki.jsx.use('Flash.FlashSheet'))
-  #end
   ## We don't have access to the form element to set the CSS class for the vertical form layout standard.
   #if("$!xcontext.action" == 'edit')
+    #set ($discard = $xwiki.jsx.use('Flash.FlashSheet'))
     {{info}}$services.localization.render('flash.creation.utcinfo'){{/info}}
   #end
   ## If recurrency is not enabled don't show the extra settings
