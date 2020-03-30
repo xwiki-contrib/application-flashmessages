@@ -238,7 +238,7 @@
       <message/>
     </property>
     <property>
-      <repeat>1</repeat>
+      <repeat>0</repeat>
     </property>
     <property>
       <repeatDays>
@@ -249,7 +249,7 @@
       <repeatFrequency>1</repeatFrequency>
     </property>
     <property>
-      <repeatInterval>weekly</repeatInterval>
+      <repeatInterval>daily</repeatInterval>
     </property>
   </object>
 </xwikidoc>
