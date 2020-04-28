@@ -42,10 +42,6 @@
   <content>{{include reference="Flash.Macros"/}}
 
 {{velocity}}
-###############################################
-##           LOAD POPUP MANAGER
-###############################################
-#set($discard = $xwiki.jsx.use('Flash.FlashNotifier', {'minify':false}))
 ##
 ###############################################
 ##           LOAD MESSAGE SLIDER
@@ -150,13 +146,18 @@
 #set($userValObj = $userDoc.getObject('Flash.FlashValidationClass'))
 #set($userValList = $userValObj.getProperty('flash').getValue())
 #set($need = [])
-#foreach($msg in $events)
-  #set($msgDoc = $xwiki.getDocument($msg.doc))
-  #set($msgValObj = $msgDoc.getObject('Flash.FlashValidationClass'))
-  #set($msgValList = $msgValObj.getProperty('flash').getValue())
-  ##
-  #if(!$userValList.contains($msg.doc) &amp;&amp; !$msgValList.contains($xcontext.user))
-    #set($discard = $need.add($msg.doc))
+#set($dateFormat = 'dd/MM/yyyy')
+#foreach ($msg in $events)
+  #set ($msgDoc = $xwiki.getDocument($msg.doc))
+  #set ($msgValObj = $msgDoc.getObject('Flash.FlashValidationClass'))
+  #set ($msgValList = $msgValObj.getProperty('flash').getValue())
+  #set ($seenDate = $msgValObj.getValue('seenDate'))
+  #set ($wasSeenToday = $datetool.format($dateFormat, $dateNow) == $datetool.format($dateFormat, $seenDate))
+  #set ($doRepeatEntry = $msgDoc.getObject('Flash.FlashClass').getValue('repeat') == 1)
+  ## Check if the message was already seen by this user or if it wasn't seen today, for entries with repeat selected.
+  #if ((!$userValList.contains($msg.doc) &amp;&amp; !$msgValList.contains($xcontext.user))
+      || (!$wasSeenToday &amp;&amp; $doRepeatEntry))
+    #set ($discard = $need.add($msg.doc))
   #end
 #end
 #if(!$need.empty())
@@ -181,9 +182,14 @@
     }
   #end
     ];
-    require(['jquery'], function($) {
-      window.flashNotifier(params);
+    require.config({
+      'paths': {
+         'flashNotifier': new XWiki.Document('FlashNotifier', 'Flash').getURL('jsx', 'r=1')
+       }
+    });
+    require(['jquery', 'flashNotifier', 'bootstrap'], function($) {
       window.flashPopup = $('#flashPopup');
+      window.flashNotifier(params);
     });
   });
   &lt;/script&gt;
