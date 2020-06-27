@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc>
+  <web>Flash</web>
+  <name>Translations</name>
+  <language>es</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Flash.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1399397413000</creationDate>
+  <date>1399473119000</date>
+  <contentUpdateDate>1399473087000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  
+  <content>## Administration ##
+admin.flashmessages=Mensajes Flash
+flash.creation.utcinfo=La hora utilizada para las alertas se base en UTC. Para comprobar la hora UTC puedes utilizar el botón 'ahora' del calendario
+flash.home.title=Entradas flash
+flash.home.msginfo=Vea a continuación el histórico de mensajes FLASH publicados en esta base de conocimientos.
+flash.panels.quicklinktitle=Mensajes flash
+
+## Livetable ##
+flash.livetable.doc.name=Nombre
+flash.livetable.dateBegin=Fecha de inicio
+flash.livetable.dateEnd=Fecha de finalización
+flash.livetable.groups=Grupos
+flash.livetable.message=Mensaje
+flash.livetable.doc.date=Fecha de actualización
+flash.livetable._actions.edit=Editar
+flash.livetable._actions.delete=Borrar
+flash.livetable._actions=Acciones
+
+## Class ##
+Flash.FlashClass_dateBegin=Fecha de inicio
+Flash.FlashClass_dateEnd=Fecha de finalización
+Flash.FlashClass_repeat=Repetir
+Flash.FlashClass_repeatInterval=Intervalo de repetición
+Flash.FlashClass_repeatInterval_daily=Diario
+Flash.FlashClass_repeatInterval_weekly=Semanal
+Flash.FlashClass_repeatInterval_monthly=Mensual
+Flash.FlashClass_repeatInterval_yearly=Anual
+Flash.FlashClass_repeatFrequency=Frecuencia de repetición
+Flash.FlashClass_repeatDays=Repetir los días
+Flash.FlashClass_repeatDays_monday=Lunes
+Flash.FlashClass_repeatDays_tuesday=Martes
+Flash.FlashClass_repeatDays_wednesday=Miércoles
+Flash.FlashClass_repeatDays_thursday=Jueves
+Flash.FlashClass_repeatDays_friday=Viernes
+Flash.FlashClass_repeatDays_saturday=Sábado
+Flash.FlashClass_repeatDays_sunday=Domingo
+Flash.FlashClass_message=Mensaje
+Flash.FlashClass_groups=Grupos
+
+## Sheet ##
+flash.repeat.summary=Resumen de repeticiones
+flash.repeat.summary.every=Cada {0} {1}
+flash.repeat.summary.on=el
+flash.repeat.summary.day=día
+flash.repeat.summary.daily=días
+flash.repeat.summary.weekly=semanas
+flash.repeat.summary.monthly=meses
+flash.repeat.summary.yearly=años</content>
+</xwikidoc>
