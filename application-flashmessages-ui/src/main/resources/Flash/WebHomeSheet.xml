@@ -66,7 +66,7 @@
   'dateEnd': {'type': 'text', 'size': 10},
   'message': {'type': 'text', 'size': 10, 'sortable': false, 'html': true},
   'doc.date': {'type': 'text', 'link': 'view', 'size': 10},
-  'groups': {'type': 'list', 'size': 10, 'html': true},
+  'groups': {'type': 'suggest', 'size': 10, 'html': true},
   '_actions': {'html': true, 'sortable': false, 'filterable': false, 'actions': ['edit', 'delete']}
 })
 #set($options = {
