@@ -65,13 +65,13 @@
   #set($groupsFilter = "")
   #foreach ($group in $localGroups)
     #set($groupsFilter = "$!{groupsFilter}'$group' member of obj.groups")
-    #if($velocityCount &lt; $localGroups.size() || $globalGroups.size() &gt; 0)
+    #if($foreach.count &lt; $localGroups.size() || $globalGroups.size() &gt; 0)
       #set($groupsFilter = "$!{groupsFilter} OR ")
     #end
   #end
   #foreach ($group in $globalGroups)
     #set($groupsFilter = "$!{groupsFilter}'xwiki:${group}' member of obj.groups")
-    #if($velocityCount &lt; $globalGroups.size())
+    #if($foreach.count &lt; $globalGroups.size())
       #set($groupsFilter = "$!{groupsFilter} OR ")
     #end
   #end
@@ -119,7 +119,19 @@
     #end
   #end
   ##
-  #set($events = $sorttool.sort($events, 'date:desc'))
+  ## Available from 12.1
+  #if("$!collectiontool" != '')
+    #set($events = $collectiontool.sort($events, 'date:desc'))
+  #else
+    ## Available from 12.0
+    ## Make a copy of events in case of collectionstool.sort() changes the object
+    #set($copyEvents = $events)
+    #set($events = $collectionstool.sort($events, 'date:desc'))
+    #if("$!events" == '')
+      ## Before 12.0
+      #set($events = $sorttool.sort($copyEvents, 'date:desc'))
+    #end
+  #end
   ##
   #if($events.size() &gt; 0)
     {{html}}
@@ -168,7 +180,7 @@
   document.observe('xwiki:dom:loaded', function(){
     var params = [
   #foreach($n in $need)
-    #if($velocityCount &gt; 1)
+    #if($foreach.count &gt; 1)
     ,
     #end
     #set($document = $xwiki.getDocument($n))
