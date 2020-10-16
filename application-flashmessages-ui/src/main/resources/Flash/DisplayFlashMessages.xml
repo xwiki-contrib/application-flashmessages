@@ -124,7 +124,8 @@
     #set($events = $collectiontool.sort($events, 'date:desc'))
   #else
     ## Available from 12.0
-    ## Make a copy of events in case of collectionstool.sort() changes the object
+    ## When the collectionstool.sort(Object object, String property) signature is not available,
+    ## the $events will be null, so a copy is necesarry.
     #set($copyEvents = $events)
     #set($events = $collectionstool.sort($events, 'date:desc'))
     #if("$!events" == '')
