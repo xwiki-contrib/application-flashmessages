@@ -232,7 +232,9 @@
       <action>edit</action>
     </property>
     <property>
-      <creationRestrictions/>
+      <creationRestrictions>
+        <value>Flash</value>
+      </creationRestrictions>
     </property>
     <property>
       <creationRestrictionsAreSuggestions>0</creationRestrictionsAreSuggestions>
@@ -247,9 +249,7 @@
       <name>templateProvider.flashmessages.name</name>
     </property>
     <property>
-      <spaces>
-        <value>Flash</value>
-      </spaces>
+      <spaces/>
     </property>
     <property>
       <template>Flash.FlashTemplate</template>
@@ -258,7 +258,9 @@
       <terminal>1</terminal>
     </property>
     <property>
-      <visibilityRestrictions/>
+      <visibilityRestrictions>
+        <value>Flash</value>
+      </visibilityRestrictions>
     </property>
   </object>
 </xwikidoc>
