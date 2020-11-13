@@ -30,6 +30,7 @@
   <artifactId>application-flashmessages-ui</artifactId>
   <packaging>xar</packaging>
   <name>Flash Messages Application - UI</name>
+  <description>Schedule and display flash announcements to one or multiple groups. Messages can be set as one off or recurring events.</description>
   <properties>
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Flash Messages Application</xwiki.extension.name>
@@ -79,15 +80,6 @@
       <artifactId>xwiki-platform-rendering-macro-script</artifactId>
       <version>${platform.version}</version>
       <scope>runtime</scope>
-    </dependency>
-    <!-- This application is needed to preselect Flash Messages template at creation step according to
-      https://github.com/xwikisas/application-flashmessages/issues/13 only for xwiki versions until 9.5 -->
-    <dependency>
-      <groupId>com.xwiki.defaultPageTemplate</groupId>
-      <artifactId>application-defaultPageTemplate</artifactId>
-      <version>1.2</version>
-      <scope>runtime</scope>
-      <type>xar</type>
     </dependency>
   </dependencies>
 </project>

@@ -32,7 +32,7 @@
   <version>1.1.11-SNAPSHOT</version>
   <name>Flash Messages Application</name>
   <packaging>pom</packaging>
-  <description>Allows you to create Flash messages aiming at one or multiple local groups</description>
+  <description>Schedule and display flash announcements to one or multiple groups. Messages can be set as one off or recurring events.</description>
   <properties>
     <!-- Don't run CLIRR here since there's no Java code. -->
     <xwiki.clirr.skip>true</xwiki.clirr.skip>
