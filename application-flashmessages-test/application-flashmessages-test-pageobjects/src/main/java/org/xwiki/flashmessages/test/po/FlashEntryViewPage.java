@@ -19,8 +19,6 @@
  */
 package org.xwiki.flashmessages.test.po;
 
-import java.util.Arrays;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -68,7 +66,7 @@ public class FlashEntryViewPage extends FlashPage
      */
     public static FlashEntryViewPage gotoPage(String page, String language)
     {
-        getUtil().gotoPage(Arrays.asList(FlashHomePage.getSpace(), page), "WebHome", "view", "language=" + language);
+        getUtil().gotoPage(FlashHomePage.getSpace(), page, "view", "language=" + language);
         return new FlashEntryViewPage();
     }
 

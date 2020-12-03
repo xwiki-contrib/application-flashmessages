@@ -181,7 +181,7 @@ public class FlashUtil extends ViewPage
      */
     public FlashEntryViewPage createEntry(FlashEntry entry) throws Exception
     {
-        if (getUtil().pageExists(Arrays.asList("Flash", entry.getName()), "WebHome")) {
+        if (getUtil().pageExists("Flash", entry.getName())) {
             getUtil().deletePage("Flash", entry.getName());
         }
 
@@ -329,7 +329,7 @@ public class FlashUtil extends ViewPage
         FlashEntryViewPage entryViewPage = createEntry(entry);
 
         // Check if the entry document was created
-        Assert.assertTrue(getUtil().pageExists(Arrays.asList("Flash", entry.getName()), "WebHome"));
+        Assert.assertTrue(getUtil().pageExists("Flash", entry.getName()));
 
         // Get the Flash Message view page
         entryViewPage = FlashEntryViewPage.gotoPage(entry.getName());

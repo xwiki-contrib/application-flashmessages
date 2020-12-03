@@ -105,7 +105,7 @@ public class FlashEntryEditPage extends FlashPage
      */
     public static FlashEntryEditPage gotoPage(String page, String language)
     {
-        getUtil().gotoPage(Arrays.asList(FlashHomePage.getSpace(), page), "WebHome", "edit", "language=" + language);
+        getUtil().gotoPage(FlashHomePage.getSpace(), page, "edit", "language=" + language);
         return new FlashEntryEditPage();
     }
 

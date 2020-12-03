@@ -107,6 +107,11 @@
             <goals>
               <goal>package</goal>
             </goals>
+            <configuration>
+              <!-- The code from Flash.DisplayFlashMessages that is responsible for displaying the flash messages on any
+                page is using a query that needs programming rights. -->
+              <testProgrammingRights>false</testProgrammingRights>
+            </configuration>
           </execution>
         </executions>
       </plugin>

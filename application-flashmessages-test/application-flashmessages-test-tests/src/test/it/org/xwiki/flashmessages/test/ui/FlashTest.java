@@ -99,7 +99,7 @@ public class FlashTest extends AbstractTest
         }
 
         // Create the default entry document inside the wiki
-        if (!getUtil().pageExists(Arrays.asList("Flash", flashUtil.getDefaultEntry().getName()), "WebHome")) {
+        if (!getUtil().pageExists("Flash", flashUtil.getDefaultEntry().getName())) {
             // Login as an administrator
             flashUtil.login("LightYagami", "justice");
 
