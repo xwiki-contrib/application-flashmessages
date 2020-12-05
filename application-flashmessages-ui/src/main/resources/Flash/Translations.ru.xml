@@ -85,7 +85,7 @@ Flash.FlashClass_groups=Группы
 ## Sheet ##
 flash.repeat.summary=Всего повторений
 flash.repeat.summary.every=Каждый(ые) {0} {1}
-### Missing: flash.repeat.summary.on=on
+flash.repeat.summary.on=ВКЛ.
 flash.repeat.summary.day=день
 flash.repeat.summary.daily=дней
 flash.repeat.summary.weekly=недель
