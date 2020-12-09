@@ -13,3 +13,10 @@ Allows you to create Flash messages aiming at one or multiple local/global group
 * Sonar Dashboard: N/A
 * Continuous Integration Status: [![Build Status](http://ci.xwiki.org/buildStatus/icon?job=Contrib%20-%20Flash%20Message%20Application)](http://ci.xwiki.org/job/Contrib%20-%20Flash%20Message%20Application/)
 
+# Release
+
+* Release
+
+```
+./release.sh
+```

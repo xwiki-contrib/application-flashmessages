@@ -25,9 +25,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.xwiki.commons</groupId>
-    <artifactId>xwiki-commons-pom</artifactId>
-    <version>6.4.1</version>
+    <groupId>org.xwiki.contrib</groupId>
+    <artifactId>parent-platform</artifactId>
+    <version>6.4-10</version>
   </parent>
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>application-flashmessages</artifactId>
@@ -36,8 +36,11 @@
   <packaging>pom</packaging>
   <description>Allows you to create Flash messages aiming at one or multiple local groups</description>
   <properties>
-    <platform.version>${commons.version}</platform.version>
-    <rendering.version>${commons.version}</rendering.version>
+    <!-- Don't run CLIRR here since there's no Java code. -->
+    <xwiki.clirr.skip>true</xwiki.clirr.skip>
+
+    <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
+    <xwiki.issueManagement.jira.id>XAFLASHM</xwiki.issueManagement.jira.id>
   </properties>
   <modules>
     <module>application-flashmessages-ui</module>
@@ -70,11 +73,4 @@
       <name>Sidali Djebloun</name>
     </developer>
   </developers>
-  <distributionManagement>
-    <repository>
-      <id>xwiki-staging</id>
-      <name>XWiki Staging Repository</name>
-      <url>http://nexus.xwiki.org/nexus/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
 </project>
