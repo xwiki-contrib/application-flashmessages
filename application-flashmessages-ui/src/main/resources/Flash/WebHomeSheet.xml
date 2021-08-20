@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -27,12 +27,9 @@
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1399397158000</creationDate>
   <parent>Flash.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1511516872000</date>
-  <contentUpdateDate>1511516872000</contentUpdateDate>
   <version>1.1</version>
   <title/>
   <comment/>
@@ -75,11 +72,6 @@
   'tagCloud': true,
   'selectedColumn': 'doc.title'
 })
-## Checking if groups type (list) can be replaced with suggest (supported in 9.8 &amp; earlier)
-## In the futere, when upgrading to a version earlier than 9.8, should definetelly change it to suggest
-#if ('#livetable_filters' != "#livetable_filters")
-  #set($columnsProperties.groups.type = 'suggest')
-#end
 ##
 #livetable('flash' $columns $columnsProperties $options)
 {{/velocity}}</content>
@@ -126,17 +118,29 @@
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </codeToExecute>
       <configurationClass>
+        <cache>0</cache>
+        <classname/>
         <customDisplay/>
         <disabled>0</disabled>
+        <displayType>input</displayType>
+        <hint/>
+        <idField/>
+        <multiSelect>0</multiSelect>
         <name>configurationClass</name>
         <number>3</number>
-        <picker>0</picker>
+        <picker>1</picker>
         <prettyName>configurationClass</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
         <size>30</size>
+        <sort>none</sort>
+        <sql/>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.PageClass</classType>
       </configurationClass>
       <configureGlobally>
         <customDisplay/>
