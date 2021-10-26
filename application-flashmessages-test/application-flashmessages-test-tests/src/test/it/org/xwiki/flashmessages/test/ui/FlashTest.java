@@ -31,6 +31,7 @@ import org.xwiki.test.ui.AbstractTest;
 import org.xwiki.test.ui.SuperAdminAuthenticationRule;
 import org.xwiki.test.ui.po.LiveTableElement;
 import org.xwiki.test.ui.po.ViewPage;
+import org.junit.After;
 import org.junit.Assert;
 import org.xwiki.panels.test.po.ApplicationsPanel;
 
@@ -110,8 +111,7 @@ public class FlashTest extends AbstractTest
             FlashEntryViewPage entryViewPage = flashUtil.getDefaultEntryViewPage();
 
             if (entryViewPage.hasPopup()) {
-                FlashPopup flashPopup = entryViewPage.getPopup();
-                flashPopup.clickOk();
+                entryViewPage.getPopup().clickOk();
             }
 
             // Re-authenticate as superadmin
@@ -325,7 +325,8 @@ public class FlashTest extends AbstractTest
         // Entry view
         FlashEntryViewPage entryViewPage = flashUtil.getDefaultEntryViewPage();
         // This is probably the dumbest thing I wrote
-        // The date format in the livetable uses a single space where as in the rest of the app a double space separator is used between the date and time
+        // The date format in the livetable uses a single space where as in the rest of the app a double space separator
+        // is used between the date and time
         Assert.assertEquals(entryViewPage.getDateBegin(),
             flashUtil.getDefaultEntryFormattedDateBegin().replace("  ", " "));
         Assert.assertEquals(entryViewPage.getDateEnd(), flashUtil.getDefaultEntryFormattedDateEnd().replace("  ", " "));
@@ -354,7 +355,7 @@ public class FlashTest extends AbstractTest
         FlashEntryViewPage entryViewPage = flashUtil.testMessage(entry, true);
 
         // Reload page as viewing a second time
-        entryViewPage.reload();
+        entryViewPage = entryViewPage.reload();
 
         // The pop-up should be present only once per user
         // And it should have been shown during the creation phase
@@ -519,5 +520,18 @@ public class FlashTest extends AbstractTest
             "Every 3 years today");
         
         flashUtil.testMessage(entry, false);
+    }
+
+    @After
+    public void tearDown()
+    {
+        validateConsole.getLogCaptureConfiguration().registerExpected(
+            "TLS certificate errors will be ignored for this session"
+        );
+        validateConsole.getLogCaptureConfiguration().registerExcludes(
+            "Failed to send event [class org.xwiki.bridge.event.ActionExecutedEvent (view)]" +
+                " to listener [com.xpn.xwiki.stats.impl.XWikiStatsServiceImpl",
+            "java.lang.IllegalStateException: Response is committed"
+        );
     }
 }

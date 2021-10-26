@@ -86,8 +86,8 @@
           &lt;div&gt;&lt;/div&gt;
         &lt;/div&gt;
         &lt;div class="modal-footer"&gt;
-          &lt;input type="button" class="btn btn-primary" data-dismiss="modal"
-          value = "$escapetool.xml($services.localization.render('flash.flashmessages.confirm'))"&gt;
+          &lt;input type="button" class="btn btn-primary" disabled="disabled"
+            value="$escapetool.xml($services.localization.render('flash.flashmessages.confirm'))"/&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;

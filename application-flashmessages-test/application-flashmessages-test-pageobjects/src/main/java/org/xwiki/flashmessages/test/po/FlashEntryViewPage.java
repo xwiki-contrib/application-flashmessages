@@ -19,7 +19,6 @@
  */
 package org.xwiki.flashmessages.test.po;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -77,7 +76,7 @@ public class FlashEntryViewPage extends FlashPage
      */
     public FlashEntryViewPage reload()
     {
-        getUtil().gotoPage(getDriver().getCurrentUrl());
+        getDriver().navigate().refresh();
         return new FlashEntryViewPage();
     }
 
@@ -108,7 +107,7 @@ public class FlashEntryViewPage extends FlashPage
      */
     public Boolean hasPopup()
     {
-        return elementExists("my-modal-popup");
+        return FlashPopup.isPresent();
     }
 
     /**
@@ -118,8 +117,6 @@ public class FlashEntryViewPage extends FlashPage
      */
     public FlashPopup getPopup()
     {
-        getDriver().waitUntilElementIsVisible(By.id("my-modal-popup"));
-
         return new FlashPopup();
     }
 

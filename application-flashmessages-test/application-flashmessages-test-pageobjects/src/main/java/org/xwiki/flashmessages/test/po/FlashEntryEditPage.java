@@ -26,11 +26,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-import org.xwiki.test.ui.po.editor.DatePicker;
+import org.xwiki.test.ui.po.SuggestInputElement;
+import org.xwiki.test.ui.po.editor.BootstrapDateTimePicker;
 
 /**
  * Represents a Flash Messages entry page being edited.
@@ -117,18 +117,21 @@ public class FlashEntryEditPage extends FlashPage
      */
     private void setDate(WebElement element, Calendar calendar)
     {
-        // Click the input field to get the date picker
+        // Click the date input field to get the date picker. The date picker is not shown if the date input is already
+        // focused so we first click outside.
+        this.messageElement.click();
         element.click();
 
-        DatePicker datePicker = new DatePicker();
-        datePicker.setYear(getFormattedDate(calendar, "yyyy"));
-        datePicker.setMonth(getFormattedDate(calendar, "MMMM"));
-        datePicker.setDay(getFormattedDate(calendar, "d"));
-        datePicker.setHour(getFormattedDate(calendar, "h a"));
-        datePicker.setMinute(getFormattedDate(calendar, "mm"));
-
-        // Close the date picker.
-        element.sendKeys(Keys.ESCAPE);
+        BootstrapDateTimePicker datePicker = new BootstrapDateTimePicker();
+        datePicker.changeMonthAndYear().changeYear().selectYear(getFormattedDate(calendar, "yyyy"))
+            .selectMonth(getFormattedDate(calendar, "MMM")).selectDay(getFormattedDate(calendar, "d"));
+        int minutes = Integer.parseInt(getFormattedDate(calendar, "m"));
+        datePicker.toggleTimePicker().changeHour().selectHour(getFormattedDate(calendar, "HH")).changeMinute()
+            .selectMinute(String.format("%02d", minutes - minutes % 5));
+        for (int i = 0; i < minutes % 5; i++) {
+            datePicker.incrementMinute();
+        }
+        datePicker.toggleTimePicker().close();
     }
 
     /**
@@ -294,12 +297,12 @@ public class FlashEntryEditPage extends FlashPage
      */
     public void setGroups(List<String> groups)
     {
+        SuggestInputElement groupSuggest = new SuggestInputElement(this.groupsElement);
+        groupSuggest.clearSelectedSuggestions();
         for (String group : groups) {
-            groupsElement.sendKeys(group);
-            getDriver().waitUntilElementIsVisible(By.className("suggestItem"));
-            getDriver().findElementWithoutWaiting(By.className("suggestItem")).click();
-            getDriver().waitUntilElementDisappears(By.className("suggestItem"));
+            groupSuggest.sendKeys(group).waitForSuggestions().selectByVisibleText(group);
         }
+        groupSuggest.hideSuggestions();
     }
 
     /**

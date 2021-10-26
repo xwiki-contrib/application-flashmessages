@@ -51,6 +51,7 @@
       <dateFormat>dd/MM/yyyy HH:mm</dateFormat>
       <disabled>0</disabled>
       <emptyIsToday>0</emptyIsToday>
+      <hint/>
       <name>dateBegin</name>
       <number>1</number>
       <picker>1</picker>
@@ -66,6 +67,7 @@
       <dateFormat>dd/MM/yyyy HH:mm</dateFormat>
       <disabled>0</disabled>
       <emptyIsToday>0</emptyIsToday>
+      <hint/>
       <name>dateEnd</name>
       <number>1</number>
       <picker>1</picker>
@@ -103,9 +105,13 @@
 #end
 {{/html}}
 {{/velocity}}</customDisplay>
+      <defaultValue/>
       <disabled>0</disabled>
       <displayType>checkbox</displayType>
+      <freeText/>
+      <hint/>
       <idField/>
+      <largeStorage>0</largeStorage>
       <multiSelect>1</multiSelect>
       <name>groups</name>
       <number>3</number>
@@ -124,9 +130,11 @@
       <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
     </groups>
     <message>
+      <contenttype>---</contenttype>
       <customDisplay/>
       <disabled>0</disabled>
       <editor>---</editor>
+      <hint/>
       <name>message</name>
       <number>3</number>
       <picker>0</picker>
@@ -144,6 +152,7 @@
       <disabled>0</disabled>
       <displayFormType>select</displayFormType>
       <displayType/>
+      <hint/>
       <name>repeat</name>
       <number>5</number>
       <prettyName>Repeat</prettyName>
@@ -155,8 +164,12 @@
     <repeatDays>
       <cache>0</cache>
       <customDisplay/>
+      <defaultValue/>
       <disabled>0</disabled>
       <displayType>checkbox</displayType>
+      <freeText/>
+      <hint/>
+      <largeStorage>0</largeStorage>
       <multiSelect>1</multiSelect>
       <name>repeatDays</name>
       <number>8</number>
@@ -176,8 +189,12 @@
     <repeatFrequency>
       <cache>0</cache>
       <customDisplay/>
+      <defaultValue/>
       <disabled>0</disabled>
       <displayType>select</displayType>
+      <freeText/>
+      <hint/>
+      <largeStorage>0</largeStorage>
       <multiSelect>0</multiSelect>
       <name>repeatFrequency</name>
       <number>7</number>
@@ -197,8 +214,12 @@
     <repeatInterval>
       <cache>0</cache>
       <customDisplay/>
+      <defaultValue>daily</defaultValue>
       <disabled>0</disabled>
       <displayType>select</displayType>
+      <freeText/>
+      <hint/>
+      <largeStorage>0</largeStorage>
       <multiSelect>0</multiSelect>
       <name>repeatInterval</name>
       <number>6</number>

@@ -172,6 +172,7 @@
     window.flashNotifierIndex = 0;
     window.flashNotifierNext();
   };
+
   /**
   * Display the next popup.
   */
@@ -189,43 +190,48 @@
       // Show the popup.
       $($.proxy(window.flashPopup, 'modal', 'show'));
     }
-  }
+  };
+
   /**
    * Confirm that the user has seen the popups.
    */
   window.flashNotifierConfirm = function() {
     let params = window.flashNotifierParams[window.flashNotifierIndex];
     url = new XWiki.Document('FlashNotifier', 'Flash').getURL('get');
-    $.ajax({
+    return $.ajax({
       url : url,
       data : {'ajax' : '1', 'flash' : params['document']}
+    }).done(function() {
+      // Show the next popup when the current one is closed.
+      $(document).one('hidden.bs.modal', '#flashPopup', function(event) {
+        window.flashNotifierIndex++;
+        window.flashNotifierNext();
+      });
     });
-    window.flashNotifierIndex++;
-    window.flashNotifierNext();
-  }
-   /**
-   * Events when flashPopup is shown.
+  };
+
+  /**
+   * Update the modal content when shown.
    */
   $(document).on('show.bs.modal', '#flashPopup', function(event) {
     let params = window.flashNotifierParams[window.flashNotifierIndex];
     $(this).find('.modal-title').text(params['date']);
     $(this).find('.modal-body').html(params['message']);
+  }).on('shown.bs.modal', '#flashPopup', function(event) {
+    // The popup is ready now.
+    $(this).find('input.btn-primary').prop('disabled', false);
   });
-  /**
-   * Save the fact that 'ok' button was clicked.
-   */
+
   $(document).on('click', '#flashPopup input.btn-primary', function(event) {
-    $(this).data('clicked', true);
-  });
-  /**
-   * Check if we can show the next popup when the modal is closed.
-   */
-  $(document).on('hidden.bs.modal', '#flashPopup', function(event) {
-    var okButton = $('#flashPopup input.btn-primary');
-    if(okButton.data('clicked')) {
-      window.flashNotifierConfirm();
-      okButton.data('clicked', false);
-    }
+    var okButton = $(this).prop('disabled', true);
+    // Wait for the confirmation request to succeed and only then hide the popup.
+    window.flashNotifierConfirm().done(function() {
+      // Hide the current popup and possibly trigger the next popup.
+      window.flashPopup.modal('hide');
+    }).fail(function() {
+      // Re-enable the OK button in case the confirmation request failed.
+      okButton.prop('disabled', false);
+    });
   });
 });</code>
     </property>

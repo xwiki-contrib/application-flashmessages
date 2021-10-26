@@ -29,7 +29,6 @@ import org.junit.Assert;
 import org.xwiki.flashmessages.test.po.FlashEntryEditPage;
 import org.xwiki.flashmessages.test.po.FlashEntryViewPage;
 import org.xwiki.flashmessages.test.po.FlashHomePage;
-import org.xwiki.flashmessages.test.po.FlashPopup;
 import org.xwiki.flashmessages.test.po.FlashSlider;
 import org.xwiki.test.ui.po.CreatePagePage;
 import org.xwiki.test.ui.po.ViewPage;
@@ -336,8 +335,7 @@ public class FlashUtil extends ViewPage
 
         // Click the pop-up notification
         if (shouldBeInSlider && entryViewPage.hasPopup()) {
-            FlashPopup flashPopup = entryViewPage.getPopup();
-            entryViewPage = flashPopup.clickOk();
+            entryViewPage.getPopup().clickOk();
             entryViewPage = entryViewPage.reload();
         }
 

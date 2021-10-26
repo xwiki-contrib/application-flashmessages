@@ -19,9 +19,13 @@
  */
 package org.xwiki.flashmessages.test.po;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.xwiki.test.ui.po.BaseElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.xwiki.test.ui.po.BaseModal;
+import org.xwiki.test.ui.po.ConfirmationModal;
 
 /**
  * Represents a Flash Messages pop-up.
@@ -29,22 +33,17 @@ import org.xwiki.test.ui.po.BaseElement;
  * @version $Id$
  * @since 1.1.2
  */
-public class FlashPopup extends BaseElement
+public class FlashPopup extends ConfirmationModal
 {
-    @FindBy(id = "my-modal-popup")
-    private WebElement modalPopupElement;
-
-    @FindBy(xpath = "//div[@id='my-modal-popup']/descendant::input[@type = 'submit' and @class = 'button']")
-    private WebElement okButtonElement;
-
-    /**
-     * Get message
-     * 
-     * @return the pop-up message
-     */
-    public String getMessage()
+    public static boolean isPresent()
     {
-        return modalPopupElement.getText();
+        return !getUtil().getDriver().findElementsWithoutWaiting(By.className("modal-backdrop")).isEmpty();
+    }
+
+    public FlashPopup()
+    {
+        super(By.id("flashPopup"));
+        waitUntilReady();
     }
 
     /**
@@ -54,21 +53,29 @@ public class FlashPopup extends BaseElement
      * @param message the message of the flash entry
      * @return if the described message is present in the pop-up or not
      */
-    public Boolean containsMessage(String date, String message)
+    public boolean containsMessage(String date, String message)
     {
         String content = getMessage();
-
         return (content.contains(date) && content.contains(message));
     }
 
-    /**
-     * Click the OK button
-     * 
-     * @return the view page state resulting from closing the pop-up
-     */
-    public FlashEntryViewPage clickOk()
+    private void waitUntilReady()
     {
-        okButtonElement.click();
-        return new FlashEntryViewPage();
+        WebElement okButton = this.container.findElement(By.cssSelector(".modal-footer .btn-primary"));
+        getDriver().waitUntilCondition(ExpectedConditions.elementToBeClickable(okButton));
+    }
+
+    @Override
+    protected BaseModal waitForClosed()
+    {
+        getDriver().waitUntilCondition(new ExpectedCondition<Boolean>()
+        {
+            @Override
+            public Boolean apply(WebDriver driver)
+            {
+                return !isPresent();
+            }
+        });
+        return this;
     }
 }

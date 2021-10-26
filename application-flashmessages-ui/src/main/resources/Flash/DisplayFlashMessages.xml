@@ -108,7 +108,7 @@
     ##
     #if(
       ($repeatInterval == 'daily'   &amp;&amp; $mathtool.mod($dateDiff.days,   $repeatFrequency) == 0) ||
-      ($repeatInterval == 'weekly'  &amp;&amp; $mathtool.mod($dateDiff.weeks,  $repeatFrequency) == 0 &amp;&amp; $listtool.contains($repeatDays, $dayOfTheWeek)) ||
+      ($repeatInterval == 'weekly'  &amp;&amp; $mathtool.mod($dateDiff.weeks,  $repeatFrequency) == 0 &amp;&amp; $repeatDays.contains($dayOfTheWeek)) ||
       ($repeatInterval == 'monthly' &amp;&amp; $mathtool.mod($dateDiff.months, $repeatFrequency) == 0 &amp;&amp; $datetool.format('d', $date) == $datetool.format('d', $today)) ||
       ($repeatInterval == 'yearly'  &amp;&amp; $mathtool.mod($dateDiff.years,  $repeatFrequency) == 0 &amp;&amp; $datetool.format('Md', $date) == $datetool.format('Md', $today))
     )
