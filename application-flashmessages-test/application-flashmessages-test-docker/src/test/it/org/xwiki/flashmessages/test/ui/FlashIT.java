@@ -22,50 +22,58 @@ package org.xwiki.flashmessages.test.ui;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.xwiki.flashmessages.test.po.*;
-import org.xwiki.test.ui.AbstractTest;
-import org.xwiki.test.ui.SuperAdminAuthenticationRule;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.xwiki.flashmessages.test.po.FlashEntryEditPage;
+import org.xwiki.flashmessages.test.po.FlashEntryViewPage;
+import org.xwiki.flashmessages.test.po.FlashHomePage;
+import org.xwiki.flashmessages.test.po.FlashSlider;
+import org.xwiki.panels.test.po.ApplicationsPanel;
+import org.xwiki.test.docker.junit5.UITest;
+import org.xwiki.test.integration.junit.LogCaptureConfiguration;
+import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.po.LiveTableElement;
 import org.xwiki.test.ui.po.ViewPage;
-import org.junit.After;
-import org.junit.Assert;
-import org.xwiki.panels.test.po.ApplicationsPanel;
+import org.xwiki.test.ui.po.editor.ObjectEditPage;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * UI tests for the Flash Messages application.
  *
  * @version $Id$
- * @since
+ * @since 1.7
  */
-public class FlashTest extends AbstractTest
+@UITest
+class FlashIT
 {
-    private FlashUtil flashUtil = FlashUtil.getInstance();
+    private FlashUtil flashUtil;
 
     private FlashTranslations translation = FlashTranslations.getInstance();
 
-    @Rule
-    public SuperAdminAuthenticationRule superAdmin = new SuperAdminAuthenticationRule(getUtil());
-
-    @BeforeClass
-    public static void createUsers()
+    @BeforeAll
+    static void createUsers(TestUtils setup)
     {
         // Create administrator
-        getUtil().createUser("LightYagami", "justice", "email", "light.yagami@xwiki.org", "first_name", "Light", "last_name", "Yagami");
-        
+        setup.createUser("LightYagami", "justice", "email", "light.yagami@xwiki.org", "first_name", "Light",
+            "last_name", "Yagami");
+
         // Create normal user
-        getUtil().createUser("MisaAmane", "love", "email", "misa.amane@xwiki.org", "first_name", "Misa", "last_name", "Amane");
+        setup.createUser("MisaAmane", "love", "email", "misa.amane@xwiki.org", "first_name", "Misa", "last_name",
+            "Amane");
     }
 
-    @Before
-    public void initialize() throws Exception
+    @BeforeEach
+    void initialize(TestUtils setup) throws Exception
     {
+        this.flashUtil = FlashUtil.getInstance(setup);
         setDefaultlanguage();
-        createXWikiAdminGroup();
-        createDefaultEntry();
+        createXWikiAdminGroup(setup);
+        createDefaultEntry(setup);
     }
 
     private void setDefaultlanguage()
@@ -73,16 +81,20 @@ public class FlashTest extends AbstractTest
         translation.setLanguage("en");
     }
 
-    private void createXWikiAdminGroup() throws Exception
+    private void createXWikiAdminGroup(TestUtils setup) throws Exception
     {
-        if (!getUtil().pageExists("XWiki", "XWikiAdminGroup")) {
+        if (!setup.pageExists("XWiki", "XWikiAdminGroup")) {
             // Add Light Yagami as member of XWikiAdminGroup
-            getUtil().addObject("XWiki", "XWikiAdminGroup", "XWiki.XWikiGroups");
-            getUtil().updateObject("XWiki", "XWikiAdminGroup", "XWiki.XWikiGroups", 0, "member", "XWiki.LightYagami");
+            setup.loginAsSuperAdmin();
+            setup.addObject("XWiki", "XWikiAdminGroup", "XWiki.XWikiGroups", "member", "XWiki.LightYagami");
+            setup.addObject("XWiki", "XWikiPreferences", "XWiki.XWikiGlobalRights", "groups", "XWiki.XWikiAdminGroup",
+                "allow", 1, "levels", "admin");
+            // Make sure the wiki administration is not locked by the superadmin user.
+            new ObjectEditPage().clickCancel();
         }
     }
 
-    private void createDefaultEntry() throws Exception
+    private void createDefaultEntry(TestUtils setup) throws Exception
     {
         // Create the default entry object
 
@@ -100,7 +112,7 @@ public class FlashTest extends AbstractTest
         }
 
         // Create the default entry document inside the wiki
-        if (!getUtil().pageExists("Flash", flashUtil.getDefaultEntry().getName())) {
+        if (!setup.pageExists("Flash", flashUtil.getDefaultEntry().getName())) {
             // Login as an administrator
             flashUtil.login("LightYagami", "justice");
 
@@ -115,12 +127,12 @@ public class FlashTest extends AbstractTest
             }
 
             // Re-authenticate as superadmin
-            superAdmin.authenticate();
+            setup.loginAsSuperAdmin();
         }
     }
 
     @Test
-    public void testGuestRights()
+    void testGuestRights()
     {
         // Login as guest.
         flashUtil.login("guest");
@@ -129,15 +141,15 @@ public class FlashTest extends AbstractTest
         FlashHomePage homePage = FlashHomePage.gotoPage();
 
         // We should have been redirected to the login page.
-        Assert.assertEquals(homePage.getMetaDataValue("space"), "XWiki");
-        Assert.assertEquals(homePage.getMetaDataValue("page"), "XWikiLogin");
+        assertEquals(homePage.getMetaDataValue("space"), "XWiki");
+        assertEquals(homePage.getMetaDataValue("page"), "XWikiLogin");
 
         // I don't care about entry page view rights since guest
         // isn't in any groups and will have no flash messages aimed towards him.
     }
 
     @Test
-    public void testRegularUserRights()
+    void testRegularUserRights()
     {
         // Login as Misa Amane (regular user).
         flashUtil.login("MisaAmane", "love");
@@ -150,7 +162,7 @@ public class FlashTest extends AbstractTest
         FlashHomePage homePage = FlashHomePage.gotoPage();
 
         // Check the not allowed message.
-        Assert.assertTrue(homePage.containsXWikiMessage(translation.getKey("notallowed")));
+        assertTrue(homePage.containsXWikiMessage(translation.getKey("notallowed")));
 
         /*
          * Entry: view
@@ -160,7 +172,7 @@ public class FlashTest extends AbstractTest
         FlashEntryViewPage entryViewPage = flashUtil.getDefaultEntryViewPage();
 
         // Check the not allowed message.
-        Assert.assertFalse(entryViewPage.containsXWikiMessage(translation.getKey("notallowed")));
+        assertFalse(entryViewPage.containsXWikiMessage(translation.getKey("notallowed")));
 
         /*
          * Entry: edit
@@ -170,11 +182,11 @@ public class FlashTest extends AbstractTest
         FlashEntryEditPage entryEditPage = flashUtil.getDefaultEntryEditPage();
 
         // Check the not allowed message.
-        Assert.assertTrue(entryEditPage.containsXWikiMessage(translation.getKey("notallowed")));
+        assertTrue(entryEditPage.containsXWikiMessage(translation.getKey("notallowed")));
     }
 
     @Test
-    public void testAdminRights()
+    void testAdminRights()
     {
         // Login as Light Yagami (administrator).
         flashUtil.login("LightYagami", "justice");
@@ -187,7 +199,7 @@ public class FlashTest extends AbstractTest
         FlashHomePage homePage = FlashHomePage.gotoPage();
 
         // Check the not allowed message.
-        Assert.assertFalse(homePage.containsXWikiMessage(translation.getKey("notallowed")));
+        assertFalse(homePage.containsXWikiMessage(translation.getKey("notallowed")));
 
         /*
          * Entry: view
@@ -197,7 +209,7 @@ public class FlashTest extends AbstractTest
         FlashEntryViewPage entryViewPage = flashUtil.getDefaultEntryViewPage();
 
         // Check the not allowed message.
-        Assert.assertFalse(entryViewPage.containsXWikiMessage(translation.getKey("notallowed")));
+        assertFalse(entryViewPage.containsXWikiMessage(translation.getKey("notallowed")));
 
         /*
          * Entry: edit
@@ -207,35 +219,35 @@ public class FlashTest extends AbstractTest
         FlashEntryEditPage entryEditPage = flashUtil.getDefaultEntryEditPage();
 
         // Check the not allowed message.
-        Assert.assertFalse(entryEditPage.containsXWikiMessage(translation.getKey("notallowed")));
+        assertFalse(entryEditPage.containsXWikiMessage(translation.getKey("notallowed")));
         entryEditPage.clickCancel();
     }
 
     @Test
-    public void testApplicationPanel()
+    void testApplicationPanel()
     {
         // Navigate to the Flash Messages application by clicking on the application panel entry
         ApplicationsPanel applicationPanel = ApplicationsPanel.gotoPage();
         ViewPage vp = applicationPanel.clickApplication(translation.getKey("flash.panels.quicklinktitle"));
 
         // Verify we're on the right page!
-        Assert.assertEquals(vp.getMetaDataValue("space"), FlashHomePage.getSpace());
-        Assert.assertEquals(vp.getMetaDataValue("page"), FlashHomePage.getPage());
+        assertEquals(vp.getMetaDataValue("space"), FlashHomePage.getSpace());
+        assertEquals(vp.getMetaDataValue("page"), FlashHomePage.getPage());
     }
 
     @Test
-    public void testBreadCrumb()
+    void testBreadCrumb()
     {
         // Go back to the home page by clicking on the breadcrumb
         ViewPage vp = flashUtil.getDefaultEntryViewPage().clickBreadcrumbLink(translation.getKey("flash.home.title"));
 
         // Verify we're on the right page!
-        Assert.assertEquals(vp.getMetaDataValue("space"), FlashHomePage.getSpace());
-        Assert.assertEquals(vp.getMetaDataValue("page"), FlashHomePage.getPage());
+        assertEquals(vp.getMetaDataValue("space"), FlashHomePage.getSpace());
+        assertEquals(vp.getMetaDataValue("page"), FlashHomePage.getPage());
     }
 
     @Test
-    public void testLocalization()
+    void testLocalization(TestUtils setup)
     {
         FlashHomePage homePage;
         LiveTableElement liveTable;
@@ -246,10 +258,11 @@ public class FlashTest extends AbstractTest
         String entryPage = flashUtil.getDefaultEntryName();
 
         // Enable support for multiple languages
-        getUtil().addObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences");
-        getUtil().updateObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences", 0, "multilingual", 1);
-        getUtil().updateObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences", 0, "languages", "en,fr");
-        getUtil().updateObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences", 0, "default_language", "en");
+        this.flashUtil.login("LightYagami", "justice");
+        setup.addObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences");
+        setup.updateObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences", 0, "multilingual", 1);
+        setup.updateObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences", 0, "languages", "en,fr");
+        setup.updateObject("XWiki", "XWikiPreferences", "XWiki.XWikiPreferences", 0, "default_language", "en");
 
         for (String language : Arrays.asList("en", "fr")) {
             // Set the current language
@@ -257,53 +270,53 @@ public class FlashTest extends AbstractTest
 
             // Home page
             homePage = FlashHomePage.gotoPage(language);
-            Assert.assertEquals(homePage.getTitle(), translation.getKey("flash.home.title"));
-            Assert.assertEquals(homePage.getInfoMessage(), translation.getKey("flash.home.msginfo"));
+            assertEquals(translation.getKey("flash.home.title"), homePage.getTitle());
+            assertEquals(homePage.getInfoMessage(), translation.getKey("flash.home.msginfo"));
             liveTable = homePage.getLiveTable();
-            Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.doc.title")));
-            Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.dateBegin")));
-            Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.dateEnd")));
-            Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.doc.date")));
-            Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.groups")));
-            Assert.assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.message")));
+            assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.doc.title")));
+            assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.dateBegin")));
+            assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.dateEnd")));
+            assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.doc.date")));
+            assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.groups")));
+            assertTrue(liveTable.hasColumn(translation.getKey("flash.livetable.message")));
 
             // Entry: view
             entryViewPage = FlashEntryViewPage.gotoPage(entryPage, language);
-            Assert.assertEquals(entryViewPage.getDateBeginLabel(),
+            assertEquals(entryViewPage.getDateBeginLabel(),
                 translation.getKeyUppercase("Flash.FlashClass_dateBegin"));
-            Assert.assertEquals(entryViewPage.getDateEndLabel(),
+            assertEquals(entryViewPage.getDateEndLabel(),
                 translation.getKeyUppercase("Flash.FlashClass_dateEnd"));
-            Assert.assertEquals(entryViewPage.getRepeatLabel(), translation.getKeyUppercase("Flash.FlashClass_repeat"));
-            Assert.assertEquals(entryViewPage.getGroupsLabel(), translation.getKeyUppercase("Flash.FlashClass_groups"));
-            Assert.assertEquals(entryViewPage.getMessageLabel(),
+            assertEquals(entryViewPage.getRepeatLabel(), translation.getKeyUppercase("Flash.FlashClass_repeat"));
+            assertEquals(entryViewPage.getGroupsLabel(), translation.getKeyUppercase("Flash.FlashClass_groups"));
+            assertEquals(entryViewPage.getMessageLabel(),
                 translation.getKeyUppercase("Flash.FlashClass_message"));
 
             // Entry: edit
             entryEditPage = FlashEntryEditPage.gotoPage(entryPage, language);
-            Assert.assertEquals(entryEditPage.getDateBeginLabel(),
+            assertEquals(entryEditPage.getDateBeginLabel(),
                 translation.getKeyUppercase("Flash.FlashClass_dateBegin"));
-            Assert.assertEquals(entryEditPage.getDateEndLabel(),
+            assertEquals(entryEditPage.getDateEndLabel(),
                 translation.getKeyUppercase("Flash.FlashClass_dateEnd"));
-            Assert.assertEquals(entryEditPage.getRepeatLabel(), translation.getKeyUppercase("Flash.FlashClass_repeat"));
-            Assert.assertEquals(entryEditPage.getRepeatIntervalLabel(),
+            assertEquals(entryEditPage.getRepeatLabel(), translation.getKeyUppercase("Flash.FlashClass_repeat"));
+            assertEquals(entryEditPage.getRepeatIntervalLabel(),
                 translation.getKeyUppercase("Flash.FlashClass_repeatInterval"));
-            Assert.assertEquals(entryEditPage.getRepeatInterval(), flashUtil.getRepeatIntervals(translation));
-            Assert.assertEquals(entryEditPage.getRepeatFrequencyLabel(),
+            assertEquals(entryEditPage.getRepeatInterval(), flashUtil.getRepeatIntervals(translation));
+            assertEquals(entryEditPage.getRepeatFrequencyLabel(),
                 translation.getKeyUppercase("Flash.FlashClass_repeatFrequency"));
-            Assert.assertEquals(entryEditPage.getRepeatDaysLabel(),
+            assertEquals(entryEditPage.getRepeatDaysLabel(),
                 translation.getKeyUppercase("Flash.FlashClass_repeatDays"));
-            Assert.assertEquals(entryEditPage.getRepeatDays(), flashUtil.getDaysOfTheWeek(translation));
-            Assert.assertEquals(entryEditPage.getRepeatSummaryLabel(),
+            assertEquals(entryEditPage.getRepeatDays(), flashUtil.getDaysOfTheWeek(translation));
+            assertEquals(entryEditPage.getRepeatSummaryLabel(),
                 translation.getKeyUppercase("flash.repeat.summary"));
-            Assert.assertEquals(entryEditPage.getGroupsLabel(), translation.getKeyUppercase("Flash.FlashClass_groups"));
-            Assert.assertEquals(entryEditPage.getMessageLabel(),
+            assertEquals(entryEditPage.getGroupsLabel(), translation.getKeyUppercase("Flash.FlashClass_groups"));
+            assertEquals(entryEditPage.getMessageLabel(),
                 translation.getKeyUppercase("Flash.FlashClass_message"));
             entryEditPage.clickCancel();
         }
     }
 
     @Test
-    public void testDataEntry()
+    void testDataEntry()
     {
         // Login as Light Yagami (administrator).
         flashUtil.login("LightYagami", "justice");
@@ -313,13 +326,13 @@ public class FlashTest extends AbstractTest
 
         // Livetable
         LiveTableElement liveTable = homePage.getLiveTable();
-        Assert.assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.doc.title"),
+        assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.doc.title"),
             flashUtil.getDefaultEntryName()));
-        Assert.assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.dateBegin"),
+        assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.dateBegin"),
             flashUtil.getDefaultEntryFormattedDateBegin()));
-        Assert.assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.dateEnd"),
+        assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.dateEnd"),
             flashUtil.getDefaultEntryFormattedDateEnd()));
-        Assert.assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.message"),
+        assertTrue(liveTable.hasRow(translation.getKey("flash.livetable.message"),
             flashUtil.getDefaultEntryMessage()));
 
         // Entry view
@@ -327,19 +340,19 @@ public class FlashTest extends AbstractTest
         // This is probably the dumbest thing I wrote
         // The date format in the livetable uses a single space where as in the rest of the app a double space separator
         // is used between the date and time
-        Assert.assertEquals(entryViewPage.getDateBegin(),
+        assertEquals(entryViewPage.getDateBegin(),
             flashUtil.getDefaultEntryFormattedDateBegin().replace("  ", " "));
-        Assert.assertEquals(entryViewPage.getDateEnd(), flashUtil.getDefaultEntryFormattedDateEnd().replace("  ", " "));
-        Assert.assertEquals(entryViewPage.getMessage(), flashUtil.getDefaultEntryMessage());
+        assertEquals(entryViewPage.getDateEnd(), flashUtil.getDefaultEntryFormattedDateEnd().replace("  ", " "));
+        assertEquals(entryViewPage.getMessage(), flashUtil.getDefaultEntryMessage());
 
         // Slider
         FlashSlider flashSlider = entryViewPage.getSlider();
-        Assert.assertTrue(flashSlider.containsMessage(flashUtil.getDefaultEntryFormattedDateBegin(),
+        assertTrue(flashSlider.containsMessage(flashUtil.getDefaultEntryFormattedDateBegin(),
             flashUtil.getDefaultEntryMessage()));
     }
 
     @Test
-    public void testMarkingAsSeen() throws Exception
+    void testMarkingAsSeen() throws Exception
     {
         FlashEntry entry = new FlashEntry("MarkAsSeen",
             flashUtil.getDate(0, 0, 0, -1, 0, true),
@@ -359,11 +372,11 @@ public class FlashTest extends AbstractTest
 
         // The pop-up should be present only once per user
         // And it should have been shown during the creation phase
-        Assert.assertFalse(entryViewPage.hasPopup());
+        assertFalse(entryViewPage.hasPopup());
     }
 
     @Test
-    public void testNonRecurringActiveMessage() throws Exception
+    void testNonRecurringActiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("NonRecurringActiveMessage",
             flashUtil.getDate(0, 0, 0, 0, -1, false),
@@ -379,7 +392,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testNonRecurringInctiveMessage() throws Exception
+    void testNonRecurringInctiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("NonRecurringInactiveMessage",
             flashUtil.getDate(0, 0, 0, 0, -5, false),
@@ -395,7 +408,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testDailyRecurringActiveMessage() throws Exception
+    void testDailyRecurringActiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("DailyRecurringActiveMessage",
             flashUtil.getDate(0, 0, 0, -2, 0, true),
@@ -411,7 +424,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testDailyRecurringInactiveMessage() throws Exception
+    void testDailyRecurringInactiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("DailyRecurringInactiveMessage",
             flashUtil.getDate(0, 0, 0, -2, 0, true),
@@ -427,7 +440,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testWeeklyRecurringActiveMessage() throws Exception
+    void testWeeklyRecurringActiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("WeeklyRecurringActiveMessage",
             flashUtil.getDate(0, -2, 0, 0, 0, true),
@@ -443,7 +456,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testWeeklyRecurringInactiveMessage() throws Exception
+    void testWeeklyRecurringInactiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("WeeklyRecurringInactiveMessage",
             flashUtil.getDate(0, 0, -2, 0, 0, true),
@@ -459,7 +472,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testMonthlyRecurringActiveMessage() throws Exception
+    void testMonthlyRecurringActiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("MonthlyRecurringActiveMessage",
             flashUtil.getDate(-2, 0, 0, 0, 0, true),
@@ -475,7 +488,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testMonthlyRecurringInactiveMessage() throws Exception
+    void testMonthlyRecurringInactiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("MonthlyRecurringInactiveMessage",
             flashUtil.getDate(-4, 0, 0, 0, 0, true),
@@ -491,7 +504,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testYearlyRecurringActiveMessage() throws Exception
+    void testYearlyRecurringActiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("YearlyRecurringActiveMessage",
             flashUtil.getDate(-2, 0, 0, 0, 0, true),
@@ -507,7 +520,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testYearlyRecurringInactiveMessage() throws Exception
+    void testYearlyRecurringInactiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("YearlyRecurringInactiveMessage",
             flashUtil.getDate(-4, 0, 0, 0, 0, true),
@@ -522,16 +535,12 @@ public class FlashTest extends AbstractTest
         flashUtil.testMessage(entry, false);
     }
 
-    @After
-    public void tearDown()
+    @AfterEach
+    void tearDown(LogCaptureConfiguration logCaptureConfiguration)
     {
-        validateConsole.getLogCaptureConfiguration().registerExpected(
-            "TLS certificate errors will be ignored for this session"
-        );
-        validateConsole.getLogCaptureConfiguration().registerExcludes(
-            "Failed to send event [class org.xwiki.bridge.event.ActionExecutedEvent (view)]" +
-                " to listener [com.xpn.xwiki.stats.impl.XWikiStatsServiceImpl",
-            "java.lang.IllegalStateException: Response is committed"
+        logCaptureConfiguration.registerExcludes(
+            // The icon theme picker used on the XWiki.XWikiPreferences requires programming right.
+            "QueryException: The query requires programming right."
         );
     }
 }

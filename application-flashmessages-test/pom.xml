@@ -38,6 +38,13 @@
   </properties>
   <modules>
     <module>application-flashmessages-test-pageobjects</module>
-    <module>application-flashmessages-test-tests</module>
   </modules>
+  <profiles>
+    <profile>
+      <id>docker</id>
+      <modules>
+        <module>application-flashmessages-test-docker</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>

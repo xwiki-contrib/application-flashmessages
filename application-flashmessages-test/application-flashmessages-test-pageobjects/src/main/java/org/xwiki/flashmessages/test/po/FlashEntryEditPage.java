@@ -273,10 +273,11 @@ public class FlashEntryEditPage extends FlashPage
     {
         List<String> daysOfTheWeek =
             Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday");
-
-        for (String day : days) {
-            getDriver().findElementWithoutWaiting(By.id("xwiki-form-repeatDays-0-" + daysOfTheWeek.indexOf(day)))
-                .click();
+        for (int i = 0; i < daysOfTheWeek.size(); i++) {
+            WebElement checkbox = getDriver().findElementWithoutWaiting(By.id("xwiki-form-repeatDays-0-" + i));
+            if (checkbox.isDisplayed() && checkbox.isSelected() != days.contains(daysOfTheWeek.get(i))) {
+                checkbox.click();
+            }
         }
     }
 

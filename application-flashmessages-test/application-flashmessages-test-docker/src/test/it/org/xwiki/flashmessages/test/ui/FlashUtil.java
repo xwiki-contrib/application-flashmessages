@@ -30,8 +30,8 @@ import org.xwiki.flashmessages.test.po.FlashEntryEditPage;
 import org.xwiki.flashmessages.test.po.FlashEntryViewPage;
 import org.xwiki.flashmessages.test.po.FlashHomePage;
 import org.xwiki.flashmessages.test.po.FlashSlider;
+import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.po.CreatePagePage;
-import org.xwiki.test.ui.po.ViewPage;
 
 /**
  * Flash Messages test utilities.
@@ -39,26 +39,29 @@ import org.xwiki.test.ui.po.ViewPage;
  * @version $Id$
  * @since
  */
-public class FlashUtil extends ViewPage
+public class FlashUtil
 {
     private static FlashUtil instance;
+    
+    private TestUtils setup;
 
     private FlashEntry defaultEntry;
 
-    private FlashUtil()
+    private FlashUtil(TestUtils setup)
     {
-        // Dummy
+        this.setup = setup;
     }
 
     /**
      * Get singleton instance
      * 
+     * @param setup the generic test utils
      * @return the instance of FlashUtil
      */
-    public static FlashUtil getInstance()
+    public static FlashUtil getInstance(TestUtils setup)
     {
         if (instance == null) {
-            instance = new FlashUtil();
+            instance = new FlashUtil(setup);
         }
 
         return instance;
@@ -143,12 +146,13 @@ public class FlashUtil extends ViewPage
     public void login(String username, String password)
     {
         if (username.equals("guest")) {
-            getUtil().forceGuestUser();
+            this.setup.forceGuestUser();
             return;
         }
 
-        getDriver().get(getUtil().getURLToLoginAndGotoPage(username, password, getUtil().getURLToNonExistentPage()));
-        getUtil().recacheSecretToken();
+        this.setup.getDriver()
+            .get(this.setup.getURLToLoginAndGotoPage(username, password, this.setup.getURLToNonExistentPage()));
+        this.setup.recacheSecretToken();
     }
 
     /**
@@ -180,8 +184,8 @@ public class FlashUtil extends ViewPage
      */
     public FlashEntryViewPage createEntry(FlashEntry entry) throws Exception
     {
-        if (getUtil().pageExists("Flash", entry.getName())) {
-            getUtil().deletePage("Flash", entry.getName());
+        if (this.setup.pageExists("Flash", entry.getName())) {
+            this.setup.deletePage("Flash", entry.getName());
         }
 
         FlashHomePage homePage = FlashHomePage.gotoPage();
@@ -328,7 +332,7 @@ public class FlashUtil extends ViewPage
         FlashEntryViewPage entryViewPage = createEntry(entry);
 
         // Check if the entry document was created
-        Assert.assertTrue(getUtil().pageExists("Flash", entry.getName()));
+        Assert.assertTrue(this.setup.pageExists("Flash", entry.getName()));
 
         // Get the Flash Message view page
         entryViewPage = FlashEntryViewPage.gotoPage(entry.getName());
