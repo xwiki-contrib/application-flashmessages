@@ -49,30 +49,29 @@
 ###############################################
 ##           Group filter
 ###############################################
-#set($groups = $xwiki.rightsmanager.groupsApi)
-#if($xcontext.userReference.wikiReference.name == $xcontext.getMainWikiName() &amp;&amp; !$xcontext.isMainWiki())
-  #set($localGroups = $groups.getAllMatchedLocalGroups({"member" : ["StringProperty", "$xcontext.userReference"]}))
-  #set($globalGroups = $groups.getAllMatchedGlobalGroups({"member" : ["StringProperty", "$xcontext.localUser"]}))
+## Collect the groups the current user is member of. This follows the logic from the Groups user profile section
+## (see XWiki.XWikiUserMembershipSheet)
+#if ("$!xcontext.userReference" == '')
+  ## Guest users can't be included in groups.
+  #set ($groups = [])
+#elseif ($xcontext.userReference.wikiReference.name == $xcontext.getMainWikiName())
+  ## Global users can be included in groups from any wiki.
+  #set ($groups = $services.user.group.getGroupsFromAllWikis($xcontext.userReference))
 #else
-  #set($localGroups = $groups.getAllMatchedLocalGroups({"member" : ["StringProperty", "$xcontext.localUser"]}))
-  #set($globalGroups = $localGroups)
+  ## Local users are normally included only in local groups (from the same wiki).
+  #set ($groups = $services.user.group.getGroupsFromMemberWiki($xcontext.userReference))
 #end
-##
-#if($localGroups.size() &gt; 0 || $globalGroups.size() &gt; 0)
-  #set($groupsFilter = "")
-  #foreach ($group in $localGroups)
-    #set($groupsFilter = "$!{groupsFilter}'$group' member of obj.groups")
-    #if($foreach.count &lt; $localGroups.size() || $globalGroups.size() &gt; 0)
-      #set($groupsFilter = "$!{groupsFilter} OR ")
-    #end
-  #end
-  #foreach ($group in $globalGroups)
-    #set($groupsFilter = "$!{groupsFilter}'xwiki:${group}' member of obj.groups")
-    #if($foreach.count &lt; $globalGroups.size())
-      #set($groupsFilter = "$!{groupsFilter} OR ")
-    #end
-  #end
-  #set($groupsFilter = " AND (${groupsFilter}) ")
+#set ($groupsFilter = [])
+#foreach ($groupReference in $groups)
+  ## Remove the wiki component from the group reference if it matches the current wiki (where we look for flash
+  ## messages) because that's what we save in the groups property of flash messages.
+  #set ($compactGroupReference = $services.model.serialize($groupReference, 'compactwiki'))
+  #set ($discard = $groupsFilter.add("'$compactGroupReference' member of obj.groups"))
+#end
+#if ($groupsFilter.size() &gt; 0)
+  #set ($groupsFilter = " AND ($stringtool.join($groupsFilter, ' OR ')) ")
+#else
+  #set ($groupsFilter = '')
 #end
 ##
 ###############################################
