@@ -40,9 +40,8 @@
   <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
-  <syntaxId>xwiki/2.1</syntaxId>
+  <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  
   <content>## Administration ##
 admin.flashmessages=Флэш-сообщения
 flash.creation.utcinfo=Время, используемое для оповещений, основано на UTC. Для проверки времени UTC можно использовать кнопку 'сейчас' в календаре

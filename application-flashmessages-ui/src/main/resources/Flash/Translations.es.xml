@@ -40,9 +40,8 @@
   <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
-  <syntaxId>xwiki/2.1</syntaxId>
+  <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  
   <content>## Administration ##
 admin.flashmessages=Mensajes Flash
 flash.creation.utcinfo=La hora utilizada para las alertas se base en UTC. Para comprobar la hora UTC puedes utilizar el botón 'ahora' del calendario
