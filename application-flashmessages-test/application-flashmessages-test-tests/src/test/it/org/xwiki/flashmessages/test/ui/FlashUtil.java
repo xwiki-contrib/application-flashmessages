@@ -177,8 +177,9 @@ public class FlashUtil extends ViewPage
      * 
      * @param entry the object representing the entry content
      * @return the resulting entry document in view mode
+     * @throws Exception 
      */
-    public FlashEntryViewPage createEntry(FlashEntry entry)
+    public FlashEntryViewPage createEntry(FlashEntry entry) throws Exception
     {
         if (getUtil().pageExists("Flash", entry.getName())) {
             getUtil().deletePage("Flash", entry.getName());
@@ -317,8 +318,9 @@ public class FlashUtil extends ViewPage
      * 
      * @param entry FlashEntry object containing the entry data
      * @param shouldBeInSlider should the entry be displayed in the slider (active or not)
+     * @throws Exception 
      */
-    public FlashEntryViewPage testMessage(FlashEntry entry, Boolean shouldBeInSlider)
+    public FlashEntryViewPage testMessage(FlashEntry entry, Boolean shouldBeInSlider) throws Exception
     {
         // Login as Light Yagami (administrator).
         login("LightYagami", "justice");

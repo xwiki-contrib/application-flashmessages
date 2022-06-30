@@ -142,7 +142,7 @@ public class FlashHomePage extends ViewPage
      */
     public Boolean containsXWikiMessage(String message)
     {
-        List<WebElement> messages = getUtil().findElementsWithoutWaiting(getDriver(), By.className("xwikimessage"));
+        List<WebElement> messages = getDriver().findElementsWithoutWaiting(By.className("xwikimessage"));
 
         for (WebElement msg : messages) {
             if (msg.getText().contains(message)) {

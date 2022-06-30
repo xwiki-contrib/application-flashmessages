@@ -118,7 +118,7 @@ public class FlashEntryViewPage extends FlashPage
      */
     public FlashPopup getPopup()
     {
-        this.waitUntilElementIsVisible(By.id("my-modal-popup"));
+        getDriver().waitUntilElementIsVisible(By.id("my-modal-popup"));
 
         return new FlashPopup();
     }

@@ -47,7 +47,7 @@ public class FlashTest extends AbstractTest
     private FlashTranslations translation = FlashTranslations.getInstance();
 
     @Rule
-    public SuperAdminAuthenticationRule superAdmin = new SuperAdminAuthenticationRule(getUtil(), getDriver());
+    public SuperAdminAuthenticationRule superAdmin = new SuperAdminAuthenticationRule(getUtil());
 
     @BeforeClass
     public static void createUsers()
@@ -60,7 +60,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Before
-    public void initialize()
+    public void initialize() throws Exception
     {
         setDefaultlanguage();
         createXWikiAdminGroup();
@@ -72,7 +72,7 @@ public class FlashTest extends AbstractTest
         translation.setLanguage("en");
     }
 
-    private void createXWikiAdminGroup()
+    private void createXWikiAdminGroup() throws Exception
     {
         if (!getUtil().pageExists("XWiki", "XWikiAdminGroup")) {
             // Add Light Yagami as member of XWikiAdminGroup
@@ -81,7 +81,7 @@ public class FlashTest extends AbstractTest
         }
     }
 
-    private void createDefaultEntry()
+    private void createDefaultEntry() throws Exception
     {
         // Create the default entry object
 
@@ -338,7 +338,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testMarkingAsSeen()
+    public void testMarkingAsSeen() throws Exception
     {
         FlashEntry entry = new FlashEntry("MarkAsSeen",
             flashUtil.getDate(0, 0, 0, -1, 0, true),
@@ -362,7 +362,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testNonRecurringActiveMessage()
+    public void testNonRecurringActiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("NonRecurringActiveMessage",
             flashUtil.getDate(0, 0, 0, 0, -1, false),
@@ -378,7 +378,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testNonRecurringInctiveMessage()
+    public void testNonRecurringInctiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("NonRecurringInactiveMessage",
             flashUtil.getDate(0, 0, 0, 0, -5, false),
@@ -394,7 +394,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testDailyRecurringActiveMessage()
+    public void testDailyRecurringActiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("DailyRecurringActiveMessage",
             flashUtil.getDate(0, 0, 0, -2, 0, true),
@@ -410,7 +410,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testDailyRecurringInactiveMessage()
+    public void testDailyRecurringInactiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("DailyRecurringInactiveMessage",
             flashUtil.getDate(0, 0, 0, -2, 0, true),
@@ -426,7 +426,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testWeeklyRecurringActiveMessage()
+    public void testWeeklyRecurringActiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("WeeklyRecurringActiveMessage",
             flashUtil.getDate(0, -2, 0, 0, 0, true),
@@ -442,7 +442,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testWeeklyRecurringInactiveMessage()
+    public void testWeeklyRecurringInactiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("WeeklyRecurringInactiveMessage",
             flashUtil.getDate(0, 0, -2, 0, 0, true),
@@ -458,7 +458,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testMonthlyRecurringActiveMessage()
+    public void testMonthlyRecurringActiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("MonthlyRecurringActiveMessage",
             flashUtil.getDate(-2, 0, 0, 0, 0, true),
@@ -474,7 +474,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testMonthlyRecurringInactiveMessage()
+    public void testMonthlyRecurringInactiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("MonthlyRecurringInactiveMessage",
             flashUtil.getDate(-4, 0, 0, 0, 0, true),
@@ -490,7 +490,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testYearlyRecurringActiveMessage()
+    public void testYearlyRecurringActiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("YearlyRecurringActiveMessage",
             flashUtil.getDate(-2, 0, 0, 0, 0, true),
@@ -506,7 +506,7 @@ public class FlashTest extends AbstractTest
     }
 
     @Test
-    public void testYearlyRecurringInactiveMessage()
+    public void testYearlyRecurringInactiveMessage() throws Exception
     {
         FlashEntry entry = new FlashEntry("YearlyRecurringInactiveMessage",
             flashUtil.getDate(-4, 0, 0, 0, 0, true),

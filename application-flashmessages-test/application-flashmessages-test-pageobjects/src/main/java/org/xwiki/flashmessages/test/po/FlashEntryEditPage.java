@@ -253,8 +253,8 @@ public class FlashEntryEditPage extends FlashPage
     {
         List<String> repeatDays = new LinkedList<String>();
         for (int i = 0; i < 7; i++) {
-            repeatDays.add(getUtil().findElementWithoutWaiting(getDriver(),
-                By.xpath("//label[@for='xwiki-form-repeatDays-0-" + i + "']")).getText());
+            repeatDays.add(getDriver()
+                .findElementWithoutWaiting(By.xpath("//label[@for='xwiki-form-repeatDays-0-" + i + "']")).getText());
         }
 
         return repeatDays;
@@ -271,8 +271,8 @@ public class FlashEntryEditPage extends FlashPage
             Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday");
 
         for (String day : days) {
-            getUtil().findElementWithoutWaiting(getDriver(),
-                By.id("xwiki-form-repeatDays-0-" + daysOfTheWeek.indexOf(day))).click();
+            getDriver().findElementWithoutWaiting(By.id("xwiki-form-repeatDays-0-" + daysOfTheWeek.indexOf(day)))
+                .click();
         }
     }
 
@@ -295,9 +295,9 @@ public class FlashEntryEditPage extends FlashPage
     {
         for (String group : groups) {
             groupsElement.sendKeys(group);
-            waitUntilElementIsVisible(By.className("suggestItem"));
-            getUtil().findElementWithoutWaiting(getDriver(), By.className("suggestItem")).click();
-            waitUntilElementDisappears(By.className("suggestItem"));
+            getDriver().waitUntilElementIsVisible(By.className("suggestItem"));
+            getDriver().findElementWithoutWaiting(By.className("suggestItem")).click();
+            getDriver().waitUntilElementDisappears(By.className("suggestItem"));
         }
     }
 
