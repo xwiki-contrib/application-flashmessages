@@ -1,0 +1,94 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc locale="ja">
+  <web>Flash</web>
+  <name>Translations</name>
+  <language>ja</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Flash.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1399397413000</creationDate>
+  <date>1399473119000</date>
+  <contentUpdateDate>1399473087000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## Administration ##
+### Missing: admin.flashmessages=Flash Messages
+### Missing: flash.creation.utcinfo=The time used for alerts is based on UTC. To check the UTC time you can use the button 'now' in the calendar
+### Missing: flash.home.title=Flash entries
+### Missing: flash.home.msginfo=See here the history of FLASH messages published on the knowledge base.
+### Missing: flash.panels.quicklinktitle=Flash Messages
+
+## Livetable ##
+flash.livetable.doc.name=名称
+flash.livetable.dateBegin=開始日
+flash.livetable.dateEnd=終了日
+flash.livetable.groups=グループ
+flash.livetable.message=メッセージ
+flash.livetable.doc.date=アップデート日
+flash.livetable._actions.edit=編集
+flash.livetable._actions.delete=削除
+flash.livetable._actions=アクション
+
+## Class ##
+Flash.FlashClass_dateBegin=開始日
+Flash.FlashClass_dateEnd=終了日
+Flash.FlashClass_repeat=繰り返し
+Flash.FlashClass_repeatInterval=繰り返しの期間
+Flash.FlashClass_repeatInterval_daily=毎日
+Flash.FlashClass_repeatInterval_weekly=毎週
+Flash.FlashClass_repeatInterval_monthly=毎月
+Flash.FlashClass_repeatInterval_yearly=毎年
+Flash.FlashClass_repeatFrequency=繰り返す頻度
+Flash.FlashClass_repeatDays=毎日
+Flash.FlashClass_repeatDays_monday=月曜日
+Flash.FlashClass_repeatDays_tuesday=火曜日
+Flash.FlashClass_repeatDays_wednesday=水曜日
+Flash.FlashClass_repeatDays_thursday=木曜日
+Flash.FlashClass_repeatDays_friday=金曜日
+Flash.FlashClass_repeatDays_saturday=土曜日
+Flash.FlashClass_repeatDays_sunday=日曜日
+Flash.FlashClass_message=メッセージ
+Flash.FlashClass_groups=グループ
+
+## Sheet ##
+flash.repeat.summary=繰り返しの要約
+flash.repeat.summary.every=毎 {0} {1}
+flash.repeat.summary.on=に
+flash.repeat.summary.day=日
+flash.repeat.summary.daily=日
+flash.repeat.summary.weekly=週
+flash.repeat.summary.monthly=月
+flash.repeat.summary.yearly=年
+</content>
+</xwikidoc>
