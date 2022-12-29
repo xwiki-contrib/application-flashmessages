@@ -48,7 +48,6 @@ public class FlashHomePage extends ViewPage
     /**
      * Go to page
      * 
-     * @param page the page name of the flash entry page
      * @return the view page of the requested entry
      */
     public static FlashHomePage gotoPage()

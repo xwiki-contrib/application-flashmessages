@@ -87,7 +87,7 @@ public class FlashEntryEditPage extends FlashPage
     /**
      * Go to page
      * 
-     * @param the page name of the flash entry page
+     * @param page the page name of the flash entry page
      * @return the edit page of the requested entry
      */
     public static FlashEntryEditPage gotoPage(String page)
@@ -289,7 +289,7 @@ public class FlashEntryEditPage extends FlashPage
     /**
      * Set the groups the groups towards the message is aimed to
      * 
-     * @param list of XWiki groups for which the entry is displayed
+     * @param groups the list of XWiki groups for which the entry is displayed
      */
     public void setGroups(List<String> groups)
     {
@@ -313,7 +313,7 @@ public class FlashEntryEditPage extends FlashPage
     }
 
     /**
-     * Click the Save & View button
+     * Click the Save &amp; View button
      * 
      * @return the resulting view page
      */
