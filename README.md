@@ -3,9 +3,9 @@
 Allows you to create Flash messages aiming at one or multiple local/global groups.
 
 * Project Lead: [Djebloun Sidali](http://www.xwiki.org/xwiki/bin/view/XWiki/Sidali)
+* Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists), [Chat](http://dev.xwiki.org/xwiki/bin/view/Community/Chat)
 * [Documentation & Download](http://extensions.xwiki.org/xwiki/bin/view/Extension/Flash+messages+application)
 * [Issue Tracker](http://jira.xwiki.org/browse/XAFLASHM)
-* Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists>), [IRC]( http://dev.xwiki.org/xwiki/bin/view/Community/IRC)
 * [Development Practices](http://dev.xwiki.org)
 * Minimal XWiki version supported: XWiki 11.10
 * License: LGPL 2.1+.
