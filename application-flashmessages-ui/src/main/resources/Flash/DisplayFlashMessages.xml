@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.3" reference="Flash.DisplayFlashMessages" locale="">
+<xwikidoc version="1.4" reference="Flash.DisplayFlashMessages" locale="">
   <web>Flash</web>
   <name>DisplayFlashMessages</name>
   <language/>
@@ -115,20 +115,7 @@
     #end
   #end
   ##
-  ## Available from 12.1
-  #if("$!collectiontool" != '')
-    #set($events = $collectiontool.sort($events, 'date:desc'))
-  #else
-    ## Available from 12.0
-    ## When the collectionstool.sort(Object object, String property) signature is not available,
-    ## the $events will be null, so a copy is necesarry.
-    #set($copyEvents = $events)
-    #set($events = $collectionstool.sort($events, 'date:desc'))
-    #if("$!events" == '')
-      ## Before 12.0
-      #set($events = $sorttool.sort($copyEvents, 'date:desc'))
-    #end
-  #end
+  #set($events = $collectiontool.sort($events, 'date:desc'))
   ##
   #if($events.size() &gt; 0)
     {{html}}
