@@ -45,7 +45,7 @@
   <content>## Administration ##
 admin.flashmessages=플래시 메시지
 flash.creation.utcinfo=경고에 사용되는 시간은 UTC를 기준으로 합니다. UTC 시간을 확인하려면 달력에서 '지금' 버튼을 사용하세요
-flash.home.title=번역이 저장되었지만, 일부 새롭게 실패한 검사가 있습니다: 일치하지 않는 마침표(.)
+flash.home.title=플래시 항목
 flash.home.msginfo=지식 베이스에 게시된 FLASH 메시지의 기록을 여기에서 확인하세요.
 flash.panels.quicklinktitle=플래시 메시지
 
