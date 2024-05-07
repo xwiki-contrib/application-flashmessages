@@ -1,0 +1,94 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc locale="pt">
+  <web>Flash</web>
+  <name>Translations</name>
+  <language>pt</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Flash.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1399397413000</creationDate>
+  <date>1399473119000</date>
+  <contentUpdateDate>1399473087000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## Administration ##
+admin.flashmessages=Mensagens instantâneas
+flash.creation.utcinfo=O horário usado para alertas é baseado em UTC. Para verificar a hora UTC você pode usar o botão 'agora' no calendário
+flash.home.title=Entradas instantâneas
+flash.home.msginfo=Veja aqui o histórico das mensagens INSTANTÂNEAS publicadas na base de conhecimento.
+flash.panels.quicklinktitle=Mensagens instantâneas
+
+## Livetable ##
+flash.livetable.doc.name=Nome
+flash.livetable.dateBegin=Data de início
+flash.livetable.dateEnd=Data final
+flash.livetable.groups=Grupos
+flash.livetable.message=Mensagem
+flash.livetable.doc.date=Data de atualização
+flash.livetable._actions.edit=Editar
+flash.livetable._actions.delete=Excluir
+flash.livetable._actions=Ações
+
+## Class ##
+Flash.FlashClass_dateBegin=Data de início
+Flash.FlashClass_dateEnd=Data final
+Flash.FlashClass_repeat=Repetir
+Flash.FlashClass_repeatInterval=Intervalo de repetição
+Flash.FlashClass_repeatInterval_daily=Diária
+Flash.FlashClass_repeatInterval_weekly=Semanalmente
+Flash.FlashClass_repeatInterval_monthly=Mensalmente
+Flash.FlashClass_repeatInterval_yearly=Anualmente
+Flash.FlashClass_repeatFrequency=Frequência de repetição
+Flash.FlashClass_repeatDays=Repetir dias
+Flash.FlashClass_repeatDays_monday=Segunda-feira
+Flash.FlashClass_repeatDays_tuesday=Terça-feira
+Flash.FlashClass_repeatDays_wednesday=Quarta-feira
+Flash.FlashClass_repeatDays_thursday=Quinta-feira
+Flash.FlashClass_repeatDays_friday=Sexta-feira
+Flash.FlashClass_repeatDays_saturday=Sábado
+Flash.FlashClass_repeatDays_sunday=Domingo
+Flash.FlashClass_message=Mensagem
+Flash.FlashClass_groups=Grupos
+
+## Sheet ##
+flash.repeat.summary=Repetir resumo
+flash.repeat.summary.every=A cada {0} {1}
+flash.repeat.summary.on=online
+flash.repeat.summary.day=dia
+flash.repeat.summary.daily=dias
+flash.repeat.summary.weekly=semanas
+flash.repeat.summary.monthly=meses
+flash.repeat.summary.yearly=anos
+</content>
+</xwikidoc>
