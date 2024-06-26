@@ -29,7 +29,7 @@
   </parent>
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>application-flashmessages</artifactId>
-  <version>1.1.10-SNAPSHOT</version>
+  <version>1.1.10</version>
   <name>Flash Messages Application</name>
   <packaging>pom</packaging>
   <description>Allows you to create Flash messages aiming at one or multiple local groups</description>
@@ -55,7 +55,7 @@
     <connection>scm:git:git://github.com/xwiki-contrib/application-flashmessages.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/application-flashmessages.git</developerConnection>
     <url>https://github.com/xwiki-contrib/application-flashmessages/tree/master</url>
-    <tag>HEAD</tag>
+    <tag>application-flashmessages-1.1.10</tag>
   </scm>
   <developers>
     <developer>
