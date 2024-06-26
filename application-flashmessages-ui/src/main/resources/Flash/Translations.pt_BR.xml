@@ -23,7 +23,7 @@
 <xwikidoc locale="pt-BR">
   <web>Flash</web>
   <name>Translations</name>
-  <language>pt-BR</language>
+  <language>pt_BR</language>
   <defaultLanguage>en</defaultLanguage>
   <translation>1</translation>
   <parent>Flash.WebHome</parent>
