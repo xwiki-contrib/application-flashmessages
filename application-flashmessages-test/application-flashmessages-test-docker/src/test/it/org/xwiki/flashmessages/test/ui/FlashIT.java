@@ -31,6 +31,7 @@ import org.xwiki.flashmessages.test.po.FlashEntryViewPage;
 import org.xwiki.flashmessages.test.po.FlashHomePage;
 import org.xwiki.flashmessages.test.po.FlashSlider;
 import org.xwiki.panels.test.po.ApplicationsPanel;
+import org.xwiki.test.docker.junit5.ExtensionOverride;
 import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.integration.junit.LogCaptureConfiguration;
 import org.xwiki.test.ui.TestUtils;
@@ -48,7 +49,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id$
  * @since 1.7
  */
-@UITest
+@UITest(
+    //TODO After the licensing app has 14.10+ as its parent, remove the overrides and the extra jars.
+    extensionOverrides = {
+        @ExtensionOverride(
+            extensionId = "com.google.code.findbugs:jsr305",
+            overrides = {
+                "features=com.google.code.findbugs:annotations"
+            }
+        ),
+        @ExtensionOverride(
+            extensionId = "org.bouncycastle:bcprov-jdk18on",
+            overrides = {
+                "org.bouncycastle:bcprov-jdk15"
+            }
+        )
+    },
+    extraJARs = {
+        "org.bouncycastle:bcprov-jdk15on:jar:1.64"
+    }
+)
 class FlashIT
 {
     private FlashUtil flashUtil;
@@ -356,14 +376,14 @@ class FlashIT
     {
         FlashEntry entry = new FlashEntry("MarkAsSeen",
             flashUtil.getDate(0, 0, 0, -1, 0, true),
-            flashUtil.getDate(0, 0, 0, 1, 0, true), 
-            true, 
-            "daily", 
-            1, 
-            new ArrayList<String>(), 
+            flashUtil.getDate(0, 0, 0, 1, 0, true),
+            true,
+            "daily",
+            1,
+            new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
             "Daily");
-        
+
         // Create test message and close the 1st time pop-up
         FlashEntryViewPage entryViewPage = flashUtil.testMessage(entry, true);
 
@@ -380,14 +400,14 @@ class FlashIT
     {
         FlashEntry entry = new FlashEntry("NonRecurringActiveMessage",
             flashUtil.getDate(0, 0, 0, 0, -1, false),
-            flashUtil.getDate(0, 0, 0, 0, 1, false), 
-            false, 
-            "daily", 
-            1, 
-            new ArrayList<String>(), 
+            flashUtil.getDate(0, 0, 0, 0, 1, false),
+            false,
+            "daily",
+            1,
+            new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAdminGroup")),
             "NonRecurringActiveMessage");
-        
+
         flashUtil.testMessage(entry, true);
     }
 
@@ -396,14 +416,14 @@ class FlashIT
     {
         FlashEntry entry = new FlashEntry("NonRecurringInactiveMessage",
             flashUtil.getDate(0, 0, 0, 0, -5, false),
-            flashUtil.getDate(0, 0, 0, 0, -2, false), 
-            false, 
-            "daily", 
-            1, 
-            new ArrayList<String>(), 
+            flashUtil.getDate(0, 0, 0, 0, -2, false),
+            false,
+            "daily",
+            1,
+            new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAdminGroup")),
             "NonRecurringInactiveMessage");
-        
+
         flashUtil.testMessage(entry, false);
     }
 
@@ -412,14 +432,14 @@ class FlashIT
     {
         FlashEntry entry = new FlashEntry("DailyRecurringActiveMessage",
             flashUtil.getDate(0, 0, 0, -2, 0, true),
-            flashUtil.getDate(0, 0, 0, 2, 0, true), 
-            true, 
-            "daily", 
-            2, 
-            new ArrayList<String>(), 
+            flashUtil.getDate(0, 0, 0, 2, 0, true),
+            true,
+            "daily",
+            2,
+            new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAdminGroup")),
             "Every 2 days");
-        
+
         flashUtil.testMessage(entry, true);
     }
 
@@ -428,14 +448,14 @@ class FlashIT
     {
         FlashEntry entry = new FlashEntry("DailyRecurringInactiveMessage",
             flashUtil.getDate(0, 0, 0, -2, 0, true),
-            flashUtil.getDate(0, 0, 1, 1, 0, true), 
-            true, 
-            "daily", 
-            5, 
-            new ArrayList<String>(), 
+            flashUtil.getDate(0, 0, 1, 1, 0, true),
+            true,
+            "daily",
+            5,
+            new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAdminGroup")),
             "Every 3 days");
-        
+
         flashUtil.testMessage(entry, false);
     }
 
@@ -445,13 +465,13 @@ class FlashIT
         FlashEntry entry = new FlashEntry("WeeklyRecurringActiveMessage",
             flashUtil.getDate(0, -2, 0, 0, 0, true),
             flashUtil.getDate(0, 0, 2, 0, 0, true),
-            true, 
-            "weekly", 
-            2, 
-            new ArrayList<String>(Arrays.asList(flashUtil.getCurrentDayOfTheWeek())), 
+            true,
+            "weekly",
+            2,
+            new ArrayList<String>(Arrays.asList(flashUtil.getCurrentDayOfTheWeek())),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
             "Every 2 weeks");
-        
+
         flashUtil.testMessage(entry, true);
     }
 
@@ -460,14 +480,14 @@ class FlashIT
     {
         FlashEntry entry = new FlashEntry("WeeklyRecurringInactiveMessage",
             flashUtil.getDate(0, 0, -2, 0, 0, true),
-            flashUtil.getDate(0, 0, 2, 1, 0, true), 
-            true, 
-            "weekly", 
-            2, 
-            new ArrayList<String>(Arrays.asList(flashUtil.getCurrentDayOfTheWeek() == "monday" ? "tuesday":"monday")), 
+            flashUtil.getDate(0, 0, 2, 1, 0, true),
+            true,
+            "weekly",
+            2,
+            new ArrayList<String>(Arrays.asList(flashUtil.getCurrentDayOfTheWeek() == "monday" ? "tuesday" : "monday")),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
             "Every 2 weeks");
-        
+
         flashUtil.testMessage(entry, false);
     }
 
@@ -476,14 +496,14 @@ class FlashIT
     {
         FlashEntry entry = new FlashEntry("MonthlyRecurringActiveMessage",
             flashUtil.getDate(-2, 0, 0, 0, 0, true),
-            flashUtil.getDate(5, 0, 0, 0, 0, true), 
-            true, 
-            "monthly", 
-            6, 
-            new ArrayList<String>(), 
+            flashUtil.getDate(5, 0, 0, 0, 0, true),
+            true,
+            "monthly",
+            6,
+            new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
             "Every 6 months");
-        
+
         flashUtil.testMessage(entry, true);
     }
 
@@ -492,14 +512,14 @@ class FlashIT
     {
         FlashEntry entry = new FlashEntry("MonthlyRecurringInactiveMessage",
             flashUtil.getDate(-4, 0, 0, 0, 0, true),
-            flashUtil.getDate(3, 0, 0, 0, 0, true), 
-            true, 
-            "monthly", 
-            9, 
-            new ArrayList<String>(), 
+            flashUtil.getDate(3, 0, 0, 0, 0, true),
+            true,
+            "monthly",
+            9,
+            new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
             "Every 9 months");
-        
+
         flashUtil.testMessage(entry, false);
     }
 
@@ -508,14 +528,14 @@ class FlashIT
     {
         FlashEntry entry = new FlashEntry("YearlyRecurringActiveMessage",
             flashUtil.getDate(-2, 0, 0, 0, 0, true),
-            flashUtil.getDate(5, 0, 0, 0, 0, true), 
-            true, 
-            "yearly", 
-            2, 
-            new ArrayList<String>(), 
+            flashUtil.getDate(5, 0, 0, 0, 0, true),
+            true,
+            "yearly",
+            2,
+            new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
             "Every 2 years today");
-        
+
         flashUtil.testMessage(entry, true);
     }
 
@@ -524,14 +544,14 @@ class FlashIT
     {
         FlashEntry entry = new FlashEntry("YearlyRecurringInactiveMessage",
             flashUtil.getDate(-4, 0, 0, 0, 0, true),
-            flashUtil.getDate(3, 0, 0, 0, 0, true), 
-            true, 
-            "yearly", 
-            3, 
-            new ArrayList<String>(), 
+            flashUtil.getDate(3, 0, 0, 0, 0, true),
+            true,
+            "yearly",
+            3,
+            new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
             "Every 3 years today");
-        
+
         flashUtil.testMessage(entry, false);
     }
 

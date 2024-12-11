@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.4" reference="Flash.WebPreferences" locale="">
+<xwikidoc version="1.5" reference="Flash.WebPreferences" locale="">
   <web>Flash</web>
   <name>WebPreferences</name>
   <language/>
@@ -288,6 +288,7 @@
         <number>26</number>
         <picker>0</picker>
         <prettyName>Confirmation eMail Content</prettyName>
+        <restricted>0</restricted>
         <rows>10</rows>
         <size>72</size>
         <tooltip/>
@@ -512,6 +513,7 @@
         <number>27</number>
         <picker>0</picker>
         <prettyName>Invitation eMail Content</prettyName>
+        <restricted>0</restricted>
         <rows>10</rows>
         <size>72</size>
         <tooltip/>
@@ -529,6 +531,7 @@
         <number>24</number>
         <picker>0</picker>
         <prettyName>Additional JavaMail properties</prettyName>
+        <restricted>0</restricted>
         <rows>6</rows>
         <size>60</size>
         <unmodifiable>0</unmodifiable>
@@ -635,6 +638,7 @@
         <number>60</number>
         <picker>0</picker>
         <prettyName>Ldap user fields mapping</prettyName>
+        <restricted>0</restricted>
         <rows>1</rows>
         <size>60</size>
         <unmodifiable>0</unmodifiable>
@@ -651,6 +655,7 @@
         <number>65</number>
         <picker>0</picker>
         <prettyName>Ldap groups mapping</prettyName>
+        <restricted>0</restricted>
         <rows>5</rows>
         <size>60</size>
         <unmodifiable>0</unmodifiable>
@@ -856,6 +861,7 @@
         <number>16</number>
         <picker>0</picker>
         <prettyName>HTTP Meta Info</prettyName>
+        <restricted>0</restricted>
         <rows>8</rows>
         <size>60</size>
         <tooltip/>
@@ -1296,6 +1302,7 @@
         <number>25</number>
         <picker>0</picker>
         <prettyName>Validation eMail Content</prettyName>
+        <restricted>0</restricted>
         <rows>10</rows>
         <size>72</size>
         <tooltip/>

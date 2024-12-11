@@ -270,11 +270,18 @@ public class FlashUtil
      * 
      * @return the current day of the week
      */
-    public String getCurrentDayOfTheWeek()
-    {
+    public String getCurrentDayOfTheWeek() {
         Calendar calendar = Calendar.getInstance();
 
-        return getDaysOfTheWeek().get(calendar.get(Calendar.DAY_OF_WEEK) - 2);
+        // Get the index of the current day of the week, adjusted to a 0-based index
+        int dayIndex = calendar.get(Calendar.DAY_OF_WEEK) - 2;
+
+        // Wrap around if the dayIndex is less than 0
+        if (dayIndex < 0) {
+            dayIndex = getDaysOfTheWeek().size() - 1;
+        }
+
+        return getDaysOfTheWeek().get(dayIndex);
     }
 
     /**

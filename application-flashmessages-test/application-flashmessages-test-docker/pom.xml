@@ -20,12 +20,13 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>application-flashmessages-test</artifactId>
-    <version>1.7.2-SNAPSHOT</version>
+    <version>1.7.3-SNAPSHOT</version>
   </parent>
   <artifactId>application-flashmessages-test-tests</artifactId>
   <name>Flash Messages Application - Test - Tests</name>
@@ -70,6 +71,22 @@
       <version>${platform.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.xwiki.rendering</groupId>
+      <artifactId>xwiki-rendering-macro-html</artifactId>
+      <version>${rendering.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-test-docker</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-crypto-common</artifactId>
+      <version>${commons.version}</version>
+    </dependency>
+    <!-- Remove until here -->
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>application-flashmessages-test-pageobjects</artifactId>
