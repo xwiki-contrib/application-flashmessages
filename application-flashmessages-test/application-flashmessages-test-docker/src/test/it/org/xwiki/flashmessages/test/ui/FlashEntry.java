@@ -46,6 +46,8 @@ public class FlashEntry
 
     private ArrayList<String> groups;
 
+    private String wikiScope;
+
     private String message;
 
     /**
@@ -59,10 +61,12 @@ public class FlashEntry
      * @param repeatFrequency the repeat frequency
      * @param repeatDays the repeat days
      * @param groups the xwiki groups
+     * @param wikiScope the wiki scope where the message should be visible (currentWiki|allWikis)
      * @param message the display message
      */
     public FlashEntry(String name, Calendar dateBegin, Calendar dateEnd, Boolean repeat, String repeatInterval,
-        int repeatFrequency, ArrayList<String> repeatDays, ArrayList<String> groups, String message)
+        int repeatFrequency, ArrayList<String> repeatDays, ArrayList<String> groups, String wikiScope,
+        String message)
     {
         this.name = name;
         this.dateBegin = dateBegin;
@@ -72,6 +76,7 @@ public class FlashEntry
         this.repeatFrequency = repeatFrequency;
         this.repeatDays = repeatDays;
         this.groups = groups;
+        this.wikiScope = wikiScope;
         this.message = message;
     }
 
@@ -233,6 +238,26 @@ public class FlashEntry
     public void setGroups(ArrayList<String> groups)
     {
         this.groups = groups;
+    }
+
+    /**
+     * Get wikiScope
+     *
+     * @return the wiki scope where the message should be visible (currentWiki|allWikis)
+     */
+    public String getWikiScope()
+    {
+        return wikiScope;
+    }
+
+    /**
+     * Set wikiScope
+     *
+     * @param wikiScope the wiki scope where the message should be visible (currentWiki|allWikis)
+     */
+    public void setWikiScope(String wikiScope)
+    {
+        this.wikiScope = wikiScope;
     }
 
     /**

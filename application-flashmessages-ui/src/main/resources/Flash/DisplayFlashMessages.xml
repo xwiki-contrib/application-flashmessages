@@ -36,15 +36,16 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{include reference="Flash.Macros"/}}
-
-{{velocity}}
+  <content>{{velocity}}
+## Variables $flashInstallSubwiki, $searchFlashInstallation are defined in Flash.FlashNotifier,
+## which includes this document.
 ##
 ###############################################
 ##           LOAD MESSAGE SLIDER
 ###############################################
-#set($discard = $xwiki.jsx.use('Flash.DisplayFlashMessages'))
-#set($discard = $xwiki.ssx.use('Flash.DisplayFlashMessages'))
+#set ($discard = $xwiki.jsx.use("$flashInstallSubwiki:Flash.FlashNotifier"))
+#set ($discard = $xwiki.jsx.use("$flashInstallSubwiki:Flash.DisplayFlashMessages"))
+#set ($discard = $xwiki.ssx.use("$flashInstallSubwiki:Flash.DisplayFlashMessages"))
 ##
 ###############################################
 ##           Group filter
@@ -63,10 +64,13 @@
 #end
 #set ($groupsFilter = [])
 #foreach ($groupReference in $groups)
-  ## Remove the wiki component from the group reference if it matches the current wiki (where we look for flash
-  ## messages) because that's what we save in the groups property of flash messages.
-  #set ($compactGroupReference = $services.model.serialize($groupReference, 'compactwiki'))
-  #set ($discard = $groupsFilter.add("'$compactGroupReference' member of obj.groups"))
+  ## Remove the wiki component from the group reference if it matches the wiki of the message.
+  #set ($groupReferenceCompact = $services.model.serialize($groupReference, 'local'))
+  #set ($groupReferenceFull  = $services.model.serialize($groupReference, 'default').replace(':','\:'))
+  #set ($messageWiki = $groupReference.getWikiReference().getName())
+  #set ($discard = $groupsFilter.add(
+    "(wiki:$messageWiki AND property.Flash.FlashClass.groups:*(?&lt;!\:)$groupReferenceCompact(,|\r)*)
+    OR (-wiki:$messageWiki AND property.Flash.FlashClass.groups:*$groupReferenceFull(,|\r)*)"))
 #end
 #if ($groupsFilter.size() &gt; 0)
   #set ($groupsFilter = " AND ($stringtool.join($groupsFilter, ' OR ')) ")
@@ -80,65 +84,72 @@
 #set($dateNow = $datetool.getSystemDate())
 ##
 ## If the user is not in any group then no message should be displayed
-#if("$!groupsFilter" != '')
-  #set($baseQuery = "select doc.fullName, obj.dateBegin {0} from Document doc, doc.object(Flash.FlashClass) as obj WHERE doc.fullName &lt;&gt; 'Flash.FlashTemplate' $!groupsFilter AND obj.dateBegin &lt;= :now AND (obj.dateEnd is null OR obj.dateEnd &gt; :now) {1} ORDER BY obj.dateBegin DESC")
-  ##
-  #set($nonRecurringQuery = $baseQuery.replace("{0}", "").replace("{1}", "AND (obj.repeat is null OR obj.repeat = 0)"))
-  #set($nonRecurring = $services.query.xwql($nonRecurringQuery).bindValue('now', $dateNow).setLimit(3).execute())
-  ##
-  #set($recurringQuery = $baseQuery.replace("{0}", ", obj.repeatInterval, obj.repeatFrequency, obj.repeatDays ").replace("{1}", "AND obj.repeat = 1"))
-  #set($recurring = $services.query.xwql($recurringQuery).bindValue('now', $dateNow).execute())
-  ##
+#if($groups.size() &gt; 0)
   #set($events = [])
-  #foreach($event in $nonRecurring)
-    #set($discard = $events.add({'doc' : $event[0], 'date' : $event[1]}))
-  #end
+  #set ($query = $services.query.createQuery(
+    "object:Flash.FlashClass AND property.Flash.FlashClass.dateBegin:[* TO NOW]
+    AND -property.Flash.FlashClass.dateEnd:[* TO NOW]
+    AND (wiki:$doc.getWiki() OR property.Flash.FlashClass.wikiScope:allWikis)
+    $groupsFilter", 'solr').bindValue('fq', 'type:DOCUMENT AND -fullname:Flash.FlashTemplate'))
+  #set ($queryResults = $query.setLimit(20).execute().get(0).getResults())
   ##
-  #foreach($event in $recurring)
-    #set($document        = $event[0])
-    #set($date            = $event[1])
-    #set($repeatInterval  = $event[2])
-    #set($repeatFrequency = $numbertool.integer($event[3]))
-    #set($repeatDays      = $stringtool.split($event[4], '|'))
-    ##
-    #set($today           = $datetool)
-    #set($dayOfTheWeek    = $stringtool.lowerCase($datetool.format('EEEE', $today)))
-    #set($dateDiff        = $datetool.difference($date, $today))
-    ##
-    #if(
-      ($repeatInterval == 'daily'   &amp;&amp; $mathtool.mod($dateDiff.days,   $repeatFrequency) == 0) ||
-      ($repeatInterval == 'weekly'  &amp;&amp; $mathtool.mod($dateDiff.weeks,  $repeatFrequency) == 0 &amp;&amp; $repeatDays.contains($dayOfTheWeek)) ||
-      ($repeatInterval == 'monthly' &amp;&amp; $mathtool.mod($dateDiff.months, $repeatFrequency) == 0 &amp;&amp; $datetool.format('d', $date) == $datetool.format('d', $today)) ||
-      ($repeatInterval == 'yearly'  &amp;&amp; $mathtool.mod($dateDiff.years,  $repeatFrequency) == 0 &amp;&amp; $datetool.format('Md', $date) == $datetool.format('Md', $today))
-    )
-      #set($discard = $events.add({'doc' : $document, 'date' : $date}))
+  #foreach($event in $queryResults)
+    #set ($eventDocName    = "$event.wiki:$event.fullname")
+    ## If solr isn't up to date, don't include deleted flashmessages.
+    #if ($xwiki.exists($eventDocName))
+      #set ($dateBegin       = $event.get('property.Flash.FlashClass.dateBegin_sortDate'))
+      #set ($repeat          = $event.get('property.Flash.FlashClass.repeat_boolean')[0])
+      #set ($repeatInterval  = $event.get('property.Flash.FlashClass.repeatInterval_string')[0])
+      #set ($repeatFrequency = $numbertool.integer($event.get('property.Flash.FlashClass.repeatFrequency_string')[0]))
+      #set ($repeatDays      = $event.get('property.Flash.FlashClass.repeatDays_string'))
+      ##
+      #set ($today           = $datetool)
+      #set ($dayOfTheWeek    = $stringtool.lowerCase($datetool.format('EEEE', $today)))
+      #set ($dateDiff        = $datetool.difference($dateBegin, $today))
+      #if ($repeat == true)
+        #if (($repeatInterval == 'daily'   &amp;&amp; $mathtool.mod($dateDiff.days,   $repeatFrequency) == 0) ||
+            ($repeatInterval == 'weekly'  &amp;&amp; $mathtool.mod($dateDiff.weeks,  $repeatFrequency) == 0 &amp;&amp; $repeatDays.contains($dayOfTheWeek)) ||
+            ($repeatInterval == 'monthly' &amp;&amp; $mathtool.mod($dateDiff.months, $repeatFrequency) == 0 &amp;&amp; $datetool.format('d', $dateBegin) == $datetool.format('d', $today)) ||
+            ($repeatInterval == 'yearly'  &amp;&amp; $mathtool.mod($dateDiff.years,  $repeatFrequency) == 0 &amp;&amp; $datetool.format('Md', $dateBegin) == $datetool.format('Md', $today))
+          )
+          #set($discard = $events.add({'doc' : $eventDocName, 'date' : $dateBegin}))
+        #end
+      #else
+        #set($discard = $events.add({'doc' : $eventDocName, 'date' : $dateBegin}))
+      #end
     #end
   #end
   ##
   #set($events = $collectiontool.sort($events, 'date:desc'))
   ##
   #if($events.size() &gt; 0)
-    {{html}}
+
+    {{html wiki="true"}}
       &lt;div id="flashMessages"&gt;
         &lt;ul class="messages"&gt;
           #foreach($r in $events)
             #set($document = $xwiki.getDocument($r.doc))
             #set($obj = $document.getObject('Flash.FlashClass'))
             &lt;li class="unit"&gt;
-              &lt;span class="date"&gt;$!obj.display('dateBegin', 'view') : &lt;/span&gt;
-              &lt;span class="message"&gt;$!obj.display('message', 'view')&lt;/span&gt;
+              #if ($hasAdmin)
+                &lt;span class="subwiki"&gt;[[$!services.rendering.escape($escapetool.xml($services.wiki.getById($document.getWiki()).getPrettyName()), 'xwiki/2.1')&gt;&gt;$document.getWiki():Flash.WebHome]]&lt;/span&gt;&amp;nbsp;
+              #end
+              &lt;span class="date"&gt;$!services.rendering.escape($!obj.display('dateBegin', 'view'), 'xwiki/2.1') : &lt;/span&gt;
+              &lt;span class="message"&gt;$!services.rendering.escape($!obj.display('message', 'view'), 'xwiki/2.1')&lt;/span&gt;
             &lt;/li&gt;
           #end
         &lt;/ul&gt;
         &lt;ul class="navigation"&gt;&lt;/ul&gt;
       &lt;/div&gt;
     {{/html}}
+
   #end
 #end
 ###############################################
 ##            DISPLAY ALERT
 ###############################################
 #set($userDoc = $xwiki.getDocument($xcontext.user))
+#set ($userLocalString = $services.model.serialize($userDoc, 'local'))
 #set($userValObj = $userDoc.getObject('Flash.FlashValidationClass'))
 #set($userValList = $userValObj.getProperty('flash').getValue())
 #set($need = [])
@@ -150,15 +161,20 @@
   #set ($seenDate = $msgValObj.getValue('seenDate'))
   #set ($wasSeenToday = $datetool.format($dateFormat, $dateNow) == $datetool.format($dateFormat, $seenDate))
   #set ($doRepeatEntry = $msgDoc.getObject('Flash.FlashClass').getValue('repeat') == 1)
+  ## If viewed from one subwiki and the message is from another subwiki, user references are serialized differently.
+  #if ($msgDoc.getWiki() == $userDoc.getWiki())
+    #set ($userStr = $userLocalString)
+  #else
+    #set ($userStr = $xcontext.user)
+  #end
   ## Check if the message was already seen by this user or if it wasn't seen today, for entries with repeat selected.
-  #if ((!$userValList.contains($msg.doc) &amp;&amp; !$msgValList.contains($xcontext.user))
+  #if ((!$userValList.contains($msg.doc) &amp;&amp; !$msgValList.contains($userStr))
       || (!$wasSeenToday &amp;&amp; $doRepeatEntry))
     #set ($discard = $need.add($msg.doc))
   #end
 #end
 #if(!$need.empty())
   ##
-
   {{html clean="false"}}
   &lt;script language="javascript"&gt;
   document.observe('xwiki:dom:loaded', function(){
@@ -178,21 +194,52 @@
     }
   #end
     ];
-    require.config({
-      'paths': {
-         'flashNotifier': new XWiki.Document('FlashNotifier', 'Flash').getURL('jsx', 'r=1')
-       }
-    });
-    require(['jquery', 'flashNotifier', 'bootstrap'], function($) {
-      window.flashPopup = $('#flashPopup');
-      window.flashNotifier(params);
+    // This is a workaround for XWIKI-20623 : JS function XWiki.Document#getURL does not take into account the wiki name
+    fetch('/xwiki/rest/wikis').then(res =&gt; res.text())
+    .then(data =&gt; {
+      data = (new DOMParser()).parseFromString(data, "text/xml");
+      let wikis = Array.from(data.activeElement.getElementsByTagName('id')).map(a =&gt; a.innerHTML);
+      let flashNotifierUrl = '/xwiki/__subwiki__/jsx/Flash/FlashNotifier';
+      flashNotifierUrl = flashNotifierUrl.replace('__subwiki__', wikis.length &gt; 1 ? 'wiki/$flashInstallSubwiki' : 'bin');
+      // End workaround.
+      require.config({
+        'paths': {
+           'flashNotifier': flashNotifierUrl
+         }
+      });
+      require(['jquery', 'flashNotifier', 'bootstrap'], function($) {
+        window.flashPopup = $('#flashPopup');
+        window.flashNotifier(params);
+      });
     });
   });
   &lt;/script&gt;
   {{/html}}
 
 #end
-#showFlashPopup()
+{{html clean="false"}}
+&lt;div class="modal fade" id="flashPopup" tabindex="-1" role="dialog" aria-hidden="true"&gt;
+  &lt;div class="modal-dialog"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;button type="button" class="close" data-dismiss="modal"&gt;&amp;times;&lt;/button&gt;
+        &lt;h4 class="modal-title"&gt;&lt;/h4&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;
+        &lt;div&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-footer"&gt;
+        ## Workaround for the translation not working on subwikis without flashmessages installed.
+        #set ($temp = $xcontext.wiki)
+        #set ($xcontext.wiki = $flashInstallSubwiki)
+        &lt;input type="button" class="btn btn-primary" disabled="disabled"
+          value="$escapetool.xml($services.localization.render('flash.flashmessages.confirm'))"/&gt;
+        #set ($xcontext.wiki = $temp)
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+{{/html}}
 {{/velocity}}</content>
   <object>
     <name>Flash.DisplayFlashMessages</name>

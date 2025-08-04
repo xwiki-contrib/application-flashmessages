@@ -32,6 +32,7 @@
   <name>Flash Messages Application - UI</name>
   <description>Schedule and display flash announcements to one or multiple groups. Messages can be set as one off or recurring events.</description>
   <properties>
+    <xwikiprocommons.version>1.2.0</xwikiprocommons.version>
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Flash Messages Application</xwiki.extension.name>
     <xwiki.extension.category>application</xwiki.extension.category>
@@ -53,6 +54,18 @@
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-wiki-user-script</artifactId>
+      <version>${platform.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-wiki-user-default</artifactId>
+      <version>${platform.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-rendering-macro-velocity</artifactId>
       <version>${platform.version}</version>
       <scope>runtime</scope>
@@ -61,6 +74,13 @@
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-rendering-macro-code</artifactId>
       <version>${platform.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.xwiki.commons</groupId>
+      <artifactId>xwiki-pro-commons-pickers-ui</artifactId>
+      <version>${xwikiprocommons.version}</version>
+      <type>xar</type>
       <scope>runtime</scope>
     </dependency>
     <dependency>

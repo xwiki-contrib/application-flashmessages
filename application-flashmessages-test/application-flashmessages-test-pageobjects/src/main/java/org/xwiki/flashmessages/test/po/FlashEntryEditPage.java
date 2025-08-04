@@ -76,6 +76,9 @@ public class FlashEntryEditPage extends FlashPage
     @FindBy(id = "Flash.FlashClass_0_groups")
     protected WebElement groupsElement;
 
+    @FindBy(id = "Flash.FlashClass_0_wikiScope")
+    protected WebElement wikiScopeElement;
+
     @FindBy(id = "Flash.FlashClass_0_message")
     protected WebElement messageElement;
 
@@ -304,6 +307,17 @@ public class FlashEntryEditPage extends FlashPage
             groupSuggest.sendKeys(group).waitForSuggestions().selectByVisibleText(group);
         }
         groupSuggest.hideSuggestions();
+    }
+
+    /**
+     * Set the wiki scope the message should be displayed in.
+     *
+     * @param wikiScope "currentWiki" or "allWikis"
+     */
+    public void setWikiScope(String wikiScope)
+    {
+        Select wikiScopeSelect = new Select(wikiScopeElement);
+        wikiScopeSelect.selectByValue(wikiScope);
     }
 
     /**

@@ -30,6 +30,7 @@ import org.xwiki.flashmessages.test.po.FlashEntryEditPage;
 import org.xwiki.flashmessages.test.po.FlashEntryViewPage;
 import org.xwiki.flashmessages.test.po.FlashHomePage;
 import org.xwiki.flashmessages.test.po.FlashSlider;
+import org.xwiki.repository.test.SolrTestUtils;
 import org.xwiki.test.ui.TestUtils;
 import org.xwiki.test.ui.po.CreatePagePage;
 
@@ -206,6 +207,7 @@ public class FlashUtil
         }
 
         entryEditPage.setGroups(entry.getGroups());
+        entryEditPage.setWikiScope(entry.getWikiScope());
         entryEditPage.setMessage(entry.getMessage());
 
         return entryEditPage.clickSaveAndView();
@@ -341,6 +343,9 @@ public class FlashUtil
         // Check if the entry document was created
         Assert.assertTrue(this.setup.pageExists("Flash", entry.getName()));
 
+        // Wait for flashmessage to be registered with solr.
+        waitUntilSolrReindex();
+
         // Get the Flash Message view page
         entryViewPage = FlashEntryViewPage.gotoPage(entry.getName());
 
@@ -363,5 +368,12 @@ public class FlashUtil
         }
 
         return entryViewPage;
+    }
+
+    public void waitUntilSolrReindex() throws Exception
+    {
+        System.out.println("Waiting for solr to finish indexing. This may take a while...");
+        new SolrTestUtils(setup, "http://localhost:8080/xwiki").waitEmpyQueue();
+        System.out.println("Solr indexing finished.");
     }
 }

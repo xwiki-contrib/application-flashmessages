@@ -198,15 +198,23 @@
    */
   window.flashNotifierConfirm = function() {
     let params = window.flashNotifierParams[window.flashNotifierIndex];
-    url = new XWiki.Document('FlashNotifier', 'Flash').getURL('get');
-    return $.ajax({
-      url : url,
-      data : {'ajax' : '1', 'flash' : params['document']}
-    }).done(function() {
-      // Show the next popup when the current one is closed.
-      $(document).one('hidden.bs.modal', '#flashPopup', function(event) {
-        window.flashNotifierIndex++;
-        window.flashNotifierNext();
+    // Workaround for XWIKI-20623 : JS function XWiki.Document#getURL does not take into account the wiki name.
+    return fetch('/xwiki/rest/wikis').then(res =&gt; res.text())
+    .then(data =&gt; {
+      data = (new DOMParser()).parseFromString(data, "text/xml");
+      let wikis = Array.from(data.activeElement.getElementsByTagName('id')).map(a =&gt; a.innerHTML);
+      let flashNotifierUrl = '/xwiki/__subwiki__/get/Flash/FlashNotifier';
+      flashNotifierUrl = flashNotifierUrl.replace('__subwiki__', wikis.length &gt; 1 ? 'wiki/$doc.getWiki()' : 'bin');
+      // End workaround.
+      return $.ajax({
+        url : flashNotifierUrl,
+        data : {'ajax' : '1', 'flash' : params['document']}
+      }).done(function() {
+        // Show the next popup when the current one is closed.
+        $(document).one('hidden.bs.modal', '#flashPopup', function(event) {
+          window.flashNotifierIndex++;
+          window.flashNotifierNext();
+        });
       });
     });
   };
@@ -226,10 +234,10 @@
   $(document).on('click', '#flashPopup input.btn-primary', function(event) {
     var okButton = $(this).prop('disabled', true);
     // Wait for the confirmation request to succeed and only then hide the popup.
-    window.flashNotifierConfirm().done(function() {
+    window.flashNotifierConfirm().then(function() {
       // Hide the current popup and possibly trigger the next popup.
       window.flashPopup.modal('hide');
-    }).fail(function() {
+    }).catch(function() {
       // Re-enable the OK button in case the confirmation request failed.
       okButton.prop('disabled', false);
     });
@@ -412,8 +420,32 @@
     </property>
     <property>
       <content>{{velocity}}
-#if($xcontext.action == 'view' &amp;&amp; $xwiki.hasAccessLevel('view', $xcontext.userReference, 'Flash.DisplayFlashMessages'))
-  {{include reference='Flash.DisplayFlashMessages' /}}
+## Don't initialize twice if there is another flashmessages installation on this subwiki.
+#if (!$flashMessagesUIXPInitialized &amp;&amp; $xcontext.action == 'view')
+  ## The subwiki to use as the source of the extension documents, css, jsx.
+  #set ($flashMessagesUIXPInitialized = 1)
+  #set ($searchFlashInstallation = $collectiontool.getOrderedSet())
+  ## App pages will be loaded from a subwiki where the FlashMessages app is installed with a version > 1.8.1 .
+  ## Look in the current subwiki first, then main and the rest of the subwikis.
+  #set ($discard = $searchFlashInstallation.addAll([$doc.getWiki(), $services.wiki.getMainWikiId()]))
+  #set ($discard = $searchFlashInstallation.addAll($services.wiki.getAllIds()))
+  #set ($flashInstallSubwikis = [])
+  #foreach ($subwiki in $searchFlashInstallation)
+    #set ($flashmessagesVersion = $services.extension.installed.getInstalledExtension(
+      'com.xwiki.flashmessages:application-flashmessages-ui', "wiki:$subwiki").getId().getVersion())
+    #if ("$!flashmessagesVersion" != '')
+      #set ($supportsGlobalFlashmessages = $flashmessagesVersion.compareTo('1.8.1') &gt; 0)
+    #end
+    #if ($supportsGlobalFlashmessages &amp;&amp; $xwiki.exists("$subwiki:Flash.DisplayFlashMessages")
+        &amp;&amp; $xwiki.hasAccessLevel('view', $xcontext.userReference, "$subwiki:Flash.DisplayFlashMessages"))
+      #set ($discard = $flashInstallSubwikis.add($subwiki))
+    #end
+  #end
+  #if ($flashInstallSubwikis.size() &gt; 0)
+    ## The subwiki to use as the source of the extension documents, css, jsx.
+    #set ($flashInstallSubwiki = $flashInstallSubwikis.get(0))
+    {{include reference='$flashInstallSubwiki:Flash.DisplayFlashMessages' /}}
+  #end
 #end
 {{/velocity}}</content>
     </property>
@@ -427,7 +459,7 @@
       <parameters/>
     </property>
     <property>
-      <scope>wiki</scope>
+      <scope>global</scope>
     </property>
   </object>
 </xwikidoc>

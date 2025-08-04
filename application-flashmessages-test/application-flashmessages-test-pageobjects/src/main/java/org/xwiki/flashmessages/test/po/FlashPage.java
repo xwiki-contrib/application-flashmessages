@@ -43,10 +43,10 @@ public class FlashPage extends ViewPage
     @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[1]/div[2]//dt")
     protected WebElement dateEndLabelElement;
 
-    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[2]/div[1]//dt")
+    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[3]/div[1]//dt")
     protected WebElement repeatLabelElement;
 
-    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[2]/div[2]//dt")
+    @FindBy(xpath = "(//div[@class='xform']//div[@class='row'])[2]/div[1]//dt")
     protected WebElement groupsLabelElement;
 
     @FindBy(xpath = "//div[@class='xform']/dl/dt")

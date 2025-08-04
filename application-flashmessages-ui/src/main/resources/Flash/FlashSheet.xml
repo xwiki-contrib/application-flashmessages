@@ -73,6 +73,17 @@
     (((
       (% class="col-sm-6" %)
       (((
+        #displayFlashProperty($obj 'groups')
+      )))
+      (% class="col-sm-6" %)
+      (((
+        #displayFlashProperty($obj 'wikiScope')
+      )))
+    )))
+    (% class="row" %)
+    (((
+      (% class="col-sm-6" %)
+      (((
         ; &lt;label for="Flash.FlashClass_0_repeat"&gt;$doc.displayPrettyName('repeat', false, false)&lt;/label&gt;
         : #if($xcontext.action == 'view' &amp;&amp; $doc.getValue('repeat') == 1)
             #set($date      = $doc.getValue('dateBegin'))
@@ -83,10 +94,6 @@
           #else
             $doc.display('repeat')
           #end
-      )))
-      (% class="col-sm-6" %)
-      (((
-        #displayFlashProperty($obj 'groups')
       )))
     )))
     (% class="repeatSettings $!hideRepeatSettings" %)

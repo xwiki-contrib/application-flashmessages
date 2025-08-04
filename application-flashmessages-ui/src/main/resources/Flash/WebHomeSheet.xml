@@ -56,10 +56,11 @@
 
 #set ($discard = $xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css', true))
 ##
-#set($columns = ['doc.title', 'dateBegin', 'dateEnd', 'message', 'doc.date','groups', '_actions'])
+#set($columns = ['doc.title', 'dateBegin', 'dateEnd', 'message', 'doc.date','groups', '_actions', 'wikiScope'])
 #set($columnsProperties = {
   'doc.title': {'type': 'text', 'link': 'view', 'size': 10},
   'dateBegin': {'type': 'text', 'size': 10},
+  'wikiScope': {'type': 'text', 'size': 10},
   'dateEnd': {'type': 'text', 'size': 10},
   'message': {'type': 'text', 'size': 10, 'sortable': false, 'html': true},
   'doc.date': {'type': 'text', 'link': 'view', 'size': 10},

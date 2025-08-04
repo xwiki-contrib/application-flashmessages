@@ -66,7 +66,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
         )
     },
     extraJARs = {
-        "org.bouncycastle:bcprov-jdk15on:jar:1.64"
+        "org.bouncycastle:bcprov-jdk15on:jar:1.64",
+        // The Solr store is not ready yet to be installed as extension
+        "org.xwiki.platform:xwiki-platform-eventstream-store-solr:14.10",
+        "org.xwiki.platform:xwiki-platform-search-solr-query:14.10"
     }
 )
 class FlashIT
@@ -127,6 +130,7 @@ class FlashIT
                 2,
                 new ArrayList<String>(Arrays.asList(flashUtil.getCurrentDayOfTheWeek())),
                 new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
+                "currentWiki",
                 "Hi! It is like hello, only shorter.");
             flashUtil.setDefaultEntry(defaultEntry);
         }
@@ -138,6 +142,9 @@ class FlashIT
 
             // Create the document
             flashUtil.createEntry(flashUtil.getDefaultEntry());
+
+            // Wait for flashmessage to be registered with solr.
+            flashUtil.waitUntilSolrReindex();
 
             // Go to the entry view page
             FlashEntryViewPage entryViewPage = flashUtil.getDefaultEntryViewPage();
@@ -382,6 +389,7 @@ class FlashIT
             1,
             new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
+            "currentWiki",
             "Daily");
 
         // Create test message and close the 1st time pop-up
@@ -406,6 +414,7 @@ class FlashIT
             1,
             new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAdminGroup")),
+            "currentWiki",
             "NonRecurringActiveMessage");
 
         flashUtil.testMessage(entry, true);
@@ -422,6 +431,7 @@ class FlashIT
             1,
             new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAdminGroup")),
+            "currentWiki",
             "NonRecurringInactiveMessage");
 
         flashUtil.testMessage(entry, false);
@@ -438,6 +448,7 @@ class FlashIT
             2,
             new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAdminGroup")),
+            "currentWiki",
             "Every 2 days");
 
         flashUtil.testMessage(entry, true);
@@ -454,6 +465,7 @@ class FlashIT
             5,
             new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAdminGroup")),
+            "currentWiki",
             "Every 3 days");
 
         flashUtil.testMessage(entry, false);
@@ -470,6 +482,7 @@ class FlashIT
             2,
             new ArrayList<String>(Arrays.asList(flashUtil.getCurrentDayOfTheWeek())),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
+            "currentWiki",
             "Every 2 weeks");
 
         flashUtil.testMessage(entry, true);
@@ -486,6 +499,7 @@ class FlashIT
             2,
             new ArrayList<String>(Arrays.asList(flashUtil.getCurrentDayOfTheWeek() == "monday" ? "tuesday" : "monday")),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
+            "currentWiki",
             "Every 2 weeks");
 
         flashUtil.testMessage(entry, false);
@@ -502,6 +516,7 @@ class FlashIT
             6,
             new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
+            "currentWiki",
             "Every 6 months");
 
         flashUtil.testMessage(entry, true);
@@ -518,6 +533,7 @@ class FlashIT
             9,
             new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
+            "currentWiki",
             "Every 9 months");
 
         flashUtil.testMessage(entry, false);
@@ -534,6 +550,7 @@ class FlashIT
             2,
             new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
+            "currentWiki",
             "Every 2 years today");
 
         flashUtil.testMessage(entry, true);
@@ -550,6 +567,7 @@ class FlashIT
             3,
             new ArrayList<String>(),
             new ArrayList<String>(Arrays.asList("XWikiAllGroup")),
+            "currentWiki",
             "Every 3 years today");
 
         flashUtil.testMessage(entry, false);
