@@ -188,7 +188,7 @@
     #set($message = $!objFlash.get('message'))
     #set($date = $!objFlash.display('dateBegin', 'view'))
     {
-      'message'  : '$message',
+      'message'  : '$escapetool.javascript($message)',
       'document' : '$escapetool.javascript($n)',
       'date'     : '$escapetool.javascript($date)',
     }
