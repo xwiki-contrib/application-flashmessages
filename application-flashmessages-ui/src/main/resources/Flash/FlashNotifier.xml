@@ -425,7 +425,7 @@
   ## The subwiki to use as the source of the extension documents, css, jsx.
   #set ($flashMessagesUIXPInitialized = 1)
   #set ($searchFlashInstallation = $collectiontool.getOrderedSet())
-  ## App pages will be loaded from a subwiki where the FlashMessages app is installed with a version > 1.8.1 .
+  ## App pages will be loaded from a subwiki where the FlashMessages app is installed with a version &gt; 1.8.1 .
   ## Look in the current subwiki first, then main and the rest of the subwikis.
   #set ($discard = $searchFlashInstallation.addAll([$doc.getWiki(), $services.wiki.getMainWikiId()]))
   #set ($discard = $searchFlashInstallation.addAll($services.wiki.getAllIds()))

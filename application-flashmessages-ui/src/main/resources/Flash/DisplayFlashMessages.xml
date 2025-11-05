@@ -66,11 +66,11 @@
 #foreach ($groupReference in $groups)
   ## Remove the wiki component from the group reference if it matches the wiki of the message.
   #set ($groupReferenceCompact = $services.model.serialize($groupReference, 'local'))
-  #set ($groupReferenceFull  = $services.model.serialize($groupReference, 'default').replace(':','\:'))
+  #set ($groupReferenceFull  = $services.model.serialize($groupReference, 'default'))
   #set ($messageWiki = $groupReference.getWikiReference().getName())
   #set ($discard = $groupsFilter.add(
-    "(wiki:$messageWiki AND property.Flash.FlashClass.groups:*(?&lt;!\:)$groupReferenceCompact(,|\r)*)
-    OR (-wiki:$messageWiki AND property.Flash.FlashClass.groups:*$groupReferenceFull(,|\r)*)"))
+    "(wiki:$messageWiki AND property.Flash.FlashClass.groups_string:""$groupReferenceCompact"")
+    OR (-wiki:$messageWiki AND property.Flash.FlashClass.groups_string:""$groupReferenceFull"")"))
 #end
 #if ($groupsFilter.size() &gt; 0)
   #set ($groupsFilter = " AND ($stringtool.join($groupsFilter, ' OR ')) ")
@@ -90,8 +90,8 @@
     "object:Flash.FlashClass AND property.Flash.FlashClass.dateBegin:[* TO NOW]
     AND -property.Flash.FlashClass.dateEnd:[* TO NOW]
     AND (wiki:$doc.getWiki() OR property.Flash.FlashClass.wikiScope:allWikis)
-    $groupsFilter", 'solr').bindValue('fq', 'type:DOCUMENT AND -fullname:Flash.FlashTemplate'))
-  #set ($queryResults = $query.setLimit(20).execute().get(0).getResults())
+    ", 'solr').bindValue('fq', "type:DOCUMENT AND -fullname:Flash.FlashTemplate $groupsFilter"))
+  #set ($queryResults = $query.setLimit(300).execute().get(0).getResults())
   ##
   #foreach($event in $queryResults)
     #set ($eventDocName    = "$event.wiki:$event.fullname")
