@@ -202,7 +202,7 @@
     return fetch('/xwiki/rest/wikis').then(res =&gt; res.text())
     .then(data =&gt; {
       data = (new DOMParser()).parseFromString(data, "text/xml");
-      let wikis = Array.from(data.activeElement.getElementsByTagName('id')).map(a =&gt; a.innerHTML);
+      let wikis = Array.from(data.documentElement.getElementsByTagName('id')).map(a =&gt; a.innerHTML);
       let flashNotifierUrl = '/xwiki/__subwiki__/get/Flash/FlashNotifier';
       flashNotifierUrl = flashNotifierUrl.replace('__subwiki__', wikis.length &gt; 1 ? 'wiki/$doc.getWiki()' : 'bin');
       // End workaround.
@@ -333,7 +333,7 @@
         <separators>|, </separators>
         <size>5</size>
         <unmodifiable>0</unmodifiable>
-        <values>action=Action|doc.reference=Document|icon.theme=Icon theme|locale=Language|rendering.defaultsyntax=Default syntax|rendering.restricted=Restricted|rendering.targetsyntax=Target syntax|request.base=Request base URL|request.cookies|request.headers|request.parameters=Request parameters|request.remoteAddr|request.url=Request URL|request.wiki=Request wiki|user=User|wiki=Wiki</values>
+        <values>action=Action|doc.reference=Document|doc.revision|icon.theme=Icon theme|locale=Language|rendering.defaultsyntax=Default syntax|rendering.restricted=Restricted|rendering.targetsyntax=Target syntax|request.base=Request base URL|request.cookies|request.headers|request.parameters=Request parameters|request.remoteAddr|request.session|request.url=Request URL|request.wiki=Request wiki|sheet|user=User|wiki=Wiki</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </async_context>
       <async_enabled>

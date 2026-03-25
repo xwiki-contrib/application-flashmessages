@@ -7,7 +7,7 @@ Allows you to create Flash messages aiming at one or multiple local/global group
 * [Documentation & Download](http://extensions.xwiki.org/xwiki/bin/view/Extension/Flash+messages+application)
 * [Issue Tracker](http://jira.xwiki.org/browse/XAFLASHM)
 * [Development Practices](http://dev.xwiki.org)
-* Minimal XWiki version supported: XWiki 14.10
+* Minimal XWiki version supported: XWiki 15.10
 * License: LGPL 2.1+.
 * [Translations](http://l10n.xwiki.org/xwiki/bin/view/Contrib/FlashMessagesApplication)
 * Sonar Dashboard: N/A

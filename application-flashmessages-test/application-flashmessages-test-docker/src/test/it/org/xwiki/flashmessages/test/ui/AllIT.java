@@ -34,7 +34,7 @@ import org.xwiki.test.docker.junit5.UITest;
         "xwikiCfgPlugins=com.xpn.xwiki.plugin.rightsmanager.RightsManagerPlugin"
     }
 )
-class AllITs
+class AllIT
 {
     @Nested
     @DisplayName("Overall Flash Messages UI")

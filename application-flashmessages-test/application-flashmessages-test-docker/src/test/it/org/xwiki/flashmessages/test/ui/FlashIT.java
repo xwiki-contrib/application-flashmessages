@@ -31,7 +31,6 @@ import org.xwiki.flashmessages.test.po.FlashEntryViewPage;
 import org.xwiki.flashmessages.test.po.FlashHomePage;
 import org.xwiki.flashmessages.test.po.FlashSlider;
 import org.xwiki.panels.test.po.ApplicationsPanel;
-import org.xwiki.test.docker.junit5.ExtensionOverride;
 import org.xwiki.test.docker.junit5.UITest;
 import org.xwiki.test.integration.junit.LogCaptureConfiguration;
 import org.xwiki.test.ui.TestUtils;
@@ -49,27 +48,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @version $Id$
  * @since 1.7
  */
-@UITest(
-    //TODO After the licensing app has 14.10+ as its parent, remove the overrides and the extra jars.
-    extensionOverrides = {
-        @ExtensionOverride(
-            extensionId = "com.google.code.findbugs:jsr305",
-            overrides = {
-                "features=com.google.code.findbugs:annotations"
-            }
-        ),
-        @ExtensionOverride(
-            extensionId = "org.bouncycastle:bcprov-jdk18on",
-            overrides = {
-                "org.bouncycastle:bcprov-jdk15"
-            }
-        )
-    },
-    extraJARs = {
-        "org.bouncycastle:bcprov-jdk15on:jar:1.64",
+@UITest(extraJARs = {
         // The Solr store is not ready yet to be installed as extension
-        "org.xwiki.platform:xwiki-platform-eventstream-store-solr:14.10",
-        "org.xwiki.platform:xwiki-platform-search-solr-query:14.10"
+        "org.xwiki.platform:xwiki-platform-eventstream-store-solr:15.10",
+        "org.xwiki.platform:xwiki-platform-search-solr-query:15.10"
     }
 )
 class FlashIT

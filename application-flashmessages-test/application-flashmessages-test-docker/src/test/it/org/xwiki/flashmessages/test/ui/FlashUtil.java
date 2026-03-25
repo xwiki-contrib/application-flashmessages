@@ -80,8 +80,8 @@ public class FlashUtil
 
     /**
      * Get default entry
-     * 
-     * @param entry the default FlashEntry object
+     *
+     * @return the default FlashEntry object
      */
     public FlashEntry getDefaultEntry()
     {
@@ -373,7 +373,7 @@ public class FlashUtil
     public void waitUntilSolrReindex() throws Exception
     {
         System.out.println("Waiting for solr to finish indexing. This may take a while...");
-        new SolrTestUtils(setup, "http://localhost:8080/xwiki").waitEmpyQueue();
+        new SolrTestUtils(setup, "http://localhost:8080/xwiki").waitEmptyQueue();
         System.out.println("Solr indexing finished.");
     }
 }

@@ -139,6 +139,7 @@
       <number>3</number>
       <picker>0</picker>
       <prettyName>Message</prettyName>
+      <restricted>0</restricted>
       <rows>5</rows>
       <size>40</size>
       <unmodifiable>0</unmodifiable>

@@ -198,7 +198,7 @@
     fetch('/xwiki/rest/wikis').then(res =&gt; res.text())
     .then(data =&gt; {
       data = (new DOMParser()).parseFromString(data, "text/xml");
-      let wikis = Array.from(data.activeElement.getElementsByTagName('id')).map(a =&gt; a.innerHTML);
+      let wikis = Array.from(data.documentElement.getElementsByTagName('id')).map(a =&gt; a.innerHTML);
       let flashNotifierUrl = '/xwiki/__subwiki__/jsx/Flash/FlashNotifier';
       flashNotifierUrl = flashNotifierUrl.replace('__subwiki__', wikis.length &gt; 1 ? 'wiki/$flashInstallSubwiki' : 'bin');
       // End workaround.
@@ -346,7 +346,7 @@
     }
 
     // Navigation bullets
-    $("#flashMessages .navigation a").click(function(e) {
+    $("#flashMessages .navigation a").on('click', function(e) {
       e.preventDefault();
 
       // Remove the selected class from the currently selected indicator
