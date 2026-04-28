@@ -42,6 +42,7 @@
   </properties>
   <modules>
     <module>application-flashmessages-ui</module>
+    <module>application-flashmessages-xip</module>
   </modules>
   <profiles>
     <profile>
