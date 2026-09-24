@@ -425,16 +425,16 @@
   ## The subwiki to use as the source of the extension documents, css, jsx.
   #set ($flashMessagesUIXPInitialized = 1)
   #set ($searchFlashInstallation = $collectiontool.getOrderedSet())
-  ## App pages will be loaded from a subwiki where the FlashMessages app is installed with a version &gt; 1.8.1 .
+  ## App pages will be loaded from a subwiki where the FlashMessages app is installed with a version &gt; 1.1.10 .
   ## Look in the current subwiki first, then main and the rest of the subwikis.
   #set ($discard = $searchFlashInstallation.addAll([$doc.getWiki(), $services.wiki.getMainWikiId()]))
   #set ($discard = $searchFlashInstallation.addAll($services.wiki.getAllIds()))
   #set ($flashInstallSubwikis = [])
   #foreach ($subwiki in $searchFlashInstallation)
     #set ($flashmessagesVersion = $services.extension.installed.getInstalledExtension(
-      'com.xwiki.flashmessages:application-flashmessages-ui', "wiki:$subwiki").getId().getVersion())
+      'org.xwiki.contrib:application-flashmessages-ui', "wiki:$subwiki").getId().getVersion())
     #if ("$!flashmessagesVersion" != '')
-      #set ($supportsGlobalFlashmessages = $flashmessagesVersion.compareTo('1.8.1') &gt; 0)
+      #set ($supportsGlobalFlashmessages = $flashmessagesVersion.compareTo('1.1.10') &gt; 0)
     #end
     #if ($supportsGlobalFlashmessages &amp;&amp; $xwiki.exists("$subwiki:Flash.DisplayFlashMessages")
         &amp;&amp; $xwiki.hasAccessLevel('view', $xcontext.userReference, "$subwiki:Flash.DisplayFlashMessages"))
