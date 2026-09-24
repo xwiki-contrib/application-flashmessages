@@ -20,29 +20,31 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.0" reference="Flash.FlashTemplate" locale="">
   <web>Flash</web>
   <name>FlashTemplate</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>Flash.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
-  <author>xwiki:XWiki.Admin</author>
-  <customClass/>
-  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1399397158000</creationDate>
-  <date>1399473232000</date>
-  <contentUpdateDate>1389567600000</contentUpdateDate>
+  <parent>Flash.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1511516871000</date>
+  <contentUpdateDate>1511516871000</contentUpdateDate>
   <version>1.1</version>
   <title/>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
+  <content/>
   <object>
+    <name>Flash.FlashTemplate</name>
+    <number>0</number>
+    <className>Flash.FlashClass</className>
+    <guid>b4ef618c-a80b-4d6b-9813-6d41a85960a2</guid>
     <class>
       <name>Flash.FlashClass</name>
       <customClass/>
@@ -53,7 +55,7 @@
       <nameField/>
       <validationScript/>
       <dateBegin>
-        <customDisplay>{{include document="AppWithinMinutes.Date"/}}</customDisplay>
+        <customDisplay>{{include reference="AppWithinMinutes.Date"/}}</customDisplay>
         <dateFormat>dd/MM/yyyy  HH:mm</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>0</emptyIsToday>
@@ -68,7 +70,7 @@
         <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
       </dateBegin>
       <dateEnd>
-        <customDisplay>{{include document="AppWithinMinutes.Date"/}}</customDisplay>
+        <customDisplay>{{include reference="AppWithinMinutes.Date"/}}</customDisplay>
         <dateFormat>dd/MM/yyyy  HH:mm</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>0</emptyIsToday>
@@ -85,7 +87,21 @@
       <groups>
         <cache>0</cache>
         <classname/>
-        <customDisplay/>
+        <customDisplay>{{velocity}}
+{{html}}
+#if ($type == 'edit')
+  #userPicker_import(true)
+  #set ($id = $escapetool.xml("${prefix}${name}"))
+  #set ($class = 'suggestGroups multipleSelection')
+  #if (!$xcontext.isMainWiki() &amp;&amp; "$!services.wiki.user.userScope" != 'LOCAL_ONLY')
+    #set ($class = "$class withScope")
+  #end
+  &lt;input type="text" id="$!id" name="$!id" value="$stringtool.join($value, ',')" class="$class" /&gt;
+#elseif ($value.size() &gt; 0)
+    #displayGroup($value)
+#end
+{{/html}}
+{{/velocity}}</customDisplay>
         <disabled>0</disabled>
         <displayType>checkbox</displayType>
         <idField/>
@@ -99,11 +115,7 @@
         <separators/>
         <size>1</size>
         <sort>none</sort>
-        <sql>select distinct doc.fullName, doc.name  from XWikiDocument as doc, BaseObject as obj where doc.fullName = obj.name and obj.className = 'XWiki.XWikiGroups' and doc.fullName not in ('XWiki.XWikiAdminGroup','XWiki.XWikiGroupTemplate') order by doc.name 
-
-
-
-</sql>
+        <sql>select distinct doc.fullName, doc.name  from XWikiDocument as doc, BaseObject as obj where doc.fullName = obj.name and obj.className = 'XWiki.XWikiGroups' and doc.fullName &lt;&gt; 'XWiki.XWikiGroupTemplate' order by doc.name</sql>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
@@ -125,11 +137,84 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </message>
+      <repeat>
+        <customDisplay/>
+        <defaultValue>0</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>repeat</name>
+        <number>5</number>
+        <prettyName>Repeat</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </repeat>
+      <repeatDays>
+        <cache>0</cache>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <displayType>checkbox</displayType>
+        <multiSelect>1</multiSelect>
+        <name>repeatDays</name>
+        <number>8</number>
+        <picker>0</picker>
+        <prettyName>Repeat Days</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator/>
+        <separators> ,|</separators>
+        <size>1</size>
+        <sort>none</sort>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values>monday|tuesday|wednesday|thursday|friday|saturday|sunday</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </repeatDays>
+      <repeatFrequency>
+        <cache>0</cache>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>repeatFrequency</name>
+        <number>7</number>
+        <picker>0</picker>
+        <prettyName>Repeat Frequency</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <sort>none</sort>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values>1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </repeatFrequency>
+      <repeatInterval>
+        <cache>0</cache>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>repeatInterval</name>
+        <number>6</number>
+        <picker>0</picker>
+        <prettyName>Repeat Interval</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <sort>none</sort>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values>daily|weekly|monthly|yearly</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </repeatInterval>
     </class>
-    <name>Flash.FlashTemplate</name>
-    <number>0</number>
-    <className>Flash.FlashClass</className>
-    <guid>b4ef618c-a80b-4d6b-9813-6d41a85960a2</guid>
     <property>
       <dateBegin/>
     </property>
@@ -140,5 +225,4 @@
       <message/>
     </property>
   </object>
-  <content/>
 </xwikidoc>

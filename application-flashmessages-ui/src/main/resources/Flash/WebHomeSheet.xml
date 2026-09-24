@@ -20,7 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc version="1.0" reference="Flash.WebHomeSheet" locale="">
   <web>Flash</web>
   <name>WebHomeSheet</name>
   <language/>
@@ -31,8 +31,8 @@
   <parent>Flash.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1399397158000</date>
-  <contentUpdateDate>1399397158000</contentUpdateDate>
+  <date>1511516872000</date>
+  <contentUpdateDate>1511516872000</contentUpdateDate>
   <version>1.1</version>
   <title/>
   <comment/>

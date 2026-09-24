@@ -20,29 +20,92 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.0" reference="Flash.FlashSheet" locale="">
   <web>Flash</web>
   <name>FlashSheet</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>Flash.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
-  <author>xwiki:XWiki.Admin</author>
-  <customClass/>
-  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1399397158000</creationDate>
-  <date>1399413898000</date>
-  <contentUpdateDate>1399398226000</contentUpdateDate>
+  <parent>Flash.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1511516872000</date>
+  <contentUpdateDate>1511516872000</contentUpdateDate>
   <version>1.1</version>
   <title/>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
+  <content>{{include reference='Flash.Macros' /}}
+
+{{velocity}}
+{{html wiki="true"}}
+#set($discard   = $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator'))
+#set($discard   = $doc.use('Flash.FlashClass'))
+##
+#if($listtool.contains(['edit', 'inline'], $xcontext.action))
+  #set($discard   = $xwiki.jsx.use('Flash.FlashSheet'))
+#end
+##
+#set($date      = $doc.getValue('dateBegin'))
+#set($interval  = $doc.getValue('repeatInterval'))
+#set($frequency = $doc.getValue('repeatFrequency'))
+#set($days      = $doc.getValue('repeatDays'))
+##
+## We don't have access to the form element to set the CSS class for the vertical form layout standard.
+#if("$!xcontext.action" == 'edit' || "$!xcontext.action" == 'inline')
+  {{info}}$services.localization.render('flash.creation.utcinfo'){{/info}}
+#end
+## If recurrency is not enabled don't show the extra settings
+#if ($xcontext.action == 'view' || $doc.getValue('repeat') != 1)
+  #set($hideRepeatSettings = 'hidden')
+#end
+## Show day of the week selector only for the week interval
+#if ($doc.getValue('repeatInterval') != 'weekly')
+  #set($hideRepeatDays = 'hidden')
+#end
+(% class="xform" %)
+(((
+  ; &lt;label for="Flash.FlashClass_0_dateBegin"&gt;$doc.displayPrettyName('dateBegin', false, false)&lt;/label&gt;
+  : $doc.display('dateBegin')
+  ; &lt;label for="Flash.FlashClass_0_dateEnd"&gt;$doc.displayPrettyName('dateEnd', false, false)&lt;/label&gt;
+  : $doc.display('dateEnd')
+  ; &lt;label for="Flash.FlashClass_0_repeat"&gt;$doc.displayPrettyName('repeat', false, false)&lt;/label&gt;
+  : #if($xcontext.action == 'view' &amp;&amp; $doc.getValue('repeat') == 1)
+      #repeatSummary($date, $interval, $frequency, $days)
+    #else
+      $doc.display('repeat')
+    #end
+  (% class="repeatSettings $!hideRepeatSettings" %)
+  (((
+    ; &lt;label for="Flash.FlashClass_0_repeatInterval"&gt;$doc.displayPrettyName('repeatInterval', false, false)&lt;/label&gt;
+    : $doc.display('repeatInterval')
+    ; &lt;label for="Flash.FlashClass_0_repeatFrequency"&gt;$doc.displayPrettyName('repeatFrequency', false, false)&lt;/label&gt;
+    : $doc.display('repeatFrequency')
+    (% class="repeatDays $!hideRepeatDays" %)
+    (((
+      ; &lt;label for="Flash.FlashClass_0_repeatDays"&gt;$doc.displayPrettyName('repeatDays', false, false)&lt;/label&gt;
+      : $doc.display('repeatDays')
+    )))
+    ; &lt;label for="repeatSummary"&gt;$services.localization.render('flash.repeat.summary')&lt;/label&gt;
+    : (% id="repeatSummary" %)N/A
+  )))
+  ; &lt;label for="Flash.FlashClass_0_groups"&gt;$doc.displayPrettyName('groups', false, false)&lt;/label&gt;
+  : $doc.display('groups')
+  ; &lt;label for="Flash.FlashClass_0_message"&gt;$doc.displayPrettyName('message', false, false)&lt;/label&gt;
+  : $doc.display('message')
+)))
+{{/html}}
+{{/velocity}}
+</content>
   <object>
+    <name>Flash.FlashSheet</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>05822848-2ae0-457b-9078-fbac588b534a</guid>
     <class>
       <name>XWiki.JavaScriptExtension</name>
       <customClass/>
@@ -62,14 +125,16 @@
         <prettyName>Caching policy</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>long|short|default|forbid</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </cache>
       <code>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>code</name>
         <number>2</number>
         <prettyName>Code</prettyName>
@@ -107,17 +172,13 @@
         <prettyName>Use this extension</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>currentPage|onDemand|always</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </use>
     </class>
-    <name>Flash.FlashSheet</name>
-    <number>0</number>
-    <className>XWiki.JavaScriptExtension</className>
-    <guid>05822848-2ae0-457b-9078-fbac588b534a</guid>
     <property>
       <cache>long</cache>
     </property>
@@ -212,66 +273,4 @@ function summary() {
       <use>onDemand</use>
     </property>
   </object>
-  <content>{{include reference='Flash.Macros' /}}
-
-{{velocity}}
-{{html wiki="true"}}
-#set($discard   = $xwiki.ssx.use('AppWithinMinutes.ClassSheetGenerator'))
-#set($discard   = $doc.use('Flash.FlashClass'))
-##
-#if($listtool.contains(['edit', 'inline'], $xcontext.action))
-  #set($discard   = $xwiki.jsx.use('Flash.FlashSheet'))
-#end
-##
-#set($date      = $doc.getValue('dateBegin'))
-#set($interval  = $doc.getValue('repeatInterval'))
-#set($frequency = $doc.getValue('repeatFrequency'))
-#set($days      = $doc.getValue('repeatDays'))
-##
-## We don't have access to the form element to set the CSS class for the vertical form layout standard.
-#if("$!xcontext.action" == 'edit' || "$!xcontext.action" == 'inline')
-  {{info}}$services.localization.render('flash.creation.utcinfo'){{/info}}
-#end
-## If recurrency is not enabled don't show the extra settings
-#if ($xcontext.action == 'view' || $doc.getValue('repeat') != 1)
-  #set($hideRepeatSettings = 'hidden')
-#end
-## Show day of the week selector only for the week interval
-#if ($doc.getValue('repeatInterval') != 'weekly')
-  #set($hideRepeatDays = 'hidden')
-#end
-(% class="xform" %)
-(((
-  ; &lt;label for="Flash.FlashClass_0_dateBegin"&gt;$doc.displayPrettyName('dateBegin', false, false)&lt;/label&gt;
-  : $doc.display('dateBegin')
-  ; &lt;label for="Flash.FlashClass_0_dateEnd"&gt;$doc.displayPrettyName('dateEnd', false, false)&lt;/label&gt;
-  : $doc.display('dateEnd')
-  ; &lt;label for="Flash.FlashClass_0_repeat"&gt;$doc.displayPrettyName('repeat', false, false)&lt;/label&gt;
-  : #if($xcontext.action == 'view' &amp;&amp; $doc.getValue('repeat') == 1)
-      #repeatSummary($date, $interval, $frequency, $days)
-    #else
-      $doc.display('repeat')
-    #end
-  (% class="repeatSettings $!hideRepeatSettings" %)
-  (((
-    ; &lt;label for="Flash.FlashClass_0_repeatInterval"&gt;$doc.displayPrettyName('repeatInterval', false, false)&lt;/label&gt;
-    : $doc.display('repeatInterval')
-    ; &lt;label for="Flash.FlashClass_0_repeatFrequency"&gt;$doc.displayPrettyName('repeatFrequency', false, false)&lt;/label&gt;
-    : $doc.display('repeatFrequency')
-    (% class="repeatDays $!hideRepeatDays" %)
-    (((
-      ; &lt;label for="Flash.FlashClass_0_repeatDays"&gt;$doc.displayPrettyName('repeatDays', false, false)&lt;/label&gt;
-      : $doc.display('repeatDays')
-    )))
-    ; &lt;label for="repeatSummary"&gt;$services.localization.render('flash.repeat.summary')&lt;/label&gt;
-    : (% id="repeatSummary" %)N/A
-  )))
-  ; &lt;label for="Flash.FlashClass_0_groups"&gt;$doc.displayPrettyName('groups', false, false)&lt;/label&gt;
-  : $doc.display('groups')
-  ; &lt;label for="Flash.FlashClass_0_message"&gt;$doc.displayPrettyName('message', false, false)&lt;/label&gt;
-  : $doc.display('message')
-)))
-{{/html}}
-{{/velocity}}
-</content>
 </xwikidoc>

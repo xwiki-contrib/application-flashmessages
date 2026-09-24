@@ -20,29 +20,62 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.0" reference="Flash.FlashNotifier" locale="">
   <web>Flash</web>
   <name>FlashNotifier</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>Flash.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
-  <author>xwiki:XWiki.Admin</author>
-  <customClass/>
-  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1399398396000</creationDate>
-  <date>1399413965000</date>
-  <contentUpdateDate>1399398612000</contentUpdateDate>
+  <parent>Flash.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1511516872000</date>
+  <contentUpdateDate>1511516872000</contentUpdateDate>
   <version>1.1</version>
   <title>FlashNotifier</title>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
+  <content>{{velocity}}
+## Mark the message as seen by the current user
+#if("$!request.ajax" == '1' &amp;&amp; $xcontext.action == 'get')
+  #set($msgdoc = $xwiki.getDocument($request.flash))
+  #set($userdoc = $xwiki.getDocument($xcontext.user))
+  #if($userdoc &amp;&amp; !$userdoc.isNew() &amp;&amp; $xwiki.exists($msgdoc))
+    ## Start by looking in the user document in order to ensure backwards compatibility
+    #set($obj = $userdoc.getObject('Flash.FlashValidationClass'))
+    #set($list = $obj.getProperty('flash').getValue())
+    #set($seen = false)
+    #if($list != $util.getNull() &amp;&amp; $list.contains("$msgdoc"))
+      #set($seen = true)
+    #end
+    ## If the user does not have the message marked as seen in his profile add him to the message document. 
+    ## Doing so we ensure that this feature works with global users.
+    #if(!$seen)
+      #set($obj = $msgdoc.getObject('Flash.FlashValidationClass', true))
+      #set($list = $obj.getProperty('flash').getValue())
+      #if($list == $util.getNull())
+        #set($discard = $obj.set('flash', [$xcontext.user]))
+        #set($discard = $msgdoc.saveAsAuthor("$xcontext.user has seen the message"))
+      #elseif($list.class.name == 'com.xpn.xwiki.objects.ListProperty$NotifyList' &amp;&amp; !$list.contains($xcontext.user))
+        #set($discard = $list.add($xcontext.user))
+        #set($discard = $obj.set('flash', $list))
+        #set($discard = $msgdoc.saveAsAuthor("$xcontext.user has seen the message"))
+      #end
+    #end
+  #end
+#end
+{{/velocity}}
+
+</content>
   <object>
+    <name>Flash.FlashNotifier</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>cd82a4ab-5751-4d8f-9e91-c426cbf15f50</guid>
     <class>
       <name>XWiki.JavaScriptExtension</name>
       <customClass/>
@@ -62,14 +95,16 @@
         <prettyName>Caching policy</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>long|short|default|forbid</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </cache>
       <code>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>code</name>
         <number>2</number>
         <prettyName>Code</prettyName>
@@ -107,17 +142,13 @@
         <prettyName>Use this extension</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
-        <values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
+        <values>currentPage|onDemand|always</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </use>
     </class>
-    <name>Flash.FlashNotifier</name>
-    <number>0</number>
-    <className>XWiki.JavaScriptExtension</className>
-    <guid>cd82a4ab-5751-4d8f-9e91-c426cbf15f50</guid>
     <property>
       <cache>long</cache>
     </property>
@@ -179,6 +210,10 @@ window.flashNotifier = function(params){
     </property>
   </object>
   <object>
+    <name>Flash.FlashNotifier</name>
+    <number>0</number>
+    <className>XWiki.UIExtensionClass</className>
+    <guid>1a06641b-d9f3-4c51-9726-5df0c8e87523</guid>
     <class>
       <name>XWiki.UIExtensionClass</name>
       <customClass/>
@@ -190,6 +225,7 @@ window.flashNotifier = function(params){
       <validationScript/>
       <content>
         <disabled>0</disabled>
+        <editor>Text</editor>
         <name>content</name>
         <number>3</number>
         <prettyName>Extension Content</prettyName>
@@ -217,7 +253,9 @@ window.flashNotifier = function(params){
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </name>
       <parameters>
+        <contenttype>PureText</contenttype>
         <disabled>0</disabled>
+        <editor>PureText</editor>
         <name>parameters</name>
         <number>4</number>
         <prettyName>Extension Parameters</prettyName>
@@ -236,17 +274,13 @@ window.flashNotifier = function(params){
         <prettyName>Extension Scope</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>wiki=Current Wiki|user=Current User|global=Global</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </scope>
     </class>
-    <name>Flash.FlashNotifier</name>
-    <number>0</number>
-    <className>XWiki.UIExtensionClass</className>
-    <guid>1a06641b-d9f3-4c51-9726-5df0c8e87523</guid>
     <property>
       <content>{{velocity}}
 #if($xcontext.action == 'view' &amp;&amp; $xwiki.hasAccessLevel('view', $xcontext.userReference, 'Flash.DisplayFlashMessages'))
@@ -267,36 +301,4 @@ window.flashNotifier = function(params){
       <scope>wiki</scope>
     </property>
   </object>
-  <content>{{velocity}}
-## Mark the message as seen by the current user
-#if("$!request.ajax" == '1' &amp;&amp; $xcontext.action == 'get')
-  #set($msgdoc = $xwiki.getDocument($request.flash))
-  #set($userdoc = $xwiki.getDocument($xcontext.user))
-  #if($userdoc &amp;&amp; !$userdoc.isNew() &amp;&amp; $xwiki.exists($msgdoc))
-    ## Start by looking in the user document in order to ensure backwards compatibility
-    #set($obj = $userdoc.getObject('Flash.FlashValidationClass'))
-    #set($list = $obj.getProperty('flash').getValue())
-    #set($seen = false)
-    #if($list != $util.getNull() &amp;&amp; $list.contains("$msgdoc"))
-      #set($seen = true)
-    #end
-    ## If the user does not have the message marked as seen in his profile add him to the message document. 
-    ## Doing so we ensure that this feature works with global users.
-    #if(!$seen)
-      #set($obj = $msgdoc.getObject('Flash.FlashValidationClass', true))
-      #set($list = $obj.getProperty('flash').getValue())
-      #if($list == $util.getNull())
-        #set($discard = $obj.set('flash', [$xcontext.user]))
-        #set($discard = $msgdoc.saveAsAuthor("$xcontext.user has seen the message"))
-      #elseif($list.class.name == 'com.xpn.xwiki.objects.ListProperty$NotifyList' &amp;&amp; !$list.contains($xcontext.user))
-        #set($discard = $list.add($xcontext.user))
-        #set($discard = $obj.set('flash', $list))
-        #set($discard = $msgdoc.saveAsAuthor("$xcontext.user has seen the message"))
-      #end
-    #end
-  #end
-#end
-{{/velocity}}
-
-</content>
 </xwikidoc>

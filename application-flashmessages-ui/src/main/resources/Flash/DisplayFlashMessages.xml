@@ -20,378 +20,25 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.0" reference="Flash.DisplayFlashMessages" locale="">
   <web>Flash</web>
   <name>DisplayFlashMessages</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>Flash.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
-  <author>xwiki:XWiki.Admin</author>
-  <customClass/>
-  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <creationDate>1399398423000</creationDate>
-  <date>1399413974000</date>
-  <contentUpdateDate>1399400917000</contentUpdateDate>
+  <parent>Flash.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1511516871000</date>
+  <contentUpdateDate>1511516871000</contentUpdateDate>
   <version>1.1</version>
   <title>DisplayFlashMessages</title>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <object>
-    <class>
-      <name>XWiki.JavaScriptExtension</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <cache>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <multiSelect>0</multiSelect>
-        <name>cache</name>
-        <number>5</number>
-        <prettyName>Caching policy</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators> ,|</separators>
-        <size>1</size>
-        <unmodifiable>0</unmodifiable>
-        <values>long|short|default|forbid</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </cache>
-      <code>
-        <disabled>0</disabled>
-        <name>code</name>
-        <number>2</number>
-        <prettyName>Code</prettyName>
-        <rows>20</rows>
-        <size>50</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </code>
-      <name>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>1</number>
-        <prettyName>Name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-      <parse>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>parse</name>
-        <number>4</number>
-        <prettyName>Parse content</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </parse>
-      <use>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <multiSelect>0</multiSelect>
-        <name>use</name>
-        <number>3</number>
-        <prettyName>Use this extension</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators> ,|</separators>
-        <size>1</size>
-        <unmodifiable>0</unmodifiable>
-        <values>currentPage|onDemand|always</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </use>
-    </class>
-    <name>Flash.DisplayFlashMessages</name>
-    <number>0</number>
-    <className>XWiki.JavaScriptExtension</className>
-    <guid>68e12981-e81d-4ec5-ac74-704b8f9618af</guid>
-    <property>
-      <cache>long</cache>
-    </property>
-    <property>
-      <code>require(['jquery'], function($) {
-  $(document).ready(function() {
-    var messages = $$("#flashMessages .messages li").length;
-    if (messages &gt; 1) {
-      var interval = setInterval(nextMessage, 10000);
-      // Generate navigation bullets
-      for (var i = 0; i &lt; messages; i++) {
-        $("#flashMessages .navigation").append('&lt;li&gt;&lt;a href="javascript:void(0)"&gt;&lt;span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;');
-      }
-    }
-  
-    if (messages &gt; 0) {
-      // Select the first message and element in the navigation
-      $("#flashMessages .messages li:first-of-type").addClass("selected");
-      $("#flashMessages .navigation :first-child a").addClass("selected");
-    }
-
-    // Navigation bullets
-    $("#flashMessages .navigation a").click(function(e) {
-      e.preventDefault();
-
-      // Remove the selected class from the currently selected indicator
-      $(this).parent().parent().find(".selected").removeClass("selected");
-      // Make the clicked indicator the selected one
-      $(this).addClass("selected");
-
-      // Reset the timer for the next message
-      clearInterval(interval);
-      interval = setInterval(nextMessage, 10000);
-
-      updateSlideshowForSelectedMessage();
-    });
-
-    // Display the currently selected message
-    function updateSlideshowForSelectedMessage() {
-      var index = $("#flashMessages .navigation .selected").parent().index();
-      var classIndex = parseInt(index+1, 10);
-
-      $("#flashMessages .messages .selected").removeClass("selected");
-      $("#flashMessages .messages li:nth-child(" + classIndex + ")").addClass("selected");
-    }
-
-    // Go to the next message
-    function nextMessage() {
-      var reachedLastMessage = $("#flashMessages .navigation .selected").parent().index()+1 &gt;= messages;
-
-      if (reachedLastMessage) {
-        $("#flashMessages .navigation .selected").removeClass("selected");
-        $("#flashMessages .navigation :first-child a").addClass("selected");
-      } else {
-        $("#flashMessages .navigation .selected").removeClass("selected").parent().next().find("a").addClass("selected");
-      }
-
-      updateSlideshowForSelectedMessage();
-    }
-  });
-});</code>
-    </property>
-    <property>
-      <name/>
-    </property>
-    <property>
-      <parse>0</parse>
-    </property>
-    <property>
-      <use>onDemand</use>
-    </property>
-  </object>
-  <object>
-    <class>
-      <name>XWiki.StyleSheetExtension</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <cache>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <multiSelect>0</multiSelect>
-        <name>cache</name>
-        <number>5</number>
-        <prettyName>Caching policy</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators> ,|</separators>
-        <size>1</size>
-        <unmodifiable>0</unmodifiable>
-        <values>long|short|default|forbid</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </cache>
-      <code>
-        <disabled>0</disabled>
-        <name>code</name>
-        <number>2</number>
-        <prettyName>Code</prettyName>
-        <rows>20</rows>
-        <size>50</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </code>
-      <name>
-        <disabled>0</disabled>
-        <name>name</name>
-        <number>1</number>
-        <prettyName>Name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </name>
-      <parse>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>parse</name>
-        <number>4</number>
-        <prettyName>Parse content</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </parse>
-      <use>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <multiSelect>0</multiSelect>
-        <name>use</name>
-        <number>3</number>
-        <prettyName>Use this extension</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators> ,|</separators>
-        <size>1</size>
-        <unmodifiable>0</unmodifiable>
-        <values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </use>
-    </class>
-    <name>Flash.DisplayFlashMessages</name>
-    <number>0</number>
-    <className>XWiki.StyleSheetExtension</className>
-    <guid>96bce27a-7a4d-4273-8f35-15c4a2dfe632</guid>
-    <property>
-      <cache>forbid</cache>
-    </property>
-    <property>
-      <code>#template('colorThemeInit.vm')
-
-#flashMessages {
-  background-color: $theme.menuBackgroundColor;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) inset;
-  color: $theme.menuLinkColor;
-  width: 100%;
-  position: relative;
-  display: -webkit-box;        /* OLD - iOS 6, Safari 3.1-6 */
-  display: -moz-box;           /* OLD - Firefox 19 */
-  display: -ms-flexbox;        /* TWEENER - IE 10 */
-  display: -webkit-flex;       /* NEW - Chrome */
-  display: flex;               /* NEW, Spec - Opera 12.1, Firefox 20+ */
-  clear: both;
-  -webkit-box-align: center;   /* OLD - iOS 6, Safari 3.1-6 */
-  -moz-box-align: center;      /* OLD - Firefox 19 */
-  -ms-flex-align: center;      /* TWEENER - IE 10 */
-  -webkit-align-items: center; /* NEW - Chrome */
-  align-items: center;         /* NEW, Spec - Opera 12.1, Firefox 20+ */
-}
-
-#flashMessages .messages {
-  width: 90%;
-  padding: 0;
-  margin: 0;
-  float: left;
-}
-
-.skin-flamingo #flashMessages .messages {
-  margin: 10px 0 0;
-}
-
-#flashMessages .messages li {
-  opacity: 0;
-  visibility: hidden;
-  position: relative;
-  display: none;
-}
-
-#flashMessages .messages li .date {
-  float: left;
-  font-size: 0.9em;
-  margin-right: 0.3em;
-}
-
-#flashMessages .messages li .message {
-  float: left;
-  font-size: 0.9em;
-}
-
-#flashMessages .messages .selected {
-  opacity: 1;
-  visibility: visible;
-  display: -webkit-box;      /* OLD - iOS 6, Safari 3.1-6 */
-  display: -moz-box;         /* OLD - Firefox 19 */
-  display: -ms-flexbox;      /* TWEENER - IE 10 */
-  display: -webkit-flex;     /* NEW - Chrome */
-  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
-  margin-left: 10px;
-}
-
-#flashMessages .hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-#flashMessages .navigation {
-  width: 10%;
-  padding: 0;
-  margin: 0;
-  font-size: 0;
-  float: right;
-  text-align: center;
-}
-
-#flashMessages .navigation li {
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-}
-
-#flashMessages .navigation a {
-  display: block;
-  padding: 4px;
-  outline: 0;
-}
-
-#flashMessages .navigation span {
-  display: block;
-  width: 10px;
-  height: 10px;
-  background-color: #fff;
-  border-radius: 100%;
-  opacity: 0.6;
-  -webkit-transition: all 0.2s ease-in-out 0s;
-  transition: all 0.2s ease-in-out 0s;
-  -webkit-transform: scale(0.6);
-  transform: scale(0.6);
-}
-
-#flashMessages .navigation a:hover span {
-  opacity: 1;
-  -webkit-transform: scale(0.8);
-  transform: scale(0.8);
-}
-
-#flashMessages .navigation a.selected span {
-  opacity: 1;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}</code>
-    </property>
-    <property>
-      <name/>
-    </property>
-    <property>
-      <parse>1</parse>
-    </property>
-    <property>
-      <use>onDemand</use>
-    </property>
-  </object>
   <content>{{velocity}}
 ###############################################
 ##           LOAD POPUP MANAGER
@@ -544,4 +191,374 @@
 #end
 {{/velocity}}
 </content>
+  <object>
+    <name>Flash.DisplayFlashMessages</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>68e12981-e81d-4ec5-ac74-704b8f9618af</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>require(['jquery'], function($) {
+  $(document).ready(function() {
+    var messages = $$("#flashMessages .messages li").length;
+    if (messages &gt; 1) {
+      var interval = setInterval(nextMessage, 10000);
+      // Generate navigation bullets
+      for (var i = 0; i &lt; messages; i++) {
+        $("#flashMessages .navigation").append('&lt;li&gt;&lt;a href="javascript:void(0)"&gt;&lt;span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;');
+      }
+    }
+  
+    if (messages &gt; 0) {
+      // Select the first message and element in the navigation
+      $("#flashMessages .messages li:first-of-type").addClass("selected");
+      $("#flashMessages .navigation :first-child a").addClass("selected");
+    }
+
+    // Navigation bullets
+    $("#flashMessages .navigation a").click(function(e) {
+      e.preventDefault();
+
+      // Remove the selected class from the currently selected indicator
+      $(this).parent().parent().find(".selected").removeClass("selected");
+      // Make the clicked indicator the selected one
+      $(this).addClass("selected");
+
+      // Reset the timer for the next message
+      clearInterval(interval);
+      interval = setInterval(nextMessage, 10000);
+
+      updateSlideshowForSelectedMessage();
+    });
+
+    // Display the currently selected message
+    function updateSlideshowForSelectedMessage() {
+      var index = $("#flashMessages .navigation .selected").parent().index();
+      var classIndex = parseInt(index+1, 10);
+
+      $("#flashMessages .messages .selected").removeClass("selected");
+      $("#flashMessages .messages li:nth-child(" + classIndex + ")").addClass("selected");
+    }
+
+    // Go to the next message
+    function nextMessage() {
+      var reachedLastMessage = $("#flashMessages .navigation .selected").parent().index()+1 &gt;= messages;
+
+      if (reachedLastMessage) {
+        $("#flashMessages .navigation .selected").removeClass("selected");
+        $("#flashMessages .navigation :first-child a").addClass("selected");
+      } else {
+        $("#flashMessages .navigation .selected").removeClass("selected").parent().next().find("a").addClass("selected");
+      }
+
+      updateSlideshowForSelectedMessage();
+    }
+  });
+});</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <object>
+    <name>Flash.DisplayFlashMessages</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>96bce27a-7a4d-4273-8f35-15c4a2dfe632</guid>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <contenttype>PureText</contenttype>
+        <disabled>0</disabled>
+        <editor>PureText</editor>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>6</number>
+        <prettyName>Content Type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>CSS|LESS</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>forbid</cache>
+    </property>
+    <property>
+      <code>#template('colorThemeInit.vm')
+
+#flashMessages {
+  background-color: $theme.menuBackgroundColor;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) inset;
+  color: $theme.menuLinkColor;
+  width: 100%;
+  position: relative;
+  display: -webkit-box;        /* OLD - iOS 6, Safari 3.1-6 */
+  display: -moz-box;           /* OLD - Firefox 19 */
+  display: -ms-flexbox;        /* TWEENER - IE 10 */
+  display: -webkit-flex;       /* NEW - Chrome */
+  display: flex;               /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  clear: both;
+  -webkit-box-align: center;   /* OLD - iOS 6, Safari 3.1-6 */
+  -moz-box-align: center;      /* OLD - Firefox 19 */
+  -ms-flex-align: center;      /* TWEENER - IE 10 */
+  -webkit-align-items: center; /* NEW - Chrome */
+  align-items: center;         /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+#flashMessages .messages {
+  width: 90%;
+  padding: 0;
+  margin: 0;
+  float: left;
+}
+
+.skin-flamingo #flashMessages .messages {
+  margin: 10px 0 0;
+}
+
+#flashMessages .messages li {
+  opacity: 0;
+  visibility: hidden;
+  position: relative;
+  display: none;
+}
+
+#flashMessages .messages li .date {
+  float: left;
+  font-size: 0.9em;
+  margin-right: 0.3em;
+}
+
+#flashMessages .messages li .message {
+  float: left;
+  font-size: 0.9em;
+}
+
+#flashMessages .messages .selected {
+  opacity: 1;
+  visibility: visible;
+  display: -webkit-box;      /* OLD - iOS 6, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19 */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  margin-left: 10px;
+}
+
+#flashMessages .hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#flashMessages .navigation {
+  width: 10%;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  float: right;
+  text-align: center;
+}
+
+#flashMessages .navigation li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+#flashMessages .navigation a {
+  display: block;
+  padding: 4px;
+  outline: 0;
+}
+
+#flashMessages .navigation span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 100%;
+  opacity: 0.6;
+  -webkit-transition: all 0.2s ease-in-out 0s;
+  transition: all 0.2s ease-in-out 0s;
+  -webkit-transform: scale(0.6);
+  transform: scale(0.6);
+}
+
+#flashMessages .navigation a:hover span {
+  opacity: 1;
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+}
+
+#flashMessages .navigation a.selected span {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
 </xwikidoc>
