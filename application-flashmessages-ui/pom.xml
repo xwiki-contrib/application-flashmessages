@@ -72,6 +72,8 @@
       <scope>runtime</scope>
       <exclusions>
         <exclusion>
+          <!-- The xwiki-pro-commons 1.4.0 version depends on XWiki platform 14.10, while flashmessages depends on
+          15.10. This exclusion can be removed when this version mismatch is resolved. -->
           <groupId>org.xwiki.platform</groupId>
           <artifactId>xwiki-platform-resource-api</artifactId>
         </exclusion>

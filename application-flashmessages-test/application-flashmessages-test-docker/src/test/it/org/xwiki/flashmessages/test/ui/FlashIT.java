@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * UI tests for the Flash Messages application.
  *
  * @version $Id$
- * @since 1.7
+ * @since 1.2
  */
 @UITest(extraJARs = {
         // The Solr store is not ready yet to be installed as extension

@@ -27,7 +27,7 @@ import org.xwiki.test.docker.junit5.UITest;
  * All UI tests for the Licensing application.
  *
  * @version $Id$
- * @since 1.7
+ * @since 1.2
  */
 @UITest(
     properties = {
