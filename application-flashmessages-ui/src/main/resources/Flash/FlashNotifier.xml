@@ -198,23 +198,16 @@
    */
   window.flashNotifierConfirm = function() {
     let params = window.flashNotifierParams[window.flashNotifierIndex];
-    // Workaround for XWIKI-20623 : JS function XWiki.Document#getURL does not take into account the wiki name.
-    return fetch('/xwiki/rest/wikis').then(res =&gt; res.text())
-    .then(data =&gt; {
-      data = (new DOMParser()).parseFromString(data, "text/xml");
-      let wikis = Array.from(data.documentElement.getElementsByTagName('id')).map(a =&gt; a.innerHTML);
-      let flashNotifierUrl = '/xwiki/__subwiki__/get/Flash/FlashNotifier';
-      flashNotifierUrl = flashNotifierUrl.replace('__subwiki__', wikis.length &gt; 1 ? 'wiki/$doc.getWiki()' : 'bin');
-      // End workaround.
-      return $.ajax({
-        url : flashNotifierUrl,
-        data : {'ajax' : '1', 'flash' : params['document']}
-      }).done(function() {
-        // Show the next popup when the current one is closed.
-        $(document).one('hidden.bs.modal', '#flashPopup', function(event) {
-          window.flashNotifierIndex++;
-          window.flashNotifierNext();
-        });
+    // Compute the URL server-side so that the context path and the wiki URL scheme are taken into account.
+    let flashNotifierUrl = '$escapetool.javascript($doc.getURL('get'))';
+    return $.ajax({
+      url : flashNotifierUrl,
+      data : {'ajax' : '1', 'flash' : params['document']}
+    }).done(function() {
+      // Show the next popup when the current one is closed.
+      $(document).one('hidden.bs.modal', '#flashPopup', function(event) {
+        window.flashNotifierIndex++;
+        window.flashNotifierNext();
       });
     });
   };

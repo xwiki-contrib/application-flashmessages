@@ -194,23 +194,17 @@
     }
   #end
     ];
-    // This is a workaround for XWIKI-20623 : JS function XWiki.Document#getURL does not take into account the wiki name
-    fetch('/xwiki/rest/wikis').then(res =&gt; res.text())
-    .then(data =&gt; {
-      data = (new DOMParser()).parseFromString(data, "text/xml");
-      let wikis = Array.from(data.documentElement.getElementsByTagName('id')).map(a =&gt; a.innerHTML);
-      let flashNotifierUrl = '/xwiki/__subwiki__/jsx/Flash/FlashNotifier';
-      flashNotifierUrl = flashNotifierUrl.replace('__subwiki__', wikis.length &gt; 1 ? 'wiki/$flashInstallSubwiki' : 'bin');
-      // End workaround.
-      require.config({
-        'paths': {
-           'flashNotifier': flashNotifierUrl
-         }
-      });
-      require(['jquery', 'flashNotifier', 'bootstrap'], function($) {
-        window.flashPopup = $('#flashPopup');
-        window.flashNotifier(params);
-      });
+    // Compute the URL server-side so that the context path and the wiki URL scheme are taken into account.
+    #set ($flashNotifierReference = $services.model.createDocumentReference($flashInstallSubwiki, 'Flash', 'FlashNotifier'))
+    let flashNotifierUrl = '$escapetool.javascript($xwiki.getURL($flashNotifierReference, 'jsx', ''))';
+    require.config({
+      'paths': {
+         'flashNotifier': flashNotifierUrl
+       }
+    });
+    require(['jquery', 'flashNotifier', 'bootstrap'], function($) {
+      window.flashPopup = $('#flashPopup');
+      window.flashNotifier(params);
     });
   });
   &lt;/script&gt;
