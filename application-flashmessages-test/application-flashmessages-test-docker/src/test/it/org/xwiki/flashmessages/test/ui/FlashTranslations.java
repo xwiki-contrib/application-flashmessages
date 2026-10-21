@@ -47,7 +47,7 @@ public class FlashTranslations
         HashMap<String, String> english = addLanguage("en");
 
         // Core
-        english.put("notallowed", "You are not allowed to view this document or perform this action.");
+        english.put("notallowed", "You are not allowed to view this page or perform this action.");
 
         // Administration
         english.put("admin.flashmessages", "Flash Messages");
@@ -59,7 +59,7 @@ public class FlashTranslations
         english.put("flash.panels.quicklinktitle", "Flash Messages");
 
         // Livetable
-        english.put("flash.livetable.doc.name", "Name");
+        english.put("flash.livetable.doc.title", "Name");
         english.put("flash.livetable.dateBegin", "Start date");
         english.put("flash.livetable.dateEnd", "End date");
         english.put("flash.livetable.groups", "Groups");
@@ -121,7 +121,7 @@ public class FlashTranslations
         french.put("flash.panels.quicklinktitle", "Messages Flash");
 
         // Livetable
-        french.put("flash.livetable.doc.name", "Nom");
+        french.put("flash.livetable.doc.title", "Nom");
         french.put("flash.livetable.dateBegin", "Date de début");
         french.put("flash.livetable.dateEnd", "Date de fin");
         french.put("flash.livetable.groups", "Groupes");

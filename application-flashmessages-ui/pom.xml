@@ -30,9 +30,12 @@
   <artifactId>application-flashmessages-ui</artifactId>
   <packaging>xar</packaging>
   <name>Flash Messages Application - UI</name>
+  <description>Schedule and display flash announcements to one or multiple groups. Messages can be set as one off or recurring events.</description>
   <properties>
+    <xwikiprocommons.version>1.4.0</xwikiprocommons.version>
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Flash Messages Application</xwiki.extension.name>
+    <xwiki.extension.category>application</xwiki.extension.category>
     <!-- Don't run CLIRR here since there's no Java code. -->
     <xwiki.clirr.skip>true</xwiki.clirr.skip>
     <!-- Old names of this module used for retro compatibility when resolving dependencies of old extensions -->
@@ -44,7 +47,7 @@
   <dependencies>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-appwithinminutes-ui</artifactId>
+      <artifactId>xwiki-platform-livetable-ui</artifactId>
       <version>${platform.version}</version>
       <type>xar</type>
       <scope>runtime</scope>
@@ -62,6 +65,21 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
+      <groupId>com.xwiki.commons</groupId>
+      <artifactId>xwiki-pro-commons-pickers-ui</artifactId>
+      <version>${xwikiprocommons.version}</version>
+      <type>xar</type>
+      <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <!-- The xwiki-pro-commons 1.4.0 version depends on XWiki platform 14.10, while flashmessages depends on
+          15.10. This exclusion can be removed when this version mismatch is resolved. -->
+          <groupId>org.xwiki.platform</groupId>
+          <artifactId>xwiki-platform-resource-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-rendering-macro-include</artifactId>
       <version>${platform.version}</version>
@@ -76,6 +94,12 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-rendering-macro-script</artifactId>
+      <version>${platform.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-uiextension-api</artifactId>
       <version>${platform.version}</version>
       <scope>runtime</scope>
     </dependency>

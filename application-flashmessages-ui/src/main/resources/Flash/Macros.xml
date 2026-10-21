@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -20,19 +20,16 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc version="1.5" reference="Flash.Macros" locale="">
   <web>Flash</web>
   <name>Macros</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1426514968000</creationDate>
   <parent>Flash.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1426516436000</date>
-  <contentUpdateDate>1426516436000</contentUpdateDate>
   <version>1.1</version>
   <title>Macros</title>
   <comment/>
@@ -68,6 +65,13 @@
   #end
   ##
   $result
+#end
+#macro (displayFlashProperty $obj $propName)
+  #set ($class = $obj.xWikiClass)
+  ; &lt;label #if ($xcontext.action == 'edit')for="${class.getName()}_${obj.number}_${propName}"#end&gt;
+      $doc.displayPrettyName($propName)
+    &lt;/label&gt;
+  : $!doc.display($propName, $obj)
 #end
 {{/velocity}}</content>
 </xwikidoc>

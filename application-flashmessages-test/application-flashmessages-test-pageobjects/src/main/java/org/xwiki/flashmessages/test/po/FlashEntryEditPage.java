@@ -29,13 +29,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-import org.xwiki.test.ui.po.editor.DatePicker;
+import org.xwiki.test.ui.po.SuggestInputElement;
+import org.xwiki.test.ui.po.editor.BootstrapDateTimePicker;
 
 /**
  * Represents a Flash Messages entry page being edited.
  *
  * @version $Id$
- * @since
+ * @since 1.1.2
  */
 public class FlashEntryEditPage extends FlashPage
 {
@@ -75,6 +76,9 @@ public class FlashEntryEditPage extends FlashPage
     @FindBy(id = "Flash.FlashClass_0_groups")
     protected WebElement groupsElement;
 
+    @FindBy(id = "Flash.FlashClass_0_wikiScope")
+    protected WebElement wikiScopeElement;
+
     @FindBy(id = "Flash.FlashClass_0_message")
     protected WebElement messageElement;
 
@@ -104,7 +108,7 @@ public class FlashEntryEditPage extends FlashPage
      */
     public static FlashEntryEditPage gotoPage(String page, String language)
     {
-        getUtil().gotoPage(FlashHomePage.getSpace(), page, "inline", "language=" + language);
+        getUtil().gotoPage(FlashHomePage.getSpace(), page, "edit", "language=" + language);
         return new FlashEntryEditPage();
     }
 
@@ -112,23 +116,25 @@ public class FlashEntryEditPage extends FlashPage
      * Set value for date element
      * 
      * @param element the element representing a date input
-     * @param date the date value to set
+     * @param calendar the date value to set
      */
     private void setDate(WebElement element, Calendar calendar)
     {
-        // Click the input field to get the date picker
+        // Click the date input field to get the date picker. The date picker is not shown if the date input is already
+        // focused so we first click outside.
+        this.messageElement.click();
         element.click();
 
-        DatePicker datePicker = new DatePicker();
-        datePicker.setYear(getFormattedDate(calendar, "yyyy"));
-        datePicker.setMonth(getFormattedDate(calendar, "MMMM"));
-        datePicker.setDay(getFormattedDate(calendar, "d"));
-        datePicker.setHour(getFormattedDate(calendar, "h a"));
-        datePicker.setMinute(getFormattedDate(calendar, "mm"));
-
-        // Click the input field again so that the date picker disappears
-        // Do so in order to avoid issues when trying to set values to other fields right after setting a date
-        element.click();
+        BootstrapDateTimePicker datePicker = new BootstrapDateTimePicker();
+        datePicker.changeMonthAndYear().changeYear().selectYear(getFormattedDate(calendar, "yyyy"))
+            .selectMonth(getFormattedDate(calendar, "MMM")).selectDay(getFormattedDate(calendar, "d"));
+        int minutes = Integer.parseInt(getFormattedDate(calendar, "m"));
+        datePicker.toggleTimePicker().changeHour().selectHour(getFormattedDate(calendar, "HH")).changeMinute()
+            .selectMinute(String.format("%02d", minutes - minutes % 5));
+        for (int i = 0; i < minutes % 5; i++) {
+            datePicker.incrementMinute();
+        }
+        datePicker.toggleTimePicker().close();
     }
 
     /**
@@ -167,7 +173,7 @@ public class FlashEntryEditPage extends FlashPage
     /**
      * Set repeat
      * 
-     * @param repeat
+     * @param repeat the flag for message occurrence repetition
      */
     public void setRepeat(Boolean repeat)
     {
@@ -252,10 +258,11 @@ public class FlashEntryEditPage extends FlashPage
     public List<String> getRepeatDays()
     {
         List<String> repeatDays = new LinkedList<String>();
-        for (int i = 0; i < 7; i++) {
-            repeatDays.add(getDriver()
-                .findElementWithoutWaiting(By.xpath("//label[@for='xwiki-form-repeatDays-0-" + i + "']")).getText());
-        }
+		for (int i = 0; i < 7; i++) {
+			repeatDays.add(getDriver()
+			    .findElementWithoutWaiting(By.xpath("//label[@for='xwiki-form-repeatDays-0-" + i + "']"))
+				.getText());
+		}
 
         return repeatDays;
     }
@@ -269,10 +276,11 @@ public class FlashEntryEditPage extends FlashPage
     {
         List<String> daysOfTheWeek =
             Arrays.asList("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday");
-
-        for (String day : days) {
-            getDriver().findElementWithoutWaiting(By.id("xwiki-form-repeatDays-0-" + daysOfTheWeek.indexOf(day)))
-                .click();
+        for (int i = 0; i < daysOfTheWeek.size(); i++) {
+            WebElement checkbox = getDriver().findElementWithoutWaiting(By.id("xwiki-form-repeatDays-0-" + i));
+            if (checkbox.isDisplayed() && checkbox.isSelected() != days.contains(daysOfTheWeek.get(i))) {
+                checkbox.click();
+            }
         }
     }
 
@@ -293,12 +301,23 @@ public class FlashEntryEditPage extends FlashPage
      */
     public void setGroups(List<String> groups)
     {
+        SuggestInputElement groupSuggest = new SuggestInputElement(this.groupsElement);
+        groupSuggest.clearSelectedSuggestions();
         for (String group : groups) {
-            groupsElement.sendKeys(group);
-            getDriver().waitUntilElementIsVisible(By.className("suggestItem"));
-            getDriver().findElementWithoutWaiting(By.className("suggestItem")).click();
-            getDriver().waitUntilElementDisappears(By.className("suggestItem"));
+            groupSuggest.sendKeys(group).waitForSuggestions().selectByVisibleText(group);
         }
+        groupSuggest.hideSuggestions();
+    }
+
+    /**
+     * Set the wiki scope the message should be displayed in.
+     *
+     * @param wikiScope "currentWiki" or "allWikis"
+     */
+    public void setWikiScope(String wikiScope)
+    {
+        Select wikiScopeSelect = new Select(wikiScopeElement);
+        wikiScopeSelect.selectByValue(wikiScope);
     }
 
     /**
@@ -319,7 +338,14 @@ public class FlashEntryEditPage extends FlashPage
      */
     public FlashEntryViewPage clickSaveAndView()
     {
+        getDriver().addPageNotYetReloadedMarker();
+
         saveAndViewButtonElement.click();
+
+        // Since we might have a loading step between clicking Save & View and the view page actually loading
+        // (specifically when using templates that have child documents associated), we need to wait for the save to
+        // finish and for the redirect to occur.
+        getDriver().waitUntilPageIsReloaded();
 
         return new FlashEntryViewPage();
     }

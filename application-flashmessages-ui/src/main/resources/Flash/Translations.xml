@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.1" encoding="UTF-8"?>
 
 <!--
  * See the NOTICE file distributed with this work for additional
@@ -20,80 +20,42 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.5" reference="Flash.Translations" locale="">
   <web>Flash</web>
   <name>Translations</name>
   <language/>
   <defaultLanguage>en</defaultLanguage>
   <translation>0</translation>
-  <parent>Flash.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
+  <parent>Flash.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
-  <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <creationDate>1399397413000</creationDate>
-  <date>1399473119000</date>
-  <contentUpdateDate>1399473087000</contentUpdateDate>
   <version>1.1</version>
   <title/>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  <object>
-    <class>
-      <name>XWiki.TranslationDocumentClass</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <scope>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <multiSelect>0</multiSelect>
-        <name>scope</name>
-        <number>1</number>
-        <prettyName>Scope</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <separators> ,|</separators>
-        <size>1</size>
-        <unmodifiable>0</unmodifiable>
-        <values>GLOBAL|WIKI|USER|ON_DEMAND</values>
-        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </scope>
-    </class>
-    <name>Flash.Translations</name>
-    <number>0</number>
-    <className>XWiki.TranslationDocumentClass</className>
-    <guid>e58859b8-7ec8-4b24-a85c-ac03c692ec06</guid>
-    <property>
-      <scope>WIKI</scope>
-    </property>
-  </object>
   <content>## Administration ##
 admin.flashmessages=Flash Messages
 flash.creation.utcinfo=The time used for alerts is based on UTC. To check the UTC time you can use the button 'now' in the calendar
+flash.flashmessages.confirm=Ok
 flash.home.title=Flash entries
 flash.home.msginfo=See here the history of FLASH messages published on the knowledge base.
 flash.panels.quicklinktitle=Flash Messages
 
 ## Livetable ##
-flash.livetable.doc.name=Name
+flash.livetable.doc.title=Name
 flash.livetable.dateBegin=Start date
 flash.livetable.dateEnd=End date
 flash.livetable.groups=Groups
 flash.livetable.message=Message
 flash.livetable.doc.date=Update date
+flash.livetable.wikiScope=Message Scope
 flash.livetable._actions.edit=Edit
 flash.livetable._actions.delete=Delete
 flash.livetable._actions=Actions
+flash.livetable.emptyvalue=-
 
 ## Class ##
 Flash.FlashClass_dateBegin=Start date
@@ -115,6 +77,9 @@ Flash.FlashClass_repeatDays_saturday=Saturday
 Flash.FlashClass_repeatDays_sunday=Sunday
 Flash.FlashClass_message=Message
 Flash.FlashClass_groups=Groups
+Flash.FlashClass_wikiScope=Message Scope
+Flash.FlashClass_wikiScope_currentWiki=Current Wiki
+Flash.FlashClass_wikiScope_allWikis=All Subwikis
 
 ## Sheet ##
 flash.repeat.summary=Repeat summary
@@ -124,5 +89,46 @@ flash.repeat.summary.day=day
 flash.repeat.summary.daily=days
 flash.repeat.summary.weekly=weeks
 flash.repeat.summary.monthly=months
-flash.repeat.summary.yearly=years</content>
+flash.repeat.summary.yearly=years
+
+## Template Provider ##
+templateProvider.flashmessages.name=Flash Messages
+templateProvider.flashmessages.description=Programmed flash messages aiming towards one or multiple groups</content>
+  <object>
+    <name>Flash.Translations</name>
+    <number>0</number>
+    <className>XWiki.TranslationDocumentClass</className>
+    <guid>e58859b8-7ec8-4b24-a85c-ac03c692ec06</guid>
+    <class>
+      <name>XWiki.TranslationDocumentClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <scope>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <freeText>forbidden</freeText>
+        <largeStorage>0</largeStorage>
+        <multiSelect>0</multiSelect>
+        <name>scope</name>
+        <number>1</number>
+        <prettyName>Scope</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>GLOBAL|WIKI|USER|ON_DEMAND</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </scope>
+    </class>
+    <property>
+      <scope>WIKI</scope>
+    </property>
+  </object>
 </xwikidoc>

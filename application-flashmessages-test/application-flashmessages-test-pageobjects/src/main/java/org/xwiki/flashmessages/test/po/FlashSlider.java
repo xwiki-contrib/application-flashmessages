@@ -30,7 +30,7 @@ import org.xwiki.test.ui.po.BaseElement;
  * Represents a Flash Messages slider.
  *
  * @version $Id$
- * @since
+ * @since 1.1.2
  */
 public class FlashSlider extends BaseElement
 {
