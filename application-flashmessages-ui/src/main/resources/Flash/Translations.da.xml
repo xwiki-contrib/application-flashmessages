@@ -43,52 +43,52 @@
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
   <content>## Administration ##
-### Missing: admin.flashmessages=
-### Missing: flash.creation.utcinfo=
-### Missing: flash.home.title=
-### Missing: flash.home.msginfo=
-### Missing: flash.panels.quicklinktitle=
+admin.flashmessages=Flash-beskeder
+flash.creation.utcinfo=Tidspunktet for advarsler er baseret på UTC. Du kan tjekke UTC-tiden med knappen "Nu" i kalenderen.
+flash.home.title=Flash-poster
+flash.home.msginfo=Se her historikken over flash-beskeder, der er udgivet i vidensbasen.
+flash.panels.quicklinktitle=Flash-beskeder
 
 ## Livetable ##
-### Missing: flash.livetable.doc.name=
-### Missing: flash.livetable.dateBegin=
-### Missing: flash.livetable.dateEnd=
-### Missing: flash.livetable.groups=
-### Missing: flash.livetable.message=
-### Missing: flash.livetable.doc.date=
-### Missing: flash.livetable._actions.edit=
-### Missing: flash.livetable._actions.delete=
-### Missing: flash.livetable._actions=
+flash.livetable.doc.name=Navn
+flash.livetable.dateBegin=Startdato
+flash.livetable.dateEnd=Slutdato
+flash.livetable.groups=Grupper
+flash.livetable.message=Besked
+flash.livetable.doc.date=Opdateringsdato
+flash.livetable._actions.edit=Rediger
+flash.livetable._actions.delete=Slet
+flash.livetable._actions=Handlinger
 
 ## Class ##
-### Missing: Flash.FlashClass_dateBegin=
-### Missing: Flash.FlashClass_dateEnd=
-### Missing: Flash.FlashClass_repeat=
-### Missing: Flash.FlashClass_repeatInterval=
-### Missing: Flash.FlashClass_repeatInterval_daily=
-### Missing: Flash.FlashClass_repeatInterval_weekly=
-### Missing: Flash.FlashClass_repeatInterval_monthly=
-### Missing: Flash.FlashClass_repeatInterval_yearly=
-### Missing: Flash.FlashClass_repeatFrequency=
-### Missing: Flash.FlashClass_repeatDays=
-### Missing: Flash.FlashClass_repeatDays_monday=
-### Missing: Flash.FlashClass_repeatDays_tuesday=
-### Missing: Flash.FlashClass_repeatDays_wednesday=
-### Missing: Flash.FlashClass_repeatDays_thursday=
-### Missing: Flash.FlashClass_repeatDays_friday=
-### Missing: Flash.FlashClass_repeatDays_saturday=
-### Missing: Flash.FlashClass_repeatDays_sunday=
-### Missing: Flash.FlashClass_message=
-### Missing: Flash.FlashClass_groups=
+Flash.FlashClass_dateBegin=Startdato
+Flash.FlashClass_dateEnd=Slutdato
+Flash.FlashClass_repeat=Gentag
+Flash.FlashClass_repeatInterval=Gentagelsesinterval
+Flash.FlashClass_repeatInterval_daily=Dagligt
+Flash.FlashClass_repeatInterval_weekly=Ugentligt
+Flash.FlashClass_repeatInterval_monthly=Månedligt
+Flash.FlashClass_repeatInterval_yearly=Årligt
+Flash.FlashClass_repeatFrequency=Gentagelsesfrekvens
+Flash.FlashClass_repeatDays=Gentagelsesdage
+Flash.FlashClass_repeatDays_monday=Mandag
+Flash.FlashClass_repeatDays_tuesday=Tirsdag
+Flash.FlashClass_repeatDays_wednesday=Onsdag
+Flash.FlashClass_repeatDays_thursday=Torsdag
+Flash.FlashClass_repeatDays_friday=Fredag
+Flash.FlashClass_repeatDays_saturday=Lørdag
+Flash.FlashClass_repeatDays_sunday=Søndag
+Flash.FlashClass_message=Besked
+Flash.FlashClass_groups=Grupper
 
 ## Sheet ##
-### Missing: flash.repeat.summary=
-### Missing: flash.repeat.summary.every=
-### Missing: flash.repeat.summary.on=
-### Missing: flash.repeat.summary.day=
-### Missing: flash.repeat.summary.daily=
-### Missing: flash.repeat.summary.weekly=
-### Missing: flash.repeat.summary.monthly=
-### Missing: flash.repeat.summary.yearly=
+flash.repeat.summary=Oversigt over gentagelse
+flash.repeat.summary.every=Hver {0}. {1}
+flash.repeat.summary.on=om
+flash.repeat.summary.day=dag
+flash.repeat.summary.daily=dag
+flash.repeat.summary.weekly=uge
+flash.repeat.summary.monthly=måned
+flash.repeat.summary.yearly=år
 </content>
 </xwikidoc>
