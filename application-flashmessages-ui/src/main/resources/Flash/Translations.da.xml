@@ -1,0 +1,94 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc locale="da">
+  <web>Flash</web>
+  <name>Translations</name>
+  <language>da</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Flash.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1399397413000</creationDate>
+  <date>1399473119000</date>
+  <contentUpdateDate>1399473087000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## Administration ##
+### Missing: admin.flashmessages=
+### Missing: flash.creation.utcinfo=
+### Missing: flash.home.title=
+### Missing: flash.home.msginfo=
+### Missing: flash.panels.quicklinktitle=
+
+## Livetable ##
+### Missing: flash.livetable.doc.name=
+### Missing: flash.livetable.dateBegin=
+### Missing: flash.livetable.dateEnd=
+### Missing: flash.livetable.groups=
+### Missing: flash.livetable.message=
+### Missing: flash.livetable.doc.date=
+### Missing: flash.livetable._actions.edit=
+### Missing: flash.livetable._actions.delete=
+### Missing: flash.livetable._actions=
+
+## Class ##
+### Missing: Flash.FlashClass_dateBegin=
+### Missing: Flash.FlashClass_dateEnd=
+### Missing: Flash.FlashClass_repeat=
+### Missing: Flash.FlashClass_repeatInterval=
+### Missing: Flash.FlashClass_repeatInterval_daily=
+### Missing: Flash.FlashClass_repeatInterval_weekly=
+### Missing: Flash.FlashClass_repeatInterval_monthly=
+### Missing: Flash.FlashClass_repeatInterval_yearly=
+### Missing: Flash.FlashClass_repeatFrequency=
+### Missing: Flash.FlashClass_repeatDays=
+### Missing: Flash.FlashClass_repeatDays_monday=
+### Missing: Flash.FlashClass_repeatDays_tuesday=
+### Missing: Flash.FlashClass_repeatDays_wednesday=
+### Missing: Flash.FlashClass_repeatDays_thursday=
+### Missing: Flash.FlashClass_repeatDays_friday=
+### Missing: Flash.FlashClass_repeatDays_saturday=
+### Missing: Flash.FlashClass_repeatDays_sunday=
+### Missing: Flash.FlashClass_message=
+### Missing: Flash.FlashClass_groups=
+
+## Sheet ##
+### Missing: flash.repeat.summary=
+### Missing: flash.repeat.summary.every=
+### Missing: flash.repeat.summary.on=
+### Missing: flash.repeat.summary.day=
+### Missing: flash.repeat.summary.daily=
+### Missing: flash.repeat.summary.weekly=
+### Missing: flash.repeat.summary.monthly=
+### Missing: flash.repeat.summary.yearly=
+</content>
+</xwikidoc>
