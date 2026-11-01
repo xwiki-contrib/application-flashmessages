@@ -44,7 +44,7 @@
   <hidden>true</hidden>
   <content>## Administration ##
 admin.flashmessages=Flash-beskeder
-flash.creation.utcinfo=Tidspunktet for advarsler er baseret på UTC. Du kan tjekke UTC-tiden med knappen "Nu" i kalenderen.
+flash.creation.utcinfo=Tidspunktet for advarsler er baseret på UTC. Du kan tjekke UTC-tiden med knappen "Nu" i kalenderen
 flash.home.title=Flash-poster
 flash.home.msginfo=Se her historikken over flash-beskeder, der er udgivet i vidensbasen.
 flash.panels.quicklinktitle=Flash-beskeder
