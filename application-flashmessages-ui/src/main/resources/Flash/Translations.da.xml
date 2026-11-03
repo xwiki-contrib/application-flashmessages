@@ -1,0 +1,94 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc locale="da">
+  <web>Flash</web>
+  <name>Translations</name>
+  <language>da</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>Flash.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1399397413000</creationDate>
+  <date>1399473119000</date>
+  <contentUpdateDate>1399473087000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>## Administration ##
+admin.flashmessages=Flash-beskeder
+flash.creation.utcinfo=Tidspunktet for advarsler er baseret på UTC. Du kan tjekke UTC-tiden med knappen "Nu" i kalenderen
+flash.home.title=Flash-poster
+flash.home.msginfo=Se her historikken over flash-beskeder, der er udgivet i vidensbasen.
+flash.panels.quicklinktitle=Flash-beskeder
+
+## Livetable ##
+flash.livetable.doc.name=Navn
+flash.livetable.dateBegin=Startdato
+flash.livetable.dateEnd=Slutdato
+flash.livetable.groups=Grupper
+flash.livetable.message=Besked
+flash.livetable.doc.date=Opdateringsdato
+flash.livetable._actions.edit=Rediger
+flash.livetable._actions.delete=Slet
+flash.livetable._actions=Handlinger
+
+## Class ##
+Flash.FlashClass_dateBegin=Startdato
+Flash.FlashClass_dateEnd=Slutdato
+Flash.FlashClass_repeat=Gentag
+Flash.FlashClass_repeatInterval=Gentagelsesinterval
+Flash.FlashClass_repeatInterval_daily=Dagligt
+Flash.FlashClass_repeatInterval_weekly=Ugentligt
+Flash.FlashClass_repeatInterval_monthly=Månedligt
+Flash.FlashClass_repeatInterval_yearly=Årligt
+Flash.FlashClass_repeatFrequency=Gentagelsesfrekvens
+Flash.FlashClass_repeatDays=Gentagelsesdage
+Flash.FlashClass_repeatDays_monday=Mandag
+Flash.FlashClass_repeatDays_tuesday=Tirsdag
+Flash.FlashClass_repeatDays_wednesday=Onsdag
+Flash.FlashClass_repeatDays_thursday=Torsdag
+Flash.FlashClass_repeatDays_friday=Fredag
+Flash.FlashClass_repeatDays_saturday=Lørdag
+Flash.FlashClass_repeatDays_sunday=Søndag
+Flash.FlashClass_message=Besked
+Flash.FlashClass_groups=Grupper
+
+## Sheet ##
+flash.repeat.summary=Oversigt over gentagelse
+flash.repeat.summary.every=Hver {0}. {1}
+flash.repeat.summary.on=om
+flash.repeat.summary.day=dag
+flash.repeat.summary.daily=dag
+flash.repeat.summary.weekly=uge
+flash.repeat.summary.monthly=måned
+flash.repeat.summary.yearly=år
+</content>
+</xwikidoc>
